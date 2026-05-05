@@ -77,8 +77,15 @@ if (-not (Get-Command $GhExe -ErrorAction SilentlyContinue)) {
 Test-GitHubAuth
 
 $fullName = "$Owner/$Repo"
-& $GhExe repo view $fullName >$null 2>$null
-$repoExists = $LASTEXITCODE -eq 0
+$repoExists = $false
+$previousErrorActionPreference = $ErrorActionPreference
+try {
+  $ErrorActionPreference = "Continue"
+  & $GhExe repo view $fullName *> $null
+  $repoExists = $LASTEXITCODE -eq 0
+} finally {
+  $ErrorActionPreference = $previousErrorActionPreference
+}
 if (-not $repoExists) {
   Invoke-Gh -Arguments @(
     "repo", "create", $fullName,
