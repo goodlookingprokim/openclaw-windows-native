@@ -45,20 +45,21 @@ if (-not $repoExists) {
     "repo", "create", $fullName,
     "--public",
     "--description", $Description,
-    "--homepage", "https://$Owner.github.io/$Repo/",
-    "--source", ".",
-    "--remote", "origin",
-    "--push"
+    "--homepage", "https://$Owner.github.io/$Repo/"
   ) | Out-Null
-} else {
-  $remote = (& git remote get-url origin 2>$null)
-  if (-not $remote) {
-    & git remote add origin "https://github.com/$fullName.git"
-  }
-  & git push -u origin main
-  if ($LASTEXITCODE -ne 0) {
-    throw "git push failed."
-  }
+}
+
+$remoteUrl = "https://github.com/$fullName.git"
+$remote = (& git remote get-url origin 2>$null)
+if (-not $remote) {
+  & git remote add origin $remoteUrl
+} elseif ($remote -ne $remoteUrl) {
+  & git remote set-url origin $remoteUrl
+}
+
+& git push -u origin main
+if ($LASTEXITCODE -ne 0) {
+  throw "git push failed."
 }
 
 Invoke-Gh -Arguments @("repo", "edit", $fullName, "--homepage", "https://$Owner.github.io/$Repo/") | Out-Null
