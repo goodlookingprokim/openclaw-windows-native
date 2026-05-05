@@ -1,23 +1,19 @@
 # OpenClaw Windows Native Companion
 
-[한국어](#한국어) | [English](#english)
-
-Public site / 공개 사이트: https://goodlookingprokim.github.io/openclaw-windows-native/
-
----
+[공개 사이트 / Public site](https://goodlookingprokim.github.io/openclaw-windows-native/) · [설치 가이드](manual.html) · [Release](https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-language-tabs)
 
 ## 한국어
 
-목표: 참석자가 설치 파일을 실행하고, 본인 Telegram 봇 토큰과 모델 인증을 직접 입력해 Windows 네이티브 환경에서 OpenClaw를 사용한다.
+OpenClaw Windows Native Companion은 WSL 없이 Windows에서 OpenClaw를 설치하고 Telegram으로 첫 대화까지 확인하도록 돕는 배포 키트입니다.
 
-어렵게 생각하면 설치는 큰 일처럼 보입니다. 이 프로젝트는 그 큰 일을 작은 행동으로 나눕니다. 파일을 받고, 파일 지문을 확인하고, 설치하고, 실제 토큰 전에 dry-run을 해보고, 마지막에 Telegram 대화를 확인합니다.
+사용자는 큰 절차를 작은 행동으로 진행합니다.
 
 1. `OpenClawWindowsNativeSetup.exe`를 다운로드합니다.
-2. SHA-256 값이 사이트와 같은지 확인합니다.
-3. Windows PowerShell/CMD에서 설치 파일을 실행합니다. WSL은 사용하지 않습니다.
-4. Telegram 실제 토큰을 넣기 전에 dry-run으로 설정 흐름을 연습합니다.
-5. BotFather 토큰은 사용자 PC의 로컬 파일에만 저장합니다.
-6. pairing code를 승인하고 Telegram 대화를 확인합니다.
+2. SHA-256 지문을 확인합니다.
+3. Windows PowerShell/CMD에서 설치합니다.
+4. 실제 Telegram 토큰 전에 dry-run을 실행합니다.
+5. BotFather 토큰은 사용자 PC의 로컬 `tokenFile`에만 저장합니다.
+6. pairing을 승인하고 Gateway health와 channel probe를 확인합니다.
 
 ```powershell
 Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
@@ -28,18 +24,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenC
 SHA-256:
 
 ```text
-a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce
+5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883
 ```
 
-설치기는 민감정보를 포함하지 않습니다. Telegram 봇 토큰, Gateway token, 모델 API key/OAuth 정보는 실행 중 사용자가 직접 입력하거나 OpenClaw 공식 온보딩에서 직접 선택합니다.
-
----
+포함 내용: PowerShell engine, 단일 EXE 설치 파일, verify/uninstall script, Tauri v2 Companion shell, JSON/redacted status, Telegram dry-run validation, 한/영 CSS 탭 GitHub Pages.
 
 ## English
 
 OpenClaw Windows Native Companion helps users install OpenClaw on Windows without WSL and reach the first Telegram conversation safely.
 
-The guide explains setup as small actions: download the file, compare its fingerprint, run the installer, practice Telegram setup with dry-run, enter real credentials only on your own PC, approve pairing, and verify the channel.
+The flow is intentionally small: download, compare the fingerprint, install, run Telegram dry-run, store real credentials only on your own PC, approve pairing, and verify the channel.
 
 ```powershell
 Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
@@ -50,26 +44,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenC
 Current installer SHA-256:
 
 ```text
-a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce
+5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883
 ```
 
-Dry-run does not contact Telegram. It creates a redacted validation artifact and keeps live send/receive separate from simulated validation.
+Included: structured PowerShell engine, single-file Windows setup package, setup/verify/uninstall scripts, build-verified Tauri v2 Companion shell, JSON/redacted status, Telegram dry-run validation, and Korean/English CSS-tab GitHub Pages.
 
-### Included
-
-- Structured PowerShell engine
-- Setup, verify, and uninstall scripts
-- Single-file Windows setup package
-- Build-verified Tauri v2 Companion shell
-- Bilingual GitHub Pages guide
-- Telegram dry-run and validation artifact checks
-
-### Security boundary
+## Security boundary
 
 - No real credentials are committed, embedded, published, or passed as command-line values.
 - Telegram bot tokens are registered through user-local token files.
-- Logs and JSON status output are redacted.
+- Logs, JSON status output, and validation artifacts are redacted.
+- Dry-run does not prove live Telegram send/receive; live testing requires user-controlled BotFather token and pairing approval.
 
-### License
+## License
 
 Installer scripts, documentation, Companion shell, and the static site are released under the MIT License. OpenClaw itself is a separate project governed by its own maintainers and license.

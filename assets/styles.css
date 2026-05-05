@@ -147,9 +147,19 @@ th { background: var(--ink); color: var(--signal); font-family: "Cascadia Mono",
   margin-right: 0;
 }
 
-.language-switch { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-.language-switch a { min-height: 42px; display: inline-flex; align-items: center; padding: 9px 14px; background: var(--panel); border: 2px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-small); font-weight: 950; text-decoration: none; }
-.language-switch a:hover { background: var(--signal); transform: translate(-2px,-2px); box-shadow: var(--shadow); }
+.language-shell { background: var(--panel); }
+.language-tabs { width: min(var(--max),100%); margin-left: auto; margin-right: auto; }
+.language-radio { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.language-tab-labels { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.language-tab-labels label { min-height: 46px; display: inline-flex; align-items: center; padding: 10px 16px; background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-small); cursor: pointer; font-weight: 950; transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+.language-tab-labels label:hover { background: var(--signal); transform: translate(-2px,-2px); box-shadow: var(--shadow); }
+#lang-ko:focus-visible ~ .language-tab-labels label[for="lang-ko"],
+#lang-en:focus-visible ~ .language-tab-labels label[for="lang-en"] { outline: 4px solid var(--blue); outline-offset: 4px; }
+#lang-ko:checked ~ .language-tab-labels label[for="lang-ko"],
+#lang-en:checked ~ .language-tab-labels label[for="lang-en"] { background: var(--signal); box-shadow: var(--shadow); }
+.lang-panel { display: none; padding: 34px; background: var(--paper); border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow-small); }
+#lang-ko:checked ~ .lang-ko,
+#lang-en:checked ~ .lang-en { display: block; }
 .plain-steps { margin: 18px 0 0; padding-left: 24px; color: var(--ink-soft); font-size: 1.08rem; font-weight: 750; }
 .plain-steps li { margin-bottom: 8px; }
 [lang="ko"] { word-break: keep-all; }

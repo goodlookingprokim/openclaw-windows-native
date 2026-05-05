@@ -1,5 +1,11 @@
 # Changelog
 
+## v2026.05.05-language-tabs - working language tabs and synced docs
+
+- Replaced language shortcut anchors with JavaScript-free CSS tabs that show one language mode at a time.
+- Synced README, Pages, user manual, and technical spec with the current installer engine, Companion shell, tokenFile, JSON status, and Telegram dry-run behavior.
+- Kept the static no-script Pages security boundary and credential redaction policy.
+
 ## v2026.05.05-bilingual - bilingual beginner guide
 
 - Added Korean and English modes across README and GitHub Pages.
