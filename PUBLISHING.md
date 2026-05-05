@@ -22,6 +22,12 @@ Then publish:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Publish-GitHub.ps1
 ```
 
+Or double-click:
+
+```text
+Publish-ToGitHub.cmd
+```
+
 The script will:
 
 1. Check GitHub CLI auth.

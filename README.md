@@ -29,6 +29,14 @@ WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하�
 
 The installer and repository do not contain real Gateway tokens, Telegram bot tokens, API keys, or pairing codes. Users enter their own credentials during installation. Telegram credentials are registered through `--token-file`.
 
+## Publishing
+
+Maintainers can publish the repository and GitHub Pages site with:
+
+```powershell
+.\Publish-ToGitHub.cmd
+```
+
 ## Audience
 
 This project is for open-source learners, educators, and researchers who want to experiment with standalone agents on Windows for academic and non-commercial learning purposes.
