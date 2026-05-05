@@ -1,61 +1,52 @@
 # OpenClaw Windows Native Companion
 
-[공개 사이트 / Public site](https://goodlookingprokim.github.io/openclaw-windows-native/) · [설치 가이드](manual.html) · [Release](https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-language-tabs)
+[공개 사이트 / Public site](https://goodlookingprokim.github.io/openclaw-windows-native/) · [설치 가이드](manual.html) · [Release](https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-open-design-refresh)
 
-## 한국어
+OpenClaw를 WSL 없이 Windows 네이티브 환경에서 설치하고, Telegram 봇 연결 전 dry-run으로 안전하게 검증하도록 돕는 설치 패키지와 GitHub Pages 안내 사이트입니다.
 
-OpenClaw Windows Native Companion은 WSL 없이 Windows에서 OpenClaw를 설치하고 Telegram으로 첫 대화까지 확인하도록 돕는 배포 키트입니다.
+## 이번 디자인 개선
 
-사용자는 큰 절차를 작은 행동으로 진행합니다.
+- `nexu-io/open-design`의 로컬 우선·디자인 시스템 접근을 참고해 GitHub Pages를 더 조용하고 명확한 설치 중심 화면으로 개편했습니다.
+- 외부 코드나 자산은 복사하지 않고, 이 저장소의 정적 HTML/CSS로 독립 구현했습니다.
+- 한국어/English CSS-only 언어 탭을 유지합니다.
+- CSP는 `script-src 'none'`이며 JavaScript를 사용하지 않습니다.
+- Telegram 민감 값은 GitHub, Pages, 릴리스 artifact에 포함하지 않습니다.
 
-1. `OpenClawWindowsNativeSetup.exe`를 다운로드합니다.
-2. SHA-256 지문을 확인합니다.
-3. Windows PowerShell/CMD에서 설치합니다.
-4. 실제 Telegram 토큰 전에 dry-run을 실행합니다.
-5. BotFather 토큰은 사용자 PC의 로컬 `tokenFile`에만 저장합니다.
-6. pairing을 승인하고 Gateway health와 channel probe를 확인합니다.
+## 빠른 시작
+
+1. [Download page](release.html#download)에서 `OpenClawWindowsNativeSetup.exe`를 받습니다.
+2. SHA-256을 확인합니다.
 
 ```powershell
 Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
-Get-Content .\checksums.sha256
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
 ```
 
-SHA-256:
+Expected:
 
 ```text
 5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883
 ```
 
-포함 내용: PowerShell engine, 단일 EXE 설치 파일, verify/uninstall script, Tauri v2 Companion shell, JSON/redacted status, Telegram dry-run validation, 한/영 CSS 탭 GitHub Pages.
+3. Windows PowerShell 또는 CMD에서 설치 파일을 실행합니다.
+4. 실제 BotFather 값을 입력하기 전에 dry-run 검증을 먼저 실행합니다.
+5. 사용자가 직접 승인한 Telegram 봇 값을 로컬 tokenFile에만 저장하고 pairing을 확인합니다.
 
-## English
+## 검증 기준
 
-OpenClaw Windows Native Companion helps users install OpenClaw on Windows without WSL and reach the first Telegram conversation safely.
+- Native Windows package: `OpenClawWindowsNativeSetup.exe`
+- Default OpenClaw source: `https://github.com/openclaw/openclaw.git`
+- Default ref: `main`
+- Node.js floor: `node >=22.14.0`
+- Default Gateway port: `18789`
+- Security posture: no published secrets, no raw token command argument, static Pages with no script execution
 
-The flow is intentionally small: download, compare the fingerprint, install, run Telegram dry-run, store real credentials only on your own PC, approve pairing, and verify the channel.
+## 문서
 
-```powershell
-Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
-Get-Content .\checksums.sha256
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
-```
+- [Setup guide](manual.html)
+- [Security guide](security.html)
+- [Technical notes](technical.html)
+- [Release download](release.html)
 
-Current installer SHA-256:
+## Not tested by automation
 
-```text
-5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883
-```
-
-Included: structured PowerShell engine, single-file Windows setup package, setup/verify/uninstall scripts, build-verified Tauri v2 Companion shell, JSON/redacted status, Telegram dry-run validation, and Korean/English CSS-tab GitHub Pages.
-
-## Security boundary
-
-- No real credentials are committed, embedded, published, or passed as command-line values.
-- Telegram bot tokens are registered through user-local token files.
-- Logs, JSON status output, and validation artifacts are redacted.
-- Dry-run does not prove live Telegram send/receive; live testing requires user-controlled BotFather token and pairing approval.
-
-## License
-
-Installer scripts, documentation, Companion shell, and the static site are released under the MIT License. OpenClaw itself is a separate project governed by its own maintainers and license.
+Live Telegram send/receive requires the user's own BotFather value and pairing approval, so it remains a user-controlled final check.
