@@ -1,0 +1,34 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_REF_NAME:-manual-release}"
+          gh release create "$tag" \
+            downloads/OpenClawWindowsNativeSetup.exe \
+            downloads/checksums.sha256 \
+            downloads/Install-OpenClawWindowsNative.ps1 \
+            downloads/Verify-OpenClawWindowsNative.ps1 \
+            downloads/Uninstall-OpenClawWindowsNative.ps1 \
+            docs/OpenClaw_Windows_Native_User_Manual.md \
+            docs/OpenClaw_Windows_Native_Technical_Spec.md \
+            --title "OpenClaw Windows Native Kit $tag" \
+            --notes-file CHANGELOG.md \
+            --verify-tag

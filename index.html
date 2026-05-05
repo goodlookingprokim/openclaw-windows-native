@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenClaw Windows Native Kit</title>
+    <meta
+      name="description"
+      content="WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하는 공개 학습용 키트입니다."
+    />
+    <meta property="og:title" content="OpenClaw Windows Native Kit" />
+    <meta
+      property="og:description"
+      content="Windows 네이티브 환경에서 OpenClaw를 설치하고 Telegram으로 독립형 에이전트를 실험하세요."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar" aria-label="Primary navigation">
+      <a class="brand" href="#top">OpenClaw Windows Native</a>
+      <nav>
+        <a href="#download">다운로드</a>
+        <a href="#install">설치</a>
+        <a href="#docs">문서</a>
+        <a href="https://github.com/goodlookingprokim/openclaw-windows-native">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Academic open-source experiment kit</p>
+          <h1 id="hero-title">OpenClaw Windows Native Kit</h1>
+          <p class="lead">
+            WSL 없이 Windows에서 OpenClaw Gateway를 설치하고 Telegram으로 독립형 에이전트를
+            실험할 수 있도록 만든 강의/연구용 배포 키트입니다.
+          </p>
+          <div class="hero-actions" id="download">
+            <a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>
+              설치 파일 다운로드
+            </a>
+            <a class="button secondary" href="docs/OpenClaw_Windows_Native_User_Manual.md">
+              설치 매뉴얼 보기
+            </a>
+          </div>
+          <p class="hash">
+            SHA-256:
+            <code>f00a55ddaa0f870d98fef4e98c82bb2cc454564b632df8d10a23ff4a599a3d0b</code>
+          </p>
+        </div>
+      </section>
+
+      <section class="band intro" aria-labelledby="intro-title">
+        <div class="section-inner">
+          <h2 id="intro-title">무엇을 해결하나요?</h2>
+          <p>
+            OpenClaw를 처음 접하는 Windows 사용자도 Git, Node.js, pnpm, OpenClaw 빌드,
+            Gateway 실행, Telegram bot token 등록, pairing 승인을 한 흐름으로 진행할 수 있게
+            합니다. 설치 파일에는 토큰이나 API key가 들어 있지 않고, 사용자가 직접 선택해 입력합니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="band install" id="install" aria-labelledby="install-title">
+        <div class="section-inner">
+          <h2 id="install-title">설치 흐름</h2>
+          <div class="steps">
+            <article>
+              <span class="step-number">1</span>
+              <h3>설치 파일 실행</h3>
+              <p>Windows에서 EXE를 실행하면 PowerShell 기반 설치기가 시작됩니다.</p>
+            </article>
+            <article>
+              <span class="step-number">2</span>
+              <h3>필수 도구 확인</h3>
+              <p>Git, Node.js LTS, pnpm을 확인하고 가능한 경우 winget으로 설치합니다.</p>
+            </article>
+            <article>
+              <span class="step-number">3</span>
+              <h3>OpenClaw 온보딩</h3>
+              <p>모델/provider 인증과 Gateway 설정은 공식 OpenClaw 온보딩에서 직접 선택합니다.</p>
+            </article>
+            <article>
+              <span class="step-number">4</span>
+              <h3>Telegram 연결</h3>
+              <p>BotFather 토큰을 로컬 token file로 저장하고 pairing code를 승인합니다.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band downloads" aria-labelledby="downloads-title">
+        <div class="section-inner two-column">
+          <div>
+            <h2 id="downloads-title">다운로드</h2>
+            <p>
+              가장 쉬운 방법은 설치 파일 하나를 내려받아 실행하는 것입니다. 학교나 회사 PC에서 EXE
+              실행이 제한되면 PowerShell 스크립트를 직접 실행할 수 있습니다.
+            </p>
+          </div>
+          <div class="download-list">
+            <a href="downloads/OpenClawWindowsNativeSetup.exe" download>
+              <strong>OpenClawWindowsNativeSetup.exe</strong>
+              <span>권장 설치 파일</span>
+            </a>
+            <a href="downloads/Install-OpenClawWindowsNative.ps1" download>
+              <strong>Install-OpenClawWindowsNative.ps1</strong>
+              <span>PowerShell 설치기</span>
+            </a>
+            <a href="downloads/checksums.sha256">
+              <strong>checksums.sha256</strong>
+              <span>무결성 확인</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band docs" id="docs" aria-labelledby="docs-title">
+        <div class="section-inner">
+          <h2 id="docs-title">문서와 운영</h2>
+          <div class="doc-links">
+            <a href="docs/OpenClaw_Windows_Native_User_Manual.md">사용자 설치 매뉴얼</a>
+            <a href="docs/OpenClaw_Windows_Native_Technical_Spec.md">기술 스펙</a>
+            <a href="https://docs.openclaw.ai/cli">OpenClaw CLI 문서</a>
+            <a href="https://docs.openclaw.ai/channels/telegram">OpenClaw Telegram 문서</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band thanks" aria-labelledby="thanks-title">
+        <div class="section-inner">
+          <h2 id="thanks-title">고맙습니다</h2>
+          <p>
+            이 키트는 오픈 소스를 사랑하고, 독립형 에이전트로 삶을 조금 더 여유롭고 생산적으로
+            만들고 싶은 사람들을 위한 순수 학습/실험용 프로젝트입니다. OpenClaw를 포함해 오픈 소스
+            생태계를 만들고 지켜 온 모든 분들께 깊이 감사드립니다.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>OpenClaw Windows Native Kit</span>
+      <span>MIT licensed installer assets. OpenClaw belongs to its own maintainers and license.</span>
+    </footer>
+  </body>
+</html>
