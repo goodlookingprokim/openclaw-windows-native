@@ -1,5 +1,12 @@
 # Changelog
 
+## v2026.05.05-bilingual - bilingual beginner guide
+
+- Added Korean and English modes across README and GitHub Pages.
+- Rewrote setup guidance as small beginner-friendly actions without exposing sensitive values.
+- Kept the no-script static Pages security boundary while adding language shortcuts.
+- Updated release page copy for Telegram dry-run before real credentials.
+
 ## 2026-05-05 — Companion overhaul foundation
 
 - Reframed the project as OpenClaw Windows Native Companion.

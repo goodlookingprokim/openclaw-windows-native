@@ -1,79 +1,75 @@
 # OpenClaw Windows Native Companion
 
-Windows에서 WSL 없이 OpenClaw를 설치하고 Telegram으로 실제 대화까지 이어지도록 만든 네이티브 온보딩 프로젝트입니다.
+[한국어](#한국어) | [English](#english)
 
-Public site: https://goodlookingprokim.github.io/openclaw-windows-native/
+Public site / 공개 사이트: https://goodlookingprokim.github.io/openclaw-windows-native/
 
-## What changed
+---
 
-OpenClaw Windows Native is moving from a script/manual kit into a guided Companion journey:
+## 한국어
 
-1. **Download** the Windows setup package.
-2. **Run guided setup** for Git, Node.js, pnpm, OpenClaw source, build, and gateway checks.
-3. **Connect Telegram** with user-controlled BotFather token entry and pairing approval.
-4. **Verify conversation** instead of stopping at "installed".
-5. **Repair/update** with structured diagnostics and redacted logs.
+목표: 참석자가 설치 파일을 실행하고, 본인 Telegram 봇 토큰과 모델 인증을 직접 입력해 Windows 네이티브 환경에서 OpenClaw를 사용한다.
 
-The repository now includes:
+어렵게 생각하면 설치는 큰 일처럼 보입니다. 이 프로젝트는 그 큰 일을 작은 행동으로 나눕니다. 파일을 받고, 파일 지문을 확인하고, 설치하고, 실제 토큰 전에 dry-run을 해보고, 마지막에 Telegram 대화를 확인합니다.
 
-- A structured PowerShell engine: `downloads/engine/OpenClawWindowsNative.Engine.psm1`
-- Backward-compatible setup and verify scripts under `downloads/`
-- A rebuilt setup package: `downloads/OpenClawWindowsNativeSetup.exe`
-- A build-verified Tauri v2 Companion shell under `companion/`
-- A redesigned static GitHub Pages experience
-- Telegram validation artifact checks documented in `docs/VALIDATION_ARTIFACTS.md`
-
-## Quick start
-
-1. Open the GitHub Pages site.
-2. Download `OpenClawWindowsNativeSetup.exe`.
-3. Run the installer on native Windows PowerShell/CMD, not WSL.
-4. Follow the guided setup and Telegram steps.
-5. Confirm OpenClaw can exchange messages through Telegram.
-
-Fallback script path:
+1. `OpenClawWindowsNativeSetup.exe`를 다운로드합니다.
+2. SHA-256 값이 사이트와 같은지 확인합니다.
+3. Windows PowerShell/CMD에서 설치 파일을 실행합니다. WSL은 사용하지 않습니다.
+4. Telegram 실제 토큰을 넣기 전에 dry-run으로 설정 흐름을 연습합니다.
+5. BotFather 토큰은 사용자 PC의 로컬 파일에만 저장합니다.
+6. pairing code를 승인하고 Telegram 대화를 확인합니다.
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Install-OpenClawWindowsNative.ps1
+Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
+Get-Content .\checksums.sha256
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
 ```
 
-Machine-readable verification:
+SHA-256:
+
+```text
+a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce
+```
+
+설치기는 민감정보를 포함하지 않습니다. Telegram 봇 토큰, Gateway token, 모델 API key/OAuth 정보는 실행 중 사용자가 직접 입력하거나 OpenClaw 공식 온보딩에서 직접 선택합니다.
+
+---
+
+## English
+
+OpenClaw Windows Native Companion helps users install OpenClaw on Windows without WSL and reach the first Telegram conversation safely.
+
+The guide explains setup as small actions: download the file, compare its fingerprint, run the installer, practice Telegram setup with dry-run, enter real credentials only on your own PC, approve pairing, and verify the channel.
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenClawWindowsNative.ps1 -JsonStatus
+Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
+Get-Content .\checksums.sha256
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
 ```
 
-## Security boundary
+Current installer SHA-256:
 
-- Telegram/provider credentials are never committed, embedded, published, or passed as command-line token values.
-- Telegram bot tokens are entered by the user and registered by user-local token file path.
-- Logs and JSON status output are redacted by the shared engine.
-- Release checks scan scripts, HTML, manifests, installer strings, workflow pinning, checksums, and git history.
-
-Run local validation:
-
-```powershell
-.\scripts\Test-ValidationArtifactFixtures.ps1
-.\scripts\Test-SecurityAudit.ps1
+```text
+a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce
 ```
 
-## Companion development
+Dry-run does not contact Telegram. It creates a redacted validation artifact and keeps live send/receive separate from simulated validation.
 
-```powershell
-cd companion
-npm install
-npm run fmt:rust
-npm run check:rust
-npm run build:frontend
-npm run build
-```
+### Included
 
-Full Tauri packaging requires Rust/Cargo and the Tauri build prerequisites on Windows.
+- Structured PowerShell engine
+- Setup, verify, and uninstall scripts
+- Single-file Windows setup package
+- Build-verified Tauri v2 Companion shell
+- Bilingual GitHub Pages guide
+- Telegram dry-run and validation artifact checks
 
-## Repository name
+### Security boundary
 
-The repository name stays `openclaw-windows-native` to preserve the public URL and release history.
+- No real credentials are committed, embedded, published, or passed as command-line values.
+- Telegram bot tokens are registered through user-local token files.
+- Logs and JSON status output are redacted.
 
-## License
+### License
 
 Installer scripts, documentation, Companion shell, and the static site are released under the MIT License. OpenClaw itself is a separate project governed by its own maintainers and license.
