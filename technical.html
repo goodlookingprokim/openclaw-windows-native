@@ -7,14 +7,14 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
     <title>기술 / Technical Spec | OpenClaw Companion</title>
-    <meta name="description" content="Bilingual technical explanation of the OpenClaw Windows Native installer, Gateway, token file, and dry-run validation." />
+    <meta name="description" content="Current bilingual technical explanation of installer engine, Companion shell, tokenFile, JSON status, and dry-run validation." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
     <header class="topbar" aria-label="Primary navigation">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav>
+      <nav aria-label="Site navigation">
         <a href="index.html">홈 Home</a>
         <a href="manual.html">설치 Setup</a>
         <a href="security.html">보안 Security</a>
@@ -24,27 +24,33 @@
       </nav>
     </header>
     <main id="main">
-      <section class="page-hero technical-hero" aria-labelledby="page-title">
+      <section class="page-hero technical-hero" aria-labelledby="page-title"><div>
         <p class="eyebrow">Technical spec</p>
-        <h1 id="page-title">복잡한 설치를 작은 Windows 네이티브 단계로 나눕니다.</h1>
-        <p class="lead">각 단계가 무엇을 하는지, 왜 필요한지, 성공은 어떻게 확인하는지 쉽게 설명합니다.</p>
-        <div class="language-switch" aria-label="Language shortcuts"><a href="#ko">한국어</a><a href="#en">English</a></div>
-      </section>
+        <h1 id="page-title">최신 코드 기준 기술 흐름을 설명합니다.</h1>
+        <p class="lead">설치기, Companion shell, Gateway, tokenFile, dry-run 검증을 현재 코드와 맞춥니다.</p>
+      </div></section>
 
-      <section class="section stack-section" id="ko" lang="ko" aria-labelledby="stack-title"><div class="section-heading"><p class="section-kicker">한국어 mode</p><h2 id="stack-title">필요한 도구를 Windows에서 순서대로 실행합니다.</h2></div><div class="table-wrap"><table><thead><tr><th>부분</th><th>역할</th></tr></thead><tbody><tr><td>PowerShell/CMD</td><td>설치 흐름을 제어합니다.</td></tr><tr><td>IExpress EXE</td><td>여러 파일을 하나의 설치 파일처럼 묶습니다.</td></tr><tr><td>Node.js + pnpm</td><td>OpenClaw를 설치하고 빌드합니다.</td></tr><tr><td>Gateway</td><td>내 PC에서 OpenClaw와 UI/Telegram을 이어줍니다.</td></tr><tr><td>tokenFile</td><td>토큰 값 대신 로컬 파일 경로를 사용합니다.</td></tr></tbody></table></div></section>
-      <section class="section split-section" id="pipeline" lang="ko" aria-labelledby="pipeline-title"><div><p class="section-kicker">Pipeline</p><h2 id="pipeline-title">큰 작업을 작은 명령으로 나눕니다.</h2></div><div class="copy-stack"><pre><code>OpenClawWindowsNativeSetup.exe
+      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
+        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
+        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
+        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
+          <label for="lang-ko" role="tab">한국어</label>
+          <label for="lang-en" role="tab">English</label>
+        </div>
+        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">최신 코드 기준 기술 흐름</h2><p>설치기는 PowerShell 5.1+, CMD wrapper, IExpress 패키지, 구조화된 엔진 모듈을 사용합니다. Companion은 Tauri v2 shell로 빌드 검증되었고, 설치 경로는 WSL/Docker/Podman을 요구하지 않습니다.</p><pre><code>OpenClawWindowsNativeSetup.exe
   -> OpenClaw_Windows_Native_Installer.cmd
     -> Install-OpenClawWindowsNative.ps1
-      1. Git / Node.js / pnpm check
-      2. OpenClaw source checkout
-      3. pnpm install and build
-      4. Gateway setup
-      5. Telegram dry-run or tokenFile
-      6. verifier</code></pre></div></section>
-      <section class="section split-section" id="verification" lang="ko" aria-labelledby="verify-title"><div><p class="section-kicker">Verify</p><h2 id="verify-title">무엇이 되는지 눈으로 확인합니다.</h2></div><div class="copy-stack"><pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1</code></pre></div></section>
-      <section class="section intro-split" id="en" lang="en" aria-labelledby="technical-en-title"><div><p class="section-kicker">English mode</p><h2 id="technical-en-title">Simple native Windows pipeline</h2></div><div class="copy-stack"><p>The kit uses PowerShell/CMD, Node.js, pnpm, OpenClaw Gateway, token-file Telegram setup, and a verifier. Dry-run validation creates a redacted artifact without contacting Telegram.</p><pre><code>OpenClawWindowsNativeSetup.exe -> installer cmd -> PowerShell installer -> OpenClaw build -> Gateway -> Telegram dry-run or tokenFile -> verifier</code></pre></div></section>
-
+      -> engine/OpenClawWindowsNative.Engine.psm1
+      -> Git/Node.js/pnpm check
+      -> OpenClaw clone/build/ui:build
+      -> onboard local gateway loopback 18789 token auth
+      -> Telegram tokenFile registration
+      -> Gateway install/start
+      -> desktop helpers
+      -> verifier and JSON/redacted status</code></pre><p id="validation">검증기는 native Windows, Node.js 버전, OpenClaw build 산출물, Gateway config, Telegram credential source, Gateway health, channel probe, port 18789 listener를 확인합니다. <code>-TelegramDryRunOnly</code>는 <code>%USERPROFILE%\.openclaw\validation\telegram-validation.dry-run.json</code>을 생성합니다.</p></div></section>
+        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">Current technical flow</h2><p>The kit uses PowerShell 5.1+, a CMD wrapper, IExpress packaging, and a structured engine module. The Companion shell is build-verified with Tauri v2, and the install path does not require WSL, Docker, or Podman.</p><pre><code>setup EXE -> installer CMD -> PowerShell installer -> engine module -> Git/Node/pnpm checks -> OpenClaw build -> local Gateway -> tokenFile Telegram -> desktop helpers -> verifier</code></pre><p>Verification checks native Windows, Node.js version, OpenClaw build outputs, Gateway config, Telegram credential source, Gateway health, channel probe, and port 18789. <code>-TelegramDryRunOnly</code> writes a redacted dry-run artifact.</p></div></section>
+      </div></section>
+      <section class="section stack-section" aria-labelledby="stack-title"><div class="section-heading"><p class="section-kicker">Stack</p><h2 id="stack-title">반영된 구성 요소</h2></div><div class="table-wrap"><table><thead><tr><th>Part</th><th>Current behavior</th></tr></thead><tbody><tr><td>Installer</td><td>PowerShell engine, CMD entry, IExpress single EXE fallback.</td></tr><tr><td>Companion</td><td>Tauri v2 Windows executable plus MSI/NSIS build evidence.</td></tr><tr><td>Secrets</td><td>No CLI token arguments; Telegram uses user-local tokenFile.</td></tr><tr><td>Status</td><td>Redacted host output and optional JSON status records.</td></tr><tr><td>Validation</td><td>Fixture-backed dry-run plus live checks only after user credentials.</td></tr></tbody></table></div></section>
     </main>
     <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>

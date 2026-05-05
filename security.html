@@ -14,7 +14,7 @@
     <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
     <header class="topbar" aria-label="Primary navigation">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav>
+      <nav aria-label="Site navigation">
         <a href="index.html">홈 Home</a>
         <a href="manual.html">설치 Setup</a>
         <a href="security.html">보안 Security</a>
@@ -24,18 +24,22 @@
       </nav>
     </header>
     <main id="main">
-      <section class="page-hero security-hero" aria-labelledby="page-title">
-        <p class="eyebrow">Security posture</p>
+      <section class="page-hero security-hero" aria-labelledby="page-title"><div>
+        <p class="eyebrow">Security boundary</p>
         <h1 id="page-title">비밀값은 로컬에, 설치 파일은 검증 가능하게 둡니다.</h1>
-        <p class="lead">실행 전에 해시를 확인하고, 실제 Telegram 연결 전에 dry-run으로 흐름을 확인합니다.</p>
-        <div class="language-switch" aria-label="Language shortcuts"><a href="#ko">한국어</a><a href="#en">English</a></div>
-      </section>
+        <p class="lead">실행 전 checksum을 확인하고, 실제 Telegram 연결 전에는 dry-run으로 흐름을 점검합니다.</p>
+      </div></section>
 
-      <section class="section trust-section" id="ko" lang="ko" aria-labelledby="security-ko-title"><div class="section-heading"><p class="section-kicker">한국어 mode</p><h2 id="security-ko-title">비밀값은 로컬에 두고, 공개 파일은 검증 가능하게 유지합니다.</h2></div><div class="card-grid three"><article class="info-card"><span class="card-index">WEB</span><h3>정적 사이트</h3><p>HTML/CSS만 사용하고 실행 스크립트는 차단합니다.</p></article><article class="info-card"><span class="card-index">KEY</span><h3>로컬 토큰</h3><p><code>%USERPROFILE%\.openclaw\credentials</code>에만 저장합니다.</p></article><article class="info-card"><span class="card-index">DRY</span><h3>Dry-run</h3><p>실제 값 없이 redacted artifact를 만듭니다.</p></article></div></section>
-      <section class="section split-section" id="checksum" lang="ko" aria-labelledby="checksum-title"><div><p class="section-kicker">Checksum</p><h2 id="checksum-title">실행 전에 파일 지문을 비교합니다.</h2></div><div class="copy-stack"><p class="integrity-line"><code>a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</code></p><pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
-Get-Content .\checksums.sha256</code></pre><p><a class="button secondary" href="downloads/checksums.sha256">checksums.sha256</a></p></div></section>
-      <section class="section split-section" id="local" lang="ko" aria-labelledby="local-title"><div><p class="section-kicker">Local boundary</p><h2 id="local-title">Gateway는 기본적으로 내 PC 안에서만 열립니다.</h2></div><div class="copy-stack"></div></section>
-      <section class="section intro-split" id="en" lang="en" aria-labelledby="security-en-title"><div><p class="section-kicker">English mode</p><h2 id="security-en-title">The rule is simple: secrets stay local.</h2></div><div class="copy-stack"><p>The public site ships static HTML and CSS only. The installer package does not include Telegram tokens, Gateway tokens, API keys, pairing codes, local state, or logs.</p><p>Before live Telegram setup, dry-run creates a redacted validation artifact. Live send/receive still requires your own BotFather token and pairing approval.</p></div></section>
+      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
+        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
+        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
+        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
+          <label for="lang-ko" role="tab">한국어</label>
+          <label for="lang-en" role="tab">English</label>
+        </div>
+        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">비밀값은 로컬에, 공개 파일은 검증 가능하게</h2><p>Pages는 HTML/CSS만 사용하고 script 실행을 차단합니다. 설치 패키지와 release asset에는 Telegram token, Gateway token, API key, pairing code, local state, logs를 넣지 않습니다.</p><ol class="plain-steps"><li id="checksum">설치 전 SHA-256을 비교합니다: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></li><li id="local">Gateway는 기본적으로 loopback <code>127.0.0.1:18789</code>에서 동작합니다.</li><li>Telegram 토큰은 <code>%USERPROFILE%\.openclaw\credentials</code> 아래 사용자 로컬 파일에만 둡니다.</li><li>Dry-run artifact는 redacted 상태로 생성됩니다.</li></ol></div></section>
+        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">Secrets stay local; public files stay verifiable</h2><p>Pages use HTML and CSS only, with scripts blocked. Release assets do not include Telegram tokens, Gateway tokens, API keys, pairing codes, local state, or logs.</p><ol class="plain-steps"><li>Compare SHA-256 before running the installer.</li><li>The Gateway defaults to loopback <code>127.0.0.1:18789</code>.</li><li>Telegram uses a user-local token file.</li><li>Dry-run artifacts are redacted and simulated.</li></ol></div></section>
+      </div></section>
 
     </main>
     <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>

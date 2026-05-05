@@ -7,14 +7,14 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
     <title>다운로드 / Download and Release | OpenClaw Companion</title>
-    <meta name="description" content="Bilingual download and release page for OpenClaw Windows Native setup assets and checksums." />
+    <meta name="description" content="Bilingual release page for OpenClaw Windows Native setup assets, checksums, and current documentation." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
     <header class="topbar" aria-label="Primary navigation">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav>
+      <nav aria-label="Site navigation">
         <a href="index.html">홈 Home</a>
         <a href="manual.html">설치 Setup</a>
         <a href="security.html">보안 Security</a>
@@ -24,18 +24,23 @@
       </nav>
     </header>
     <main id="main">
-      <section class="page-hero release-hero" aria-labelledby="page-title">
+      <section class="page-hero release-hero" aria-labelledby="page-title"><div>
         <p class="eyebrow">Release center</p>
         <h1 id="page-title">설치 파일과 검증 자료를 함께 제공합니다.</h1>
         <p class="lead">사용자는 파일을 받고 해시를 확인한 뒤 dry-run과 실제 Telegram 연결을 순서대로 진행합니다.</p>
-        <div class="language-switch" aria-label="Language shortcuts"><a href="#ko">한국어</a><a href="#en">English</a></div>
-      </section>
+      </div></section>
 
-      <section class="section download-panel" id="download" aria-labelledby="download-title"><div class="download-callout"><p class="section-kicker">Primary asset</p><h2 id="download-title">OpenClawWindowsNativeSetup.exe</h2><p>Windows 네이티브 설치 파일입니다. 한국어와 English 안내를 함께 제공합니다.</p><a class="download-primary" href="downloads/OpenClawWindowsNativeSetup.exe" download><span>Download</span><strong>OpenClawWindowsNativeSetup.exe</strong><small>SHA-256 a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</small></a></div><div class="card-grid three compact"><a class="action-card" href="downloads/Install-OpenClawWindowsNative.ps1" download><span class="card-index">PS1</span><h3>Install script</h3><p>Fallback path when the EXE is restricted.</p></a><a class="action-card" href="downloads/checksums.sha256"><span class="card-index">SHA</span><h3>checksums.sha256</h3><p>Verify installer integrity.</p></a><a class="action-card" href="downloads/package-manifest.json"><span class="card-index">JSON</span><h3>package-manifest.json</h3><p>Review payload and defaults.</p></a></div></section>
-      <section class="section split-section" id="ko" lang="ko" aria-labelledby="current-title"><div><p class="section-kicker">현재 릴리스</p><h2 id="current-title">v2026.05.05-bilingual</h2></div><div class="copy-stack"><p>이 릴리스는 한글/영문 안내, 초보자용 단계 설명, Telegram dry-run 검증 경로, 갱신된 설치 파일과 checksum을 포함합니다.</p><p><a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-bilingual" rel="noopener noreferrer">GitHub release</a></p></div></section>
-      <section class="section journey-section" aria-labelledby="after-title"><div class="section-heading"><p class="section-kicker">After download</p><h2 id="after-title">Checksum ? Setup ? Dry-run ? Live Telegram</h2></div><div class="journey-grid compact-route"><a class="journey-card" href="security.html#checksum"><span class="step-number">A</span><h3>Checksum</h3><p>Compare SHA-256 before running.</p></a><a class="journey-card" href="manual.html#guided-setup"><span class="step-number">B</span><h3>Setup</h3><p>Run native Windows setup.</p></a><a class="journey-card" href="manual.html#dry-run"><span class="step-number">C</span><h3>Dry-run</h3><p>Validate without real values.</p></a><a class="journey-card" href="manual.html#telegram-connect"><span class="step-number">D</span><h3>Telegram</h3><p>Store token in a local file.</p></a><a class="journey-card" href="manual.html#verify-conversation"><span class="step-number">E</span><h3>Verify</h3><p>Approve pairing and probe.</p></a></div></section>
-      <section class="section intro-split" id="en" lang="en" aria-labelledby="release-en-title"><div><p class="section-kicker">English mode</p><h2 id="release-en-title">Release summary</h2></div><div class="copy-stack"><p>This release adds bilingual guidance, beginner-friendly setup steps, Telegram dry-run validation, refreshed setup assets, and updated checksums.</p><p><a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-bilingual" rel="noopener noreferrer">Open GitHub release</a></p></div></section>
-
+      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
+        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
+        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
+        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
+          <label for="lang-ko" role="tab">한국어</label>
+          <label for="lang-en" role="tab">English</label>
+        </div>
+        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">v2026.05.05-language-tabs</h2><p>이번 릴리스는 실제로 작동하는 CSS 한/영 탭, 최신 기술/사용자 문서, Telegram dry-run 안내, release asset 12개 검증을 반영합니다.</p><p id="download"><a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>OpenClawWindowsNativeSetup.exe 다운로드</a> <a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-language-tabs" rel="noopener noreferrer">GitHub release</a></p><p>Checksum: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p></div></section>
+        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">v2026.05.05-language-tabs</h2><p>This release reflects working CSS language tabs, current technical/user documentation, Telegram dry-run guidance, and validation for the 12 release assets.</p><p><a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>Download setup EXE</a> <a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-language-tabs" rel="noopener noreferrer">Open GitHub release</a></p><p>Checksum: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p></div></section>
+      </div></section>
+      <section class="section journey-section" aria-labelledby="assets-title"><div class="section-heading"><p class="section-kicker">Assets</p><h2 id="assets-title">릴리스에 포함되는 검증 자료</h2></div><div class="card-grid three"><a class="action-card" href="downloads/checksums.sha256"><span class="card-index">SHA</span><h3>checksums.sha256</h3><p>Installer integrity fingerprint.</p></a><a class="action-card" href="downloads/package-manifest.json"><span class="card-index">JSON</span><h3>package-manifest.json</h3><p>Payload, defaults, Companion packaging metadata.</p></a><a class="action-card" href="downloads/Verify-OpenClawWindowsNative.ps1" download><span class="card-index">VERIFY</span><h3>Verifier</h3><p>Native checks plus Telegram dry-run mode.</p></a></div></section>
     </main>
     <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
