@@ -14,7 +14,7 @@ Use this checklist whenever installer files, docs, or the landing page change.
 ## Local verification
 
 ```powershell
-$repo = "C:\Users\kimju\Desktop\OpenClaw\openclaw-windows-native"
+$repo = Join-Path $env:USERPROFILE "Desktop\OpenClaw\openclaw-windows-native"
 $hash = (Get-FileHash "$repo\downloads\OpenClawWindowsNativeSetup.exe" -Algorithm SHA256).Hash.ToLowerInvariant()
 Select-String "$repo\downloads\checksums.sha256" -Pattern $hash
 
