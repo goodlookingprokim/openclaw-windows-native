@@ -99,15 +99,7 @@ $manifest = [pscustomobject]@{
 $manifest | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $KitDir "package-manifest.json") -Encoding UTF8
 
 $hashLines = Get-ChildItem -LiteralPath $KitDir -File |
-  Where-Object { $_.Name -in @(
-    "Build-OpenClawWindowsNativeSetup.ps1",
-    "Install-OpenClawWindowsNative.ps1",
-    "OpenClawWindowsNativeSetup.exe",
-    "OpenClaw_Windows_Native_Installer.cmd",
-    "package-manifest.json",
-    "Uninstall-OpenClawWindowsNative.ps1",
-    "Verify-OpenClawWindowsNative.ps1"
-  ) } |
+  Where-Object { $_.Name -eq "OpenClawWindowsNativeSetup.exe" } |
   Sort-Object Name |
   ForEach-Object {
     $hash = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
