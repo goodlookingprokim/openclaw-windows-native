@@ -1,117 +1,28 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
-    />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>다운로드 및 릴리스 | OpenClaw Windows Native Kit</title>
-    <meta name="description" content="OpenClaw Windows Native Kit 다운로드, 체크섬, 릴리스 운영 절차입니다." />
+    <title>Download and Release | OpenClaw Companion</title>
+    <meta name="description" content="Download the OpenClaw Windows Native Kit, review checksums, and follow the maintainer release flow." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동</a>
-    <header class="topbar" aria-label="Primary navigation">
-      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span>OpenClaw Windows Native</span></a>
-      <nav>
-        <a href="manual.html">온보딩</a>
-        <a href="security.html">보안</a>
-        <a href="release.html" aria-current="page">다운로드</a>
-        <a href="technical.html">기술 스펙</a>
-        <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
-      </nav>
-    </header>
-
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Primary navigation"><a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a><nav><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html" aria-current="page">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></nav></header>
     <main id="main">
-      <section class="page-hero release-hero" aria-labelledby="page-title">
-        <p class="eyebrow">Release center</p>
-        <h1 id="page-title">다운로드와 릴리스 운영을 한 페이지에서 확인합니다.</h1>
-        <p class="lead">참석자는 설치 파일을 받고, 유지보수자는 같은 저장소 흐름으로 변경 사항과 릴리스를 깔끔하게 게시합니다.</p>
+      <section class="page-hero release-hero" aria-labelledby="page-title"><p class="eyebrow">Release center</p><h1 id="page-title">Download the kit. Keep the audit trail next to it.</h1><p class="lead">The release page separates participant downloads from maintainer publishing steps while keeping hashes, manifests, and update flow visible.</p></section>
+      <section class="section download-panel" id="download" aria-labelledby="download-title">
+        <div class="download-callout"><p class="section-kicker">Primary asset</p><h2 id="download-title">OpenClawWindowsNativeSetup.exe</h2><p>Recommended for participants who want the native Windows guided installer.</p><a class="download-primary" href="downloads/OpenClawWindowsNativeSetup.exe" download><span>Download</span><strong>OpenClawWindowsNativeSetup.exe</strong><small>200 KB - Windows PowerShell, CMD wrapper, IExpress package</small></a></div>
+        <div class="card-grid three compact"><a class="action-card" href="downloads/Install-OpenClawWindowsNative.ps1" download><span class="card-index">PS1</span><h3>Install script</h3><p>Fallback path when the EXE is restricted by local policy.</p></a><a class="action-card" href="downloads/checksums.sha256"><span class="card-index">SHA</span><h3>checksums.sha256</h3><p>Published hash for installer integrity checks.</p></a><a class="action-card" href="downloads/package-manifest.json"><span class="card-index">JSON</span><h3>package-manifest.json</h3><p>Payload list, default repo, state directory, and default port.</p></a></div>
       </section>
-
-      <section class="section downloads-panel" aria-labelledby="download-title">
-        <div class="section-heading">
-          <p class="section-kicker">Downloads</p>
-          <h2 id="download-title">공개 배포 파일</h2>
-        </div>
-        <div class="card-grid three">
-          <a class="action-card" href="downloads/OpenClawWindowsNativeSetup.exe" download>
-            <span class="card-index">EXE</span>
-            <h3>OpenClawWindowsNativeSetup.exe</h3>
-            <p>참석자에게 권장하는 단일 Windows 설치 파일입니다.</p>
-          </a>
-          <a class="action-card" href="downloads/Install-OpenClawWindowsNative.ps1" download>
-            <span class="card-index">PS1</span>
-            <h3>Install script</h3>
-            <p>EXE 실행이 제한된 환경에서 PowerShell로 직접 실행할 수 있습니다.</p>
-          </a>
-          <a class="action-card" href="downloads/checksums.sha256">
-            <span class="card-index">SHA</span>
-            <h3>checksums.sha256</h3>
-            <p>다운로드 파일의 무결성을 확인하는 체크섬 목록입니다.</p>
-          </a>
-          <a class="action-card" href="downloads/package-manifest.json">
-            <span class="card-index">JSON</span>
-            <h3>package-manifest.json</h3>
-            <p>EXE에 포함된 payload와 기본 설치 경계를 확인합니다.</p>
-          </a>
-        </div>
-      </section>
-
-      <section class="section split-section" aria-labelledby="release-title">
-        <div>
-          <p class="section-kicker">Current release</p>
-          <h2 id="release-title">v2026.05.05-security</h2>
-        </div>
-        <div class="copy-stack">
-          <p>현재 공개 릴리스는 GitHub Release에도 같은 설치 파일과 문서를 포함합니다.</p>
-          <p>
-            <a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-security" rel="noopener noreferrer">
-              GitHub Release 열기
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section class="section color-block pink" aria-labelledby="maintain-title">
-        <div class="section-heading">
-          <p class="section-kicker">Maintainer flow</p>
-          <h2 id="maintain-title">앞으로의 코드 변경과 릴리스 흐름</h2>
-        </div>
-        <div class="card-grid four">
-          <article class="info-card">
-            <span class="card-index">01</span>
-            <h3>수정</h3>
-            <p>사이트, 설치기, 문서 변경을 로컬에서 수정합니다.</p>
-          </article>
-          <article class="info-card">
-            <span class="card-index">02</span>
-            <h3>검증</h3>
-            <p>PowerShell parser, checksum, secret scan, 링크 검사를 실행합니다.</p>
-          </article>
-          <article class="info-card">
-            <span class="card-index">03</span>
-            <h3>커밋 및 push</h3>
-            <p><code>main</code>에 push하면 Pages workflow가 새 사이트를 배포합니다.</p>
-          </article>
-          <article class="info-card">
-            <span class="card-index">04</span>
-            <h3>태그 릴리스</h3>
-            <p>새 버전 태그를 push하면 release workflow가 다운로드 asset을 게시합니다.</p>
-          </article>
-        </div>
-      </section>
+      <section class="section split-section" aria-labelledby="current-title"><div><p class="section-kicker">Current release</p><h2 id="current-title">v2026.05.05-security</h2></div><div class="copy-stack"><p>This public package includes the installer, PowerShell verifier, uninstall script, user manual, and technical spec. It does not include real Telegram tokens, Gateway tokens, API keys, pairing codes, or local OpenClaw state.</p><p><a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-security" rel="noopener noreferrer">Open GitHub release</a></p></div></section>
+      <section class="section journey-section" aria-labelledby="after-title"><div class="section-heading"><p class="section-kicker">After download</p><h2 id="after-title">The next safe step is guided setup.</h2></div><div class="journey-grid compact-route"><a class="journey-card" href="security.html#checksum"><span class="step-number">A</span><h3>Verify hash</h3><p>Compare SHA-256 before running the EXE.</p></a><a class="journey-card" href="manual.html#guided-setup"><span class="step-number">B</span><h3>Install</h3><p>Run the guided installer and accept safe local defaults.</p></a><a class="journey-card" href="manual.html#telegram-connect"><span class="step-number">C</span><h3>Connect Telegram</h3><p>Create the bot and store the token locally.</p></a><a class="journey-card" href="manual.html#verify-conversation"><span class="step-number">D</span><h3>Verify</h3><p>Approve pairing and probe the channel.</p></a><a class="journey-card" href="manual.html#repair-update"><span class="step-number">E</span><h3>Repair/update</h3><p>Use the desktop helpers for recovery.</p></a></div></section>
+      <section class="section maintainer-section" aria-labelledby="maintain-title"><div class="section-heading"><p class="section-kicker">Maintainer flow</p><h2 id="maintain-title">Publish with the same evidence participants need.</h2></div><div class="card-grid four"><article class="info-card"><span class="card-index">01</span><h3>Build</h3><p>Run the package builder or copy a refreshed installer into <code>downloads/</code>.</p></article><article class="info-card"><span class="card-index">02</span><h3>Hash</h3><p>Update <code>downloads/checksums.sha256</code> and the package manifest.</p></article><article class="info-card"><span class="card-index">03</span><h3>Scan</h3><p>Confirm no token, API key, pairing code, local state, or install log entered the release.</p></article><article class="info-card"><span class="card-index">04</span><h3>Ship</h3><p>Push Pages changes and tag the GitHub release asset set.</p></article></div></section>
     </main>
-
-    <footer class="site-footer">
-      <a href="index.html">Home</a>
-      <a href="manual.html">Manual</a>
-      <a href="security.html">Security</a>
-      <a href="technical.html">Technical</a>
-    </footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

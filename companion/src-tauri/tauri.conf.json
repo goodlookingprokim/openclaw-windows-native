@@ -1,0 +1,33 @@
+{
+    "$schema":  "https://schema.tauri.app/config/2",
+    "productName":  "OpenClaw Companion",
+    "version":  "0.1.0",
+    "identifier":  "ai.openclaw.windows-native.companion",
+    "build":  {
+                  "beforeDevCommand":  "npm run dev:frontend",
+                  "beforeBuildCommand":  "npm run build:frontend",
+                  "devUrl":  "http://127.0.0.1:1420",
+                  "frontendDist":  "../dist"
+              },
+    "app":  {
+                "windows":  [
+                                {
+                                    "title":  "OpenClaw Companion",
+                                    "width":  980,
+                                    "height":  720,
+                                    "resizable":  true,
+                                    "fullscreen":  false
+                                }
+                            ],
+                "security":  {
+                                 "csp":  "default-src \u0027self\u0027; script-src \u0027self\u0027; style-src \u0027self\u0027 \u0027unsafe-inline\u0027; img-src \u0027self\u0027 data:; connect-src ipc: http://ipc.localhost"
+                             }
+            },
+    "bundle":  {
+                   "active":  true,
+                   "targets":  "all",
+                   "category":  "DeveloperTool",
+                   "shortDescription":  "OpenClaw Windows Native companion",
+                   "longDescription":  "Desktop companion shell for OpenClaw Windows Native status checks and safe PowerShell engine handoff."
+               }
+}

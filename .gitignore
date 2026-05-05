@@ -5,3 +5,5 @@ Thumbs.db
 .artifacts/
 .openclaw/
 node_modules/
+companion/dist/
+companion/src-tauri/target/

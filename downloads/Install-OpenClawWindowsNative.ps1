@@ -8,13 +8,26 @@ param(
   [string]$RepoRef = "main",
   [string]$RepoDir = (Join-Path $env:USERPROFILE "openclaw-src"),
   [string]$StateDir = (Join-Path $env:USERPROFILE ".openclaw"),
-  [int]$Port = 18789
+  [int]$Port = 18789,
+  [switch]$JsonStatus
 )
 
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $false
 
 $KitDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$EngineCandidates = @(
+  (Join-Path $KitDir "engine\OpenClawWindowsNative.Engine.psm1"),
+  (Join-Path $KitDir "OpenClawWindowsNative.Engine.psm1")
+)
+$EngineModule = $EngineCandidates | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
+$EngineAvailable = $false
+if ($EngineModule) {
+  Import-Module $EngineModule -Force -DisableNameChecking
+  $EngineAvailable = $true
+  Assert-OpenClawSafeParameters -BoundParameters $PSBoundParameters
+}
+
 $DesktopDir = [Environment]::GetFolderPath("DesktopDirectory")
 $DesktopOpenClaw = Join-Path $DesktopDir "OpenClaw"
 $LogDir = Join-Path $DesktopOpenClaw "install-logs"
@@ -30,18 +43,34 @@ function Write-Title([string]$Text) {
 }
 
 function Write-Info([string]$Text) {
+  if ($EngineAvailable) {
+    Write-OpenClawStatus -Level info -Message $Text -Json:$JsonStatus
+    return
+  }
   Write-Host "[INFO] $Text" -ForegroundColor Gray
 }
 
 function Write-Ok([string]$Text) {
+  if ($EngineAvailable) {
+    Write-OpenClawStatus -Level ok -Message $Text -Json:$JsonStatus
+    return
+  }
   Write-Host "[OK] $Text" -ForegroundColor Green
 }
 
 function Write-WarnLine([string]$Text) {
+  if ($EngineAvailable) {
+    Write-OpenClawStatus -Level warn -Message $Text -Json:$JsonStatus
+    return
+  }
   Write-Host "[WARN] $Text" -ForegroundColor Yellow
 }
 
 function Write-Fail([string]$Text) {
+  if ($EngineAvailable) {
+    Write-OpenClawStatus -Level error -Message $Text -Json:$JsonStatus
+    return
+  }
   Write-Host "[ERROR] $Text" -ForegroundColor Red
 }
 
@@ -78,6 +107,9 @@ function Read-YesNo {
 }
 
 function Read-PlainSecret([string]$Prompt) {
+  if ($EngineAvailable) {
+    return Read-OpenClawPlainSecret -Prompt $Prompt
+  }
   $secure = Read-Host $Prompt -AsSecureString
   $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
   try {
@@ -96,7 +128,11 @@ function Invoke-LoggedCommand {
     [string]$WorkingDirectory = $RepoDir,
     [switch]$AllowFailure
   )
-  Write-Info "$FilePath $($Arguments -join ' ')"
+  if ($EngineAvailable) {
+    Write-Info (Format-OpenClawCommandForLog -FilePath $FilePath -Arguments $Arguments)
+  } else {
+    Write-Info "$FilePath $($Arguments -join ' ')"
+  }
   $oldLocation = Get-Location
   try {
     if ($WorkingDirectory -and (Test-Path -LiteralPath $WorkingDirectory -PathType Container)) {
@@ -120,6 +156,9 @@ function Refresh-ProcessPath {
 }
 
 function Test-CommandExists([string]$Name) {
+  if ($EngineAvailable) {
+    return Test-OpenClawCommandExists -Name $Name
+  }
   return [bool](Get-Command $Name -ErrorAction SilentlyContinue)
 }
 
@@ -293,9 +332,13 @@ function Run-Onboarding {
 
 function Protect-SecretFile([string]$Path) {
   try {
-    $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-    & icacls.exe $Path /inheritance:r | Out-Null
-    & icacls.exe $Path /grant:r "${identity}:F" "SYSTEM:F" | Out-Null
+    if ($EngineAvailable) {
+      Protect-OpenClawSecretFile -Path $Path
+    } else {
+      $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+      & icacls.exe $Path /inheritance:r | Out-Null
+      & icacls.exe $Path /grant:r "${identity}:F" "SYSTEM:F" | Out-Null
+    }
   } catch {
     Write-WarnLine "Could not tighten ACL on ${Path}: $($_.Exception.Message)"
   }
@@ -387,13 +430,17 @@ function Run-Verifier {
   Write-Title "Running verification"
   if (Test-Path -LiteralPath $VerifyScript -PathType Leaf) {
     Write-Info "powershell.exe -NoProfile -ExecutionPolicy Bypass -File $VerifyScript -RepoDir $RepoDir -StateDir $StateDir -Port $Port"
-    & powershell.exe @(
+    $verifyArgs = @(
       "-NoProfile", "-ExecutionPolicy", "Bypass",
       "-File", $VerifyScript,
       "-RepoDir", $RepoDir,
       "-StateDir", $StateDir,
       "-Port", ([string]$Port)
     )
+    if ($JsonStatus) {
+      $verifyArgs += "-JsonStatus"
+    }
+    & powershell.exe @verifyArgs
     if ($LASTEXITCODE -ne 0) {
       Write-WarnLine "Verification reported failures. Review the messages above."
     }

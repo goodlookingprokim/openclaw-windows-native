@@ -18,6 +18,7 @@ $payloadFiles = @(
   [pscustomobject]@{ Name = "OpenClaw_Windows_Native_Installer.cmd"; Source = (Join-Path $KitDir "OpenClaw_Windows_Native_Installer.cmd") },
   [pscustomobject]@{ Name = "Install-OpenClawWindowsNative.ps1"; Source = (Join-Path $KitDir "Install-OpenClawWindowsNative.ps1") },
   [pscustomobject]@{ Name = "Verify-OpenClawWindowsNative.ps1"; Source = (Join-Path $KitDir "Verify-OpenClawWindowsNative.ps1") },
+  [pscustomobject]@{ Name = "OpenClawWindowsNative.Engine.psm1"; Source = (Join-Path $KitDir "engine\OpenClawWindowsNative.Engine.psm1") },
   [pscustomobject]@{ Name = "Uninstall-OpenClawWindowsNative.ps1"; Source = (Join-Path $KitDir "Uninstall-OpenClawWindowsNative.ps1") },
   [pscustomobject]@{ Name = "OpenClaw_Windows_Native_User_Manual.md"; Source = (Join-Path $RepoRoot "docs\OpenClaw_Windows_Native_User_Manual.md") },
   [pscustomobject]@{ Name = "OpenClaw_Windows_Native_Technical_Spec.md"; Source = (Join-Path $RepoRoot "docs\OpenClaw_Windows_Native_Technical_Spec.md") }
@@ -89,7 +90,9 @@ $manifest = [pscustomobject]@{
   buildScript = "Build-OpenClawWindowsNativeSetup.ps1"
   nativeWindows = $true
   usesWsl = $false
-  installer = "PowerShell 5.1 + CMD wrapper + IExpress"
+  installer = "PowerShell 5.1 + structured engine + CMD wrapper + IExpress fallback"
+  companionScaffold = "..\companion"
+  secretBoundary = "No command-line token arguments; token-file registration only"
   defaultRepoUrl = "https://github.com/openclaw/openclaw.git"
   defaultRepoRef = "main"
   defaultRepoDir = "%USERPROFILE%\openclaw-src"

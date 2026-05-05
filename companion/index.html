@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src ipc: http://ipc.localhost"
+    />
+    <title>OpenClaw Companion</title>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">OpenClaw Windows Native</p>
+        <h1>Companion control surface</h1>
+        <p>
+          A small desktop shell for status checks and safe handoff into the PowerShell-based
+          OpenClaw engine. Secrets stay in user-owned files and are never passed as CLI values.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div>
+          <h2>Environment</h2>
+          <p>Check that the companion can reach PowerShell without exposing credentials.</p>
+        </div>
+        <button id="status-button" type="button">Check PowerShell</button>
+        <pre id="status-output" aria-live="polite">Not checked yet.</pre>
+      </section>
+
+      <section class="panel">
+        <div>
+          <h2>Safe launch plan</h2>
+          <p>
+            Enter the path to a token file. The companion validates the path shape only; it does not
+            read or echo token contents.
+          </p>
+        </div>
+        <label>
+          Token file path
+          <input
+            id="token-file"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="%USERPROFILE%\\.openclaw\\credentials\\telegram-bot-token.txt"
+          />
+        </label>
+        <button id="plan-button" type="button">Build redacted plan</button>
+        <pre id="plan-output" aria-live="polite">No launch plan yet.</pre>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

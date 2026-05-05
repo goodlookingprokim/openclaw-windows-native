@@ -1,60 +1,76 @@
-# OpenClaw Windows Native Kit
+﻿# OpenClaw Windows Native Companion
 
-WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하기 위한 공개 학습용 키트입니다.
+Windows에서 WSL 없이 OpenClaw를 설치하고 Telegram으로 실제 대화까지 이어지도록 만든 네이티브 온보딩 프로젝트입니다.
 
-## Repository name
+Public site: https://goodlookingprokim.github.io/openclaw-windows-native/
 
-추천 리포 이름은 `openclaw-windows-native`입니다.
+## What changed
 
-- 서비스 목적이 바로 드러납니다.
-- GitHub Pages URL이 명확합니다: `https://goodlookingprokim.github.io/openclaw-windows-native/`
-- Windows, native, OpenClaw 키워드가 모두 들어 있어 검색과 공유에 유리합니다.
+OpenClaw Windows Native is moving from a script/manual kit into a guided Companion journey:
+
+1. **Download** the Windows setup package.
+2. **Run guided setup** for Git, Node.js, pnpm, OpenClaw source, build, and gateway checks.
+3. **Connect Telegram** with user-controlled BotFather token entry and pairing approval.
+4. **Verify conversation** instead of stopping at "installed".
+5. **Repair/update** with structured diagnostics and redacted logs.
+
+The repository now includes:
+
+- A structured PowerShell engine: `downloads/engine/OpenClawWindowsNative.Engine.psm1`
+- Backward-compatible setup and verify scripts under `downloads/`
+- A rebuilt setup package: `downloads/OpenClawWindowsNativeSetup.exe`
+- A Tauri v2-style Companion scaffold under `companion/`
+- A redesigned static GitHub Pages experience
+- Telegram validation artifact checks documented in `docs/VALIDATION_ARTIFACTS.md`
 
 ## Quick start
 
-1. GitHub Pages 홈에서 `OpenClawWindowsNativeSetup.exe`를 다운로드합니다.
-2. [`온보딩 매뉴얼`](https://goodlookingprokim.github.io/openclaw-windows-native/manual.html)을 따라 설치기를 실행합니다.
-3. OpenClaw 온보딩에서 provider/model 인증을 직접 선택합니다.
-4. Telegram BotFather token을 입력합니다.
-5. Telegram pairing code를 승인합니다.
+1. Open the GitHub Pages site.
+2. Download `OpenClawWindowsNativeSetup.exe`.
+3. Run the installer on native Windows PowerShell/CMD, not WSL.
+4. Follow the guided setup and Telegram steps.
+5. Confirm OpenClaw can exchange messages through Telegram.
 
-## Downloads
-
-- Installer: [`downloads/OpenClawWindowsNativeSetup.exe`](downloads/OpenClawWindowsNativeSetup.exe)
-- SHA-256: [`downloads/checksums.sha256`](downloads/checksums.sha256)
-- Package manifest: [`downloads/package-manifest.json`](downloads/package-manifest.json)
-- Web manual: [`manual.html`](https://goodlookingprokim.github.io/openclaw-windows-native/manual.html)
-- Security guide: [`security.html`](https://goodlookingprokim.github.io/openclaw-windows-native/security.html)
-- Release center: [`release.html`](https://goodlookingprokim.github.io/openclaw-windows-native/release.html)
-- Technical spec: [`technical.html`](https://goodlookingprokim.github.io/openclaw-windows-native/technical.html)
-- Source manual: [`docs/OpenClaw_Windows_Native_User_Manual.md`](docs/OpenClaw_Windows_Native_User_Manual.md)
-- Source technical spec: [`docs/OpenClaw_Windows_Native_Technical_Spec.md`](docs/OpenClaw_Windows_Native_Technical_Spec.md)
-- Release checklist: [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md)
-
-## Security
-
-The installer and repository do not contain real Gateway tokens, Telegram bot tokens, API keys, or pairing codes. Users enter their own credentials during installation. Telegram credentials are registered through `--token-file`.
-
-Every push runs the repository security audit in `scripts/Test-SecurityAudit.ps1`. The audit checks PowerShell syntax, checksums, common secret patterns, installer binary strings, HTML security metadata, internal links, Pages publish allowlists, pinned workflow actions, and git history secret patterns.
-
-## Publishing
-
-Maintainers can publish the repository and GitHub Pages site with:
+Fallback script path:
 
 ```powershell
-.\Publish-ToGitHub.cmd
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Install-OpenClawWindowsNative.ps1
 ```
 
-If browser login is unavailable, use `.\Publish-WithToken.cmd` and paste a GitHub token with `repo` and `workflow` scopes.
+Machine-readable verification:
 
-## Audience
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Verify-OpenClawWindowsNative.ps1 -JsonStatus
+```
 
-This project is for open-source learners, educators, and researchers who want to experiment with standalone agents on Windows for academic and non-commercial learning purposes.
+## Security boundary
 
-## Thanks
+- Telegram/provider credentials are never committed, embedded, published, or passed as command-line token values.
+- Telegram bot tokens are entered by the user and registered by user-local token file path.
+- Logs and JSON status output are redacted by the shared engine.
+- Release checks scan scripts, HTML, manifests, installer strings, workflow pinning, checksums, and git history.
 
-Thank you to OpenClaw and to everyone building the open-source ecosystem that makes local, user-owned agent workflows possible.
+Run local validation:
+
+```powershell
+.\scripts\Test-ValidationArtifactFixtures.ps1
+.\scripts\Test-SecurityAudit.ps1
+```
+
+## Companion development
+
+```powershell
+cd companion
+npm install
+npm run build:frontend
+```
+
+Full Tauri packaging also requires Rust/Cargo and the Tauri build prerequisites on Windows.
+
+## Repository name
+
+The repository name stays `openclaw-windows-native` to preserve the public URL and release history.
 
 ## License
 
-Installer scripts, documentation, and this landing page are released under the MIT License. OpenClaw itself is a separate project and remains governed by its own maintainers and license.
+Installer scripts, documentation, Companion scaffold, and the static site are released under the MIT License. OpenClaw itself is a separate project governed by its own maintainers and license.

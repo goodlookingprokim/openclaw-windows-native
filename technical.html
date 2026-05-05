@@ -1,106 +1,39 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
-    />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>기술 스펙 | OpenClaw Windows Native Kit</title>
-    <meta name="description" content="OpenClaw Windows Native Kit의 설치 흐름, 저장 경로, 검증 기준입니다." />
+    <title>Technical Spec | OpenClaw Companion</title>
+    <meta name="description" content="Technical overview of the OpenClaw Windows Native installer, generated paths, gateway boundary, Telegram channel, and verification checks." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동</a>
-    <header class="topbar" aria-label="Primary navigation">
-      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span>OpenClaw Windows Native</span></a>
-      <nav>
-        <a href="manual.html">온보딩</a>
-        <a href="security.html">보안</a>
-        <a href="release.html">다운로드</a>
-        <a href="technical.html" aria-current="page">기술 스펙</a>
-        <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
-      </nav>
-    </header>
-
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Primary navigation"><a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a><nav><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html" aria-current="page">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></nav></header>
     <main id="main">
-      <section class="page-hero technical-hero" aria-labelledby="page-title">
-        <p class="eyebrow">Technical spec</p>
-        <h1 id="page-title">Windows native 설치 흐름과 운영 경계를 명확하게 둡니다.</h1>
-        <p class="lead">WSL, Docker, Podman 없이 PowerShell, Git, Node.js, pnpm으로 OpenClaw Gateway와 Telegram channel을 준비합니다.</p>
-      </section>
-
-      <section class="section color-block yellow" aria-labelledby="stack-title">
-        <div class="section-heading">
-          <p class="section-kicker">Stack</p>
-          <h2 id="stack-title">채택 스택</h2>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>계층</th><th>선택</th></tr></thead>
-            <tbody>
-              <tr><td>설치 제어</td><td>Windows PowerShell 5.1+</td></tr>
-              <tr><td>단일 EXE</td><td>Windows 내장 IExpress 패키징</td></tr>
-              <tr><td>런타임</td><td>Node.js LTS, OpenClaw 요구 최소 22.14.0</td></tr>
-              <tr><td>패키지 매니저</td><td>pnpm 10.33.2</td></tr>
-              <tr><td>소스 ref</td><td>기본 <code>main</code>, 설치 옵션 <code>-RepoRef &lt;tag-or-commit&gt;</code> 지원</td></tr>
-              <tr><td>Telegram 인증</td><td><code>channels.telegram.tokenFile</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section split-section" aria-labelledby="flow-title">
-        <div>
-          <p class="section-kicker">Install flow</p>
-          <h2 id="flow-title">설치 파이프라인</h2>
-        </div>
-        <div class="copy-stack">
-          <pre><code>OpenClawWindowsNativeSetup.exe
+      <section class="page-hero technical-hero" aria-labelledby="page-title"><p class="eyebrow">Technical spec</p><h1 id="page-title">The Companion journey is backed by a simple native pipeline.</h1><p class="lead">PowerShell, Git, Node.js, pnpm, OpenClaw Gateway, Control UI, and Telegram channel setup run directly on Windows without WSL, Docker, or Podman.</p></section>
+      <section class="section stack-section" id="stack" aria-labelledby="stack-title"><div class="section-heading"><p class="section-kicker">Stack</p><h2 id="stack-title">Chosen components</h2></div><div class="table-wrap"><table><thead><tr><th>Layer</th><th>Selection</th></tr></thead><tbody><tr><td>Installer control</td><td>Windows PowerShell 5.1+ with a CMD wrapper.</td></tr><tr><td>Single-file package</td><td>Windows built-in IExpress package.</td></tr><tr><td>Runtime dependency</td><td>Node.js LTS; OpenClaw minimum requirement is 22.14.0.</td></tr><tr><td>Package manager</td><td>pnpm 10.33.2.</td></tr><tr><td>Source ref</td><td>Default <code>main</code>; installer supports <code>-RepoRef &lt;tag-or-commit&gt;</code>.</td></tr><tr><td>Telegram credential</td><td><code>channels.telegram.tokenFile</code>.</td></tr></tbody></table></div></section>
+      <section class="section split-section" id="pipeline" aria-labelledby="pipeline-title"><div><p class="section-kicker">Pipeline</p><h2 id="pipeline-title">Install flow</h2></div><div class="copy-stack"><pre><code>OpenClawWindowsNativeSetup.exe
   -> OpenClaw_Windows_Native_Installer.cmd
     -> Install-OpenClawWindowsNative.ps1
-      1. Git/Node.js/pnpm 확인
-      2. openclaw-src clone 또는 pull
-      3. RepoRef fetch 및 checkout
-      4. pnpm install --frozen-lockfile
-      5. pnpm build 및 ui:build
-      6. openclaw onboard
-      7. telegram plugin 및 tokenFile 등록
-      8. gateway install/start
-      9. Verify-OpenClawWindowsNative.ps1</code></pre>
-        </div>
-      </section>
-
-      <section class="section color-block cyan" aria-labelledby="verify-title">
-        <div class="section-heading">
-          <p class="section-kicker">Verification</p>
-          <h2 id="verify-title">검증 기준</h2>
-        </div>
-        <div class="card-grid three">
-          <article class="info-card">
-            <h3>네이티브 Windows</h3>
-            <p><code>WSL_DISTRO_NAME</code>이 없는 PowerShell/CMD 프로세스에서 실행합니다.</p>
-          </article>
-          <article class="info-card">
-            <h3>빌드 산출물</h3>
-            <p><code>dist\index.js</code>와 <code>dist\control-ui\index.html</code> 존재를 확인합니다.</p>
-          </article>
-          <article class="info-card">
-            <h3>서비스 상태</h3>
-            <p>Gateway health, port 18789 listener, Telegram channel probe를 확인합니다.</p>
-          </article>
-        </div>
-      </section>
+      1. Check Git, Node.js, and pnpm
+      2. Clone or update openclaw-src
+      3. Fetch and checkout RepoRef
+      4. Run pnpm install --frozen-lockfile
+      5. Build OpenClaw and Control UI
+      6. Run OpenClaw onboarding
+      7. Enable Telegram plugin and tokenFile
+      8. Install/start Gateway
+      9. Run Verify-OpenClawWindowsNative.ps1</code></pre></div></section>
+      <section class="section boundaries-section" id="boundaries" aria-labelledby="boundaries-title"><div class="section-heading"><p class="section-kicker">Runtime boundaries</p><h2 id="boundaries-title">Defaults are explicit and local.</h2></div><div class="card-grid three"><article class="info-card"><span class="card-index">GW</span><h3>Gateway</h3><p>OpenClaw gateway install/start uses local mode, loopback bind, token auth, and default port <code>18789</code>.</p></article><article class="info-card"><span class="card-index">UI</span><h3>Control UI</h3><p>The built Control UI is opened through desktop helpers so it uses the current gateway token.</p></article><article class="info-card"><span class="card-index">TG</span><h3>Telegram</h3><p>Telegram pairing protects the first conversation and can be approved from CLI or desktop helper.</p></article></div></section>
+      <section class="section split-section" id="verification" aria-labelledby="verify-title"><div><p class="section-kicker">Verification</p><h2 id="verify-title">What the verifier proves</h2></div><div class="copy-stack"><p><code>Verify-OpenClawWindowsNative.ps1</code> checks dependency availability, OpenClaw build output, config presence, Telegram channel setup, gateway health, channel probe, and whether port <code>18789</code> is listening.</p><pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1
+pnpm.cmd openclaw gateway health
+pnpm.cmd openclaw channels status --probe</code></pre></div></section>
+      <section class="section journey-section" aria-labelledby="tech-journey-title"><div class="section-heading"><p class="section-kicker">Spec-to-journey mapping</p><h2 id="tech-journey-title">Each technical step supports a user-facing stop.</h2></div><div class="journey-grid compact-route"><a class="journey-card" href="release.html#download"><span class="step-number">01</span><h3>Package</h3><p>IExpress EXE, manifest, and checksum.</p></a><a class="journey-card" href="manual.html#guided-setup"><span class="step-number">02</span><h3>Build</h3><p>Clone, checkout, install, build, onboard.</p></a><a class="journey-card" href="manual.html#telegram-connect"><span class="step-number">03</span><h3>Channel</h3><p>Enable plugin and register tokenFile.</p></a><a class="journey-card" href="manual.html#verify-conversation"><span class="step-number">04</span><h3>Probe</h3><p>Health check, status probe, and pairing approval.</p></a><a class="journey-card" href="manual.html#repair-update"><span class="step-number">05</span><h3>Recover</h3><p>Desktop helpers restart, update, rebuild, and verify.</p></a></div></section>
     </main>
-
-    <footer class="site-footer">
-      <a href="index.html">Home</a>
-      <a href="manual.html">Manual</a>
-      <a href="security.html">Security</a>
-      <a href="release.html">Release</a>
-    </footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

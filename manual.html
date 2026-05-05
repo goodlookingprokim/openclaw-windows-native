@@ -1,161 +1,79 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
-    />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>온보딩 매뉴얼 | OpenClaw Windows Native Kit</title>
-    <meta name="description" content="OpenClaw Windows Native Kit 설치, Telegram 연결, 검증, 문제 해결 매뉴얼입니다." />
+    <title>Guided Setup | OpenClaw Companion</title>
+    <meta name="description" content="Step-by-step OpenClaw Windows Native setup: download, install, connect Telegram, verify the first conversation, and repair or update." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동</a>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <header class="topbar" aria-label="Primary navigation">
-      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span>OpenClaw Windows Native</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
       <nav>
-        <a href="manual.html" aria-current="page">온보딩</a>
-        <a href="security.html">보안</a>
-        <a href="release.html">다운로드</a>
-        <a href="technical.html">기술 스펙</a>
-        <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
+        <a href="manual.html" aria-current="page">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
 
     <main id="main">
-      <section class="page-hero manual-hero" aria-labelledby="page-title">
-        <p class="eyebrow">Step-by-step onboarding</p>
-        <h1 id="page-title">Windows에서 OpenClaw를 처음 실행하는 길</h1>
-        <p class="lead">
-          설치 파일 실행부터 Telegram pairing 승인까지, 참석자가 화면을 따라가며 끝낼 수 있도록
-          순서를 고정했습니다.
-        </p>
+      <section class="page-hero manual-hero" aria-labelledby="page-title"><p class="eyebrow">Guided setup</p><h1 id="page-title">Follow the Companion rail from installer to first Telegram reply.</h1><p class="lead">Each stop has one goal, one proof point, and one recovery path. Keep this page open while running the Windows native kit.</p></section>
+      <section class="section route-nav" aria-label="Setup route shortcuts"><a href="#download">01 Download</a><a href="#guided-setup">02 Guided Setup</a><a href="#telegram-connect">03 Telegram Connect</a><a href="#verify-conversation">04 Verify Conversation</a><a href="#repair-update">05 Repair/Update</a></section>
+
+      <section class="section split-section" id="download" aria-labelledby="download-title">
+        <div><p class="section-kicker">01 Download</p><h2 id="download-title">Start with the kit and its checksum.</h2></div>
+        <div class="copy-stack"><p>Download the EXE from this site, then compare the SHA-256 before running it. The checksum is also published as <a href="downloads/checksums.sha256">checksums.sha256</a>.</p><p><a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>Download setup EXE</a></p><pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
+Get-Content .\checksums.sha256</code></pre><p class="integrity-line"><code>f804f0583076e9d40abe097d1a0c572645efad7055e35af2bc388e81d9126b80</code></p></div>
       </section>
 
-      <section class="section split-section" id="prepare" aria-labelledby="prepare-title">
-        <div>
-          <p class="section-kicker">01 Prepare</p>
-          <h2 id="prepare-title">설치 전 확인</h2>
-        </div>
-        <div class="copy-stack">
-          <p>Windows 10/11, 인터넷 연결, PowerShell 또는 CMD 실행 권한이 필요합니다.</p>
-          <p>설치기는 Git for Windows, Node.js LTS, pnpm을 확인하고 가능한 경우 winget으로 설치합니다.</p>
-          <p>기본 OpenClaw 소스는 <code>https://github.com/openclaw/openclaw.git</code>의 <code>main</code> ref입니다. 재현 가능한 실험이 필요하면 PowerShell 설치기 실행 시 <code>-RepoRef &lt;tag-or-commit&gt;</code>을 지정합니다.</p>
-          <pre><code>winget install --id Git.Git -e --source winget
-winget install --id OpenJS.NodeJS.LTS -e --source winget
-npm install -g pnpm@10.33.2</code></pre>
-        </div>
-      </section>
-
-      <section class="section color-block yellow" id="install" aria-labelledby="install-title">
-        <div class="section-heading">
-          <p class="section-kicker">02 Install</p>
-          <h2 id="install-title">설치 파일 실행</h2>
-        </div>
+      <section class="section setup-section" id="guided-setup" aria-labelledby="setup-title">
+        <div class="section-heading"><p class="section-kicker">02 Guided Setup</p><h2 id="setup-title">Let the installer prepare the Windows-native workspace.</h2></div>
         <div class="card-grid three">
-          <article class="info-card">
-            <span class="card-index">A</span>
-            <h3>EXE 다운로드</h3>
-            <p><a href="downloads/OpenClawWindowsNativeSetup.exe" download>OpenClawWindowsNativeSetup.exe</a>를 실행합니다.</p>
-          </article>
-          <article class="info-card">
-            <span class="card-index">B</span>
-            <h3>SmartScreen 확인</h3>
-            <p>파일 출처가 이 GitHub Pages 사이트인지 확인한 뒤 실행합니다.</p>
-          </article>
-          <article class="info-card">
-            <span class="card-index">C</span>
-            <h3>온보딩 선택</h3>
-            <p>Gateway mode는 local, bind는 loopback, port는 18789를 기본값으로 둡니다.</p>
-          </article>
+          <article class="info-card"><span class="card-index">A</span><h3>Prerequisites</h3><p>Windows 10/11, internet access, and PowerShell or CMD. The installer checks Git, Node.js LTS, and pnpm.</p></article>
+          <article class="info-card"><span class="card-index">B</span><h3>Native install</h3><p>The kit clones OpenClaw into <code>%USERPROFILE%\openclaw-src</code>, installs dependencies, builds, and creates desktop launchers.</p></article>
+          <article class="info-card"><span class="card-index">C</span><h3>Safe defaults</h3><p>Gateway mode is local, bind is loopback, auth is token, and the default port is <code>18789</code>.</p></article>
         </div>
         <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-OpenClawWindowsNative.ps1 -RepoRef main</code></pre>
       </section>
 
       <section class="section split-section" id="paths" aria-labelledby="paths-title">
-        <div>
-          <p class="section-kicker">Install paths</p>
-          <h2 id="paths-title">설치 후 생성되는 경로</h2>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>경로</th><th>역할</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><code>%USERPROFILE%\openclaw-src</code></td><td>OpenClaw 소스 및 빌드 산출물</td></tr>
-              <tr><td><code>%USERPROFILE%\.openclaw</code></td><td>설정, 로그, 세션, credentials</td></tr>
-              <tr><td><code>%USERPROFILE%\Desktop\OpenClaw</code></td><td>운영용 실행기와 로그 바로가기</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <div><p class="section-kicker">Generated paths</p><h2 id="paths-title">Know where the Companion puts things.</h2></div>
+        <div class="table-wrap"><table><thead><tr><th>Path</th><th>Purpose</th></tr></thead><tbody><tr><td><code>%USERPROFILE%\openclaw-src</code></td><td>OpenClaw source checkout, build output, and CLI working directory.</td></tr><tr><td><code>%USERPROFILE%\.openclaw</code></td><td>Config, logs, sessions, and user-local credentials.</td></tr><tr><td><code>%USERPROFILE%\.openclaw\credentials\telegram-bot-token.txt</code></td><td>Telegram bot token file created on the participant PC only.</td></tr><tr><td><code>%USERPROFILE%\Desktop\OpenClaw</code></td><td>Start, status, stop, dashboard, pairing, update, and verify helpers.</td></tr></tbody></table></div>
       </section>
 
-      <section class="section color-block cyan" id="telegram" aria-labelledby="telegram-title">
-        <div class="section-heading">
-          <p class="section-kicker">03 Telegram</p>
-          <h2 id="telegram-title">BotFather 토큰과 pairing 승인</h2>
-        </div>
-        <div class="card-grid two">
-          <article class="info-card">
-            <span class="card-index">BOT</span>
-            <h3>새 봇 만들기</h3>
-            <p>Telegram에서 <code>@BotFather</code>에게 <code>/newbot</code>을 보내고 토큰을 복사합니다.</p>
-          </article>
-          <article class="info-card">
-            <span class="card-index">FILE</span>
-            <h3>토큰 파일 등록</h3>
-            <p>설치기는 토큰 원문을 로그에 출력하지 않고 로컬 token file 경로로 등록합니다.</p>
-          </article>
-        </div>
+      <section class="section telegram-section" id="telegram-connect" aria-labelledby="telegram-title">
+        <div class="section-heading"><p class="section-kicker">03 Telegram Connect</p><h2 id="telegram-title">Create a bot, store the token locally, then approve pairing.</h2></div>
+        <div class="card-grid two"><article class="info-card"><span class="card-index">BOT</span><h3>BotFather</h3><p>In Telegram, message <code>@BotFather</code>, run <code>/newbot</code>, name the bot, and copy the bot token when the installer asks for it.</p></article><article class="info-card"><span class="card-index">FILE</span><h3>Token file</h3><p>The token is written to a user-local file path and registered with OpenClaw as <code>channels.telegram.tokenFile</code>.</p></article></div>
         <pre><code>cd $env:USERPROFILE\openclaw-src
+pnpm.cmd openclaw plugins enable telegram
+pnpm.cmd openclaw channels add --channel telegram --token-file "$env:USERPROFILE\.openclaw\credentials\telegram-bot-token.txt"</code></pre>
+      </section>
+
+      <section class="section split-section" id="verify-conversation" aria-labelledby="verify-title">
+        <div><p class="section-kicker">04 Verify Conversation</p><h2 id="verify-title">Prove the gateway and Telegram channel are alive.</h2></div>
+        <div class="copy-stack"><p>Send a message to your Telegram bot. If OpenClaw requires pairing, list pending codes and approve the code shown for your conversation.</p><pre><code>cd $env:USERPROFILE\openclaw-src
 pnpm.cmd openclaw pairing list telegram
-pnpm.cmd openclaw pairing approve telegram &lt;PAIRING_CODE&gt;</code></pre>
+pnpm.cmd openclaw pairing approve telegram &lt;PAIRING_CODE&gt;
+pnpm.cmd openclaw gateway health
+pnpm.cmd openclaw channels status --probe</code></pre><p>You can also use <code>OpenClaw_02_Status.cmd</code> and <code>OpenClaw_05_Approve_Telegram_Pairing.cmd</code> from the desktop <code>OpenClaw</code> folder.</p></div>
       </section>
 
-      <section class="section split-section" id="verify" aria-labelledby="verify-title">
-        <div>
-          <p class="section-kicker">04 Verify</p>
-          <h2 id="verify-title">설치 검증과 운영</h2>
-        </div>
-        <div class="copy-stack">
-          <p>설치 후 바탕화면 <code>OpenClaw</code> 폴더에서 Gateway 시작, 상태 확인, Dashboard 열기, Telegram pairing 승인을 실행할 수 있습니다.</p>
-          <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1</code></pre>
-          <p>검증은 Git, Node.js, pnpm, OpenClaw 빌드, Gateway health, Telegram channel probe를 확인합니다.</p>
-        </div>
-      </section>
-
-      <section class="section color-block pink" id="troubleshooting" aria-labelledby="trouble-title">
-        <div class="section-heading">
-          <p class="section-kicker">Troubleshooting</p>
-          <h2 id="trouble-title">자주 생기는 문제</h2>
-        </div>
+      <section class="section repair-section" id="repair-update" aria-labelledby="repair-title">
+        <div class="section-heading"><p class="section-kicker">05 Repair/Update</p><h2 id="repair-title">When something drifts, use the desktop helpers before guessing.</h2></div>
         <div class="card-grid three">
-          <article class="info-card">
-            <h3>winget이 없을 때</h3>
-            <p>Microsoft Store에서 App Installer를 업데이트하거나 Git/Node.js를 수동 설치합니다.</p>
-          </article>
-          <article class="info-card">
-            <h3>pnpm install 실패</h3>
-            <p>네트워크, 프록시, 백신 검사 문제일 수 있습니다. 같은 PowerShell에서 다시 실행합니다.</p>
-          </article>
-          <article class="info-card">
-            <h3>Telegram이 응답하지 않을 때</h3>
-            <p><code>channels status --probe</code>와 pairing 목록을 확인한 뒤 코드를 승인합니다.</p>
-          </article>
+          <article class="info-card"><h3>Gateway stopped</h3><p>Run <code>OpenClaw_01_Start_Gateway.cmd</code>, then <code>OpenClaw_02_Status.cmd</code>. Check that port <code>18789</code> is listening.</p></article>
+          <article class="info-card"><h3>Dashboard token issue</h3><p>Open the dashboard through <code>OpenClaw_04_Open_Dashboard.cmd</code> so the current gateway token is applied.</p></article>
+          <article class="info-card"><h3>Telegram silent</h3><p>Run <code>channels status --probe</code>, inspect pending pairings, then approve the latest pairing code.</p></article>
+          <article class="info-card"><h3>Update/rebuild</h3><p>Run <code>OpenClaw_06_Update.cmd</code> to pull the selected repo ref, rebuild, re-enable Telegram, and restart the gateway.</p></article>
+          <article class="info-card"><h3>Full verifier</h3><p>Run the verifier after a repair to check dependencies, build output, config, gateway health, channel probe, and listener state.</p></article>
+          <article class="info-card"><h3>Clean uninstall</h3><p>Use the included uninstall script only when you intentionally want to remove scheduled startup and local helper files.</p></article>
         </div>
+        <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1</code></pre>
       </section>
     </main>
-
-    <footer class="site-footer">
-      <a href="index.html">Home</a>
-      <a href="security.html">Security</a>
-      <a href="release.html">Release</a>
-      <a href="technical.html">Technical</a>
-    </footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

@@ -25,10 +25,12 @@ jobs:
             downloads/OpenClawWindowsNativeSetup.exe \
             downloads/checksums.sha256 \
             downloads/Install-OpenClawWindowsNative.ps1 \
+            downloads/engine/OpenClawWindowsNative.Engine.psm1 \
             downloads/OpenClaw_Windows_Native_Installer.cmd \
             downloads/package-manifest.json \
             downloads/Verify-OpenClawWindowsNative.ps1 \
             downloads/Uninstall-OpenClawWindowsNative.ps1 \
+            docs/VALIDATION_ARTIFACTS.md \
             docs/OpenClaw_Windows_Native_User_Manual.md \
             docs/OpenClaw_Windows_Native_Technical_Spec.md \
             --title "OpenClaw Windows Native Kit $tag" \
