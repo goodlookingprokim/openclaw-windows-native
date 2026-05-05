@@ -33,7 +33,7 @@ jobs:
           set -euo pipefail
           rm -rf public
           mkdir -p public
-          cp index.html public/
+          cp *.html public/
           cp .nojekyll public/
           cp -R assets docs downloads public/
 

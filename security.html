@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
+    <title>보안 및 무결성 | OpenClaw Windows Native Kit</title>
+    <meta name="description" content="GitHub Pages 보안, 설치 파일 체크섬, 토큰 보호 원칙을 설명합니다." />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
+    <header class="topbar" aria-label="Primary navigation">
+      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span>OpenClaw Windows Native</span></a>
+      <nav>
+        <a href="manual.html">온보딩</a>
+        <a href="security.html" aria-current="page">보안</a>
+        <a href="release.html">다운로드</a>
+        <a href="technical.html">기술 스펙</a>
+        <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="page-hero security-hero" aria-labelledby="page-title">
+        <p class="eyebrow">Security posture</p>
+        <h1 id="page-title">보안은 사이트, 다운로드, 로컬 토큰으로 나누어 확인합니다.</h1>
+        <p class="lead">GitHub Pages의 한계를 인정하고, 정적 사이트에서 가능한 보호와 사용자가 직접 검증할 수 있는 절차를 제공합니다.</p>
+      </section>
+
+      <section class="section color-block cyan" id="site" aria-labelledby="site-title">
+        <div class="section-heading">
+          <p class="section-kicker">Website</p>
+          <h2 id="site-title">GitHub Pages 보안 설정</h2>
+        </div>
+        <div class="card-grid three">
+          <article class="info-card">
+            <span class="card-index">HTTPS</span>
+            <h3>HTTPS enforced</h3>
+            <p>GitHub Pages의 HTTPS 배포를 사용하고, Pages API에서 public HTTPS 상태를 확인합니다.</p>
+          </article>
+          <article class="info-card">
+            <span class="card-index">CSP</span>
+            <h3>Meta CSP</h3>
+            <p>외부 스크립트, object embed, form submit을 차단하는 meta CSP를 모든 HTML 페이지에 적용합니다.</p>
+          </article>
+          <article class="info-card">
+            <span class="card-index">ZERO</span>
+            <h3>No runtime JS</h3>
+            <p>랜딩과 문서 페이지는 JavaScript, 외부 폰트, 추적 픽셀 없이 정적 HTML/CSS만 사용합니다.</p>
+          </article>
+        </div>
+        <p class="note">
+          GitHub Pages는 사용자 지정 HTTP security header를 직접 설정할 수 없습니다. 그래서 header 전용 지시어가 필요한 보호는
+          메타 태그와 무스크립트 정적 설계로 보완합니다.
+        </p>
+      </section>
+
+      <section class="section split-section" id="checksum" aria-labelledby="checksum-title">
+        <div>
+          <p class="section-kicker">Integrity</p>
+          <h2 id="checksum-title">다운로드 파일 무결성 확인</h2>
+        </div>
+        <div class="copy-stack">
+          <p>게시된 설치 파일의 SHA-256은 다음 값이어야 합니다.</p>
+          <p class="integrity-line"><code>f00a55ddaa0f870d98fef4e98c82bb2cc454564b632df8d10a23ff4a599a3d0b</code></p>
+          <pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
+Get-Content .\checksums.sha256</code></pre>
+          <p><a class="button secondary" href="downloads/checksums.sha256">checksums.sha256 열기</a></p>
+        </div>
+      </section>
+
+      <section class="section color-block yellow" id="secrets" aria-labelledby="secrets-title">
+        <div class="section-heading">
+          <p class="section-kicker">Secrets</p>
+          <h2 id="secrets-title">토큰은 배포물에 넣지 않습니다.</h2>
+        </div>
+        <div class="card-grid three">
+          <article class="info-card">
+            <h3>Telegram bot token</h3>
+            <p>사용자가 설치 중 직접 입력하고, OpenClaw 설정에는 token file 경로만 등록합니다.</p>
+          </article>
+          <article class="info-card">
+            <h3>Gateway token</h3>
+            <p>로컬 온보딩에서 생성/선택되며 저장소, Pages, release asset에 포함하지 않습니다.</p>
+          </article>
+          <article class="info-card">
+            <h3>API key/OAuth</h3>
+            <p>모델 provider 인증은 공식 OpenClaw 온보딩에서 사용자가 직접 선택합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split-section" id="local" aria-labelledby="local-title">
+        <div>
+          <p class="section-kicker">Local boundary</p>
+          <h2 id="local-title">Windows PC 안에서의 기본 경계</h2>
+        </div>
+        <div class="copy-stack">
+          <p>Gateway는 loopback <code>127.0.0.1</code>과 port <code>18789</code>를 기본값으로 사용합니다.</p>
+          <p>민감정보 폴더는 <code>%USERPROFILE%\.openclaw\credentials</code>이며, 공유하거나 스크린샷에 노출하지 않습니다.</p>
+          <p><a class="button secondary" href="manual.html#telegram">Telegram 토큰 등록 절차 보기</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a href="index.html">Home</a>
+      <a href="manual.html">Manual</a>
+      <a href="release.html">Release</a>
+      <a href="technical.html">Technical</a>
+    </footer>
+  </body>
+</html>

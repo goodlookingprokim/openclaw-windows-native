@@ -3,10 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    />
     <title>OpenClaw Windows Native Kit</title>
     <meta
       name="description"
-      content="WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하는 공개 학습용 키트입니다."
+      content="WSL 없이 Windows에서 OpenClaw Gateway와 Telegram agent channel을 설치하는 공개 학습용 키트입니다."
     />
     <meta property="og:title" content="OpenClaw Windows Native Kit" />
     <meta
@@ -17,133 +26,187 @@
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
     <header class="topbar" aria-label="Primary navigation">
-      <a class="brand" href="#top">OpenClaw Windows Native</a>
+      <a class="brand" href="index.html" aria-label="OpenClaw Windows Native home">
+        <span class="brand-mark">OC</span>
+        <span>OpenClaw Windows Native</span>
+      </a>
       <nav>
-        <a href="#download">다운로드</a>
-        <a href="#install">설치</a>
-        <a href="#docs">문서</a>
-        <a href="https://github.com/goodlookingprokim/openclaw-windows-native">GitHub</a>
+        <a href="manual.html">온보딩</a>
+        <a href="security.html">보안</a>
+        <a href="release.html">다운로드</a>
+        <a href="technical.html">기술 스펙</a>
+        <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-overlay"></div>
+    <main id="main">
+      <section class="hero hero-home" aria-labelledby="hero-title">
         <div class="hero-content">
           <p class="eyebrow">Academic open-source experiment kit</p>
           <h1 id="hero-title">OpenClaw Windows Native Kit</h1>
           <p class="lead">
-            WSL 없이 Windows에서 OpenClaw Gateway를 설치하고 Telegram으로 독립형 에이전트를
-            실험할 수 있도록 만든 강의/연구용 배포 키트입니다.
+            WSL 없이 Windows에서 OpenClaw Gateway를 설치하고 Telegram 기반 독립형 에이전트를
+            실험할 수 있도록 만든 공개 학습 키트입니다.
           </p>
-          <div class="hero-actions" id="download">
+          <div class="hero-actions" aria-label="Primary actions">
             <a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>
-              설치 파일 다운로드
+              EXE 다운로드
             </a>
-            <a class="button secondary" href="docs/OpenClaw_Windows_Native_User_Manual.md">
-              설치 매뉴얼 보기
-            </a>
+            <a class="button secondary" href="manual.html">온보딩 시작</a>
+            <a class="button secondary" href="security.html">보안 확인</a>
           </div>
-          <p class="hash">
-            SHA-256:
+          <p class="integrity-line">
+            Installer SHA-256
             <code>f00a55ddaa0f870d98fef4e98c82bb2cc454564b632df8d10a23ff4a599a3d0b</code>
           </p>
         </div>
       </section>
 
-      <section class="band intro" aria-labelledby="intro-title">
-        <div class="section-inner">
-          <h2 id="intro-title">무엇을 해결하나요?</h2>
+      <section class="ticker" aria-label="Project highlights">
+        <span>Windows native</span>
+        <span>No bundled secrets</span>
+        <span>Telegram pairing ready</span>
+        <span>Open-source learning</span>
+      </section>
+
+      <section class="section split-section" aria-labelledby="what-title">
+        <div>
+          <p class="section-kicker">What ships</p>
+          <h2 id="what-title">설치 파일 하나로 시작하고, 모든 안내는 페이지 안에서 이어집니다.</h2>
+        </div>
+        <div class="copy-stack">
           <p>
-            OpenClaw를 처음 접하는 Windows 사용자도 Git, Node.js, pnpm, OpenClaw 빌드,
-            Gateway 실행, Telegram bot token 등록, pairing 승인을 한 흐름으로 진행할 수 있게
-            합니다. 설치 파일에는 토큰이나 API key가 들어 있지 않고, 사용자가 직접 선택해 입력합니다.
+            참석자는 이 사이트에서 설치 파일을 받고, 같은 사이트의 온보딩 페이지에서 준비물,
+            설치, Telegram 연결, 검증, 문제 해결까지 순서대로 따라갈 수 있습니다.
+          </p>
+          <p>
+            문서 링크는 Markdown 원문으로 빠지지 않고, 읽기 쉬운 웹 페이지로 연결됩니다.
+            원본 Markdown 문서는 저장소 안에 보존해 유지보수와 릴리스 기록을 남깁니다.
           </p>
         </div>
       </section>
 
-      <section class="band install" id="install" aria-labelledby="install-title">
-        <div class="section-inner">
-          <h2 id="install-title">설치 흐름</h2>
-          <div class="steps">
-            <article>
-              <span class="step-number">1</span>
-              <h3>설치 파일 실행</h3>
-              <p>Windows에서 EXE를 실행하면 PowerShell 기반 설치기가 시작됩니다.</p>
-            </article>
-            <article>
-              <span class="step-number">2</span>
-              <h3>필수 도구 확인</h3>
-              <p>Git, Node.js LTS, pnpm을 확인하고 가능한 경우 winget으로 설치합니다.</p>
-            </article>
-            <article>
-              <span class="step-number">3</span>
-              <h3>OpenClaw 온보딩</h3>
-              <p>모델/provider 인증과 Gateway 설정은 공식 OpenClaw 온보딩에서 직접 선택합니다.</p>
-            </article>
-            <article>
-              <span class="step-number">4</span>
-              <h3>Telegram 연결</h3>
-              <p>BotFather 토큰을 로컬 token file로 저장하고 pairing code를 승인합니다.</p>
-            </article>
+      <section class="section color-block yellow" aria-labelledby="journey-title">
+        <div class="section-heading">
+          <p class="section-kicker">Onboarding map</p>
+          <h2 id="journey-title">처음 설치하는 사람을 위한 4단계 흐름</h2>
+        </div>
+        <div class="card-grid four">
+          <a class="action-card" href="manual.html#prepare">
+            <span class="card-index">01</span>
+            <h3>준비물 확인</h3>
+            <p>Git, Node.js LTS, pnpm, 인터넷 연결을 설치 전에 확인합니다.</p>
+          </a>
+          <a class="action-card" href="manual.html#install">
+            <span class="card-index">02</span>
+            <h3>EXE 실행</h3>
+            <p>Windows 설치기가 도구 확인, 소스 준비, OpenClaw 빌드를 진행합니다.</p>
+          </a>
+          <a class="action-card" href="manual.html#telegram">
+            <span class="card-index">03</span>
+            <h3>Telegram 연결</h3>
+            <p>BotFather 토큰을 로컬 token file에 등록하고 pairing을 승인합니다.</p>
+          </a>
+          <a class="action-card" href="manual.html#verify">
+            <span class="card-index">04</span>
+            <h3>검증 및 운영</h3>
+            <p>Gateway health, channel probe, 바탕화면 실행기를 확인합니다.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section downloads-panel" aria-labelledby="download-title">
+        <div class="section-heading">
+          <p class="section-kicker">Download center</p>
+          <h2 id="download-title">가장 쉬운 설치 경로와 검증 경로를 분리했습니다.</h2>
+        </div>
+        <div class="download-layout">
+          <a class="download-primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>
+            <span>권장 다운로드</span>
+            <strong>OpenClawWindowsNativeSetup.exe</strong>
+            <small>200 KB Windows 설치 파일</small>
+          </a>
+          <div class="card-grid three compact">
+            <a class="action-card" href="release.html">
+              <span class="card-index">REL</span>
+              <h3>릴리스 센터</h3>
+              <p>EXE, PowerShell 설치기, 체크섬, 릴리스 절차를 한 곳에서 확인합니다.</p>
+            </a>
+            <a class="action-card" href="security.html#checksum">
+              <span class="card-index">SHA</span>
+              <h3>무결성 확인</h3>
+              <p>다운로드한 파일의 SHA-256이 게시값과 일치하는지 확인합니다.</p>
+            </a>
+            <a class="action-card" href="manual.html#troubleshooting">
+              <span class="card-index">FIX</span>
+              <h3>문제 해결</h3>
+              <p>winget, pnpm, Dashboard token, Telegram pairing 문제를 해결합니다.</p>
+            </a>
           </div>
         </div>
       </section>
 
-      <section class="band downloads" aria-labelledby="downloads-title">
-        <div class="section-inner two-column">
-          <div>
-            <h2 id="downloads-title">다운로드</h2>
-            <p>
-              가장 쉬운 방법은 설치 파일 하나를 내려받아 실행하는 것입니다. 학교나 회사 PC에서 EXE
-              실행이 제한되면 PowerShell 스크립트를 직접 실행할 수 있습니다.
-            </p>
-          </div>
-          <div class="download-list">
-            <a href="downloads/OpenClawWindowsNativeSetup.exe" download>
-              <strong>OpenClawWindowsNativeSetup.exe</strong>
-              <span>권장 설치 파일</span>
-            </a>
-            <a href="downloads/Install-OpenClawWindowsNative.ps1" download>
-              <strong>Install-OpenClawWindowsNative.ps1</strong>
-              <span>PowerShell 설치기</span>
-            </a>
-            <a href="downloads/checksums.sha256">
-              <strong>checksums.sha256</strong>
-              <span>무결성 확인</span>
-            </a>
-          </div>
+      <section class="section color-block cyan" aria-labelledby="security-title">
+        <div class="section-heading">
+          <p class="section-kicker">Security posture</p>
+          <h2 id="security-title">정적 사이트, 무스크립트, 무추적, 무비밀정보 원칙</h2>
+        </div>
+        <div class="card-grid three">
+          <a class="action-card" href="security.html#site">
+            <span class="card-index">WEB</span>
+            <h3>Pages 보안</h3>
+            <p>GitHub Pages HTTPS, meta CSP, 외부 스크립트 없는 정적 배포를 사용합니다.</p>
+          </a>
+          <a class="action-card" href="security.html#secrets">
+            <span class="card-index">KEY</span>
+            <h3>토큰 보호</h3>
+            <p>Telegram/API 토큰은 배포물에 포함하지 않고 사용자 PC에만 저장됩니다.</p>
+          </a>
+          <a class="action-card" href="security.html#local">
+            <span class="card-index">PC</span>
+            <h3>로컬 경계</h3>
+            <p>Gateway는 loopback과 사용자 프로필 경로를 기본 운영 경계로 둡니다.</p>
+          </a>
         </div>
       </section>
 
-      <section class="band docs" id="docs" aria-labelledby="docs-title">
-        <div class="section-inner">
-          <h2 id="docs-title">문서와 운영</h2>
-          <div class="doc-links">
-            <a href="docs/OpenClaw_Windows_Native_User_Manual.md">사용자 설치 매뉴얼</a>
-            <a href="docs/OpenClaw_Windows_Native_Technical_Spec.md">기술 스펙</a>
-            <a href="https://docs.openclaw.ai/cli">OpenClaw CLI 문서</a>
-            <a href="https://docs.openclaw.ai/channels/telegram">OpenClaw Telegram 문서</a>
-          </div>
+      <section class="section split-section" aria-labelledby="docs-title">
+        <div>
+          <p class="section-kicker">Site pages</p>
+          <h2 id="docs-title">클릭 가능한 항목은 실제 페이지나 다운로드로 연결됩니다.</h2>
+        </div>
+        <div class="link-board">
+          <a href="manual.html">사용자 온보딩 매뉴얼</a>
+          <a href="security.html">보안 및 무결성 가이드</a>
+          <a href="release.html">다운로드 및 릴리스 운영</a>
+          <a href="technical.html">Windows Native 기술 스펙</a>
+          <a href="https://github.com/goodlookingprokim/openclaw-windows-native/issues/new/choose" rel="noopener noreferrer">
+            설치 도움 요청
+          </a>
+          <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">
+            GitHub 저장소
+          </a>
         </div>
       </section>
 
-      <section class="band thanks" aria-labelledby="thanks-title">
-        <div class="section-inner">
-          <h2 id="thanks-title">고맙습니다</h2>
-          <p>
-            이 키트는 오픈 소스를 사랑하고, 독립형 에이전트로 삶을 조금 더 여유롭고 생산적으로
-            만들고 싶은 사람들을 위한 순수 학습/실험용 프로젝트입니다. OpenClaw를 포함해 오픈 소스
-            생태계를 만들고 지켜 온 모든 분들께 깊이 감사드립니다.
-          </p>
-        </div>
+      <section class="section thanks-block" aria-labelledby="thanks-title">
+        <p class="section-kicker">Thanks</p>
+        <h2 id="thanks-title">오픈 소스 생태계에 고맙습니다.</h2>
+        <p>
+          이 키트는 오픈 소스를 사랑하고, 독립형 에이전트로 삶을 조금 더 여유롭고 생산적으로
+          만들고 싶은 사람들을 위한 순수 학습/실험용 프로젝트입니다. OpenClaw를 포함해
+          오픈 소스 생태계를 만들고 지켜 온 모든 분들께 깊이 감사드립니다.
+        </p>
       </section>
     </main>
 
-    <footer>
+    <footer class="site-footer">
       <span>OpenClaw Windows Native Kit</span>
-      <span>MIT licensed installer assets. OpenClaw belongs to its own maintainers and license.</span>
+      <a href="security.html">Security</a>
+      <a href="release.html">Release</a>
+      <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
     </footer>
   </body>
 </html>
