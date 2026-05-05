@@ -1,6 +1,6 @@
-﻿# OpenClaw Companion scaffold
+# OpenClaw Companion
 
-This directory is a minimal Tauri v2-style desktop companion for the Windows Native kit. It is intentionally small: no generated `node_modules`, no committed Cargo lockfile yet, and no credentials.
+This directory contains the build-verified Tauri v2 desktop companion for the Windows Native kit. It is intentionally small: no generated `node_modules`, no committed build output, and no credentials.
 
 ## Build prerequisites
 
@@ -18,6 +18,8 @@ npm run fmt:rust
 npm run dev
 npm run build
 ```
+
+`npm run build` produces the Windows executable plus MSI and NSIS installer bundles under `src-tauri\target\release\bundle\`.
 
 ## Secret handling
 

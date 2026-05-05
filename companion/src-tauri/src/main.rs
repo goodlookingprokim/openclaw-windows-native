@@ -1,4 +1,4 @@
-﻿use serde::Serialize;
+use serde::Serialize;
 use std::{env, path::PathBuf, process::Command};
 use tauri::Manager;
 use thiserror::Error;
@@ -66,7 +66,10 @@ fn probe_powershell() -> Result<PowerShellProbe, String> {
 }
 
 #[tauri::command]
-fn plan_gateway_start(app: tauri::AppHandle, token_file: String) -> Result<GatewayStartPlan, String> {
+fn plan_gateway_start(
+    app: tauri::AppHandle,
+    token_file: String,
+) -> Result<GatewayStartPlan, String> {
     let token_file = validate_token_file_path(token_file)?;
     let planned_script = default_engine_script(&app);
 

@@ -27,6 +27,9 @@
                    "active":  true,
                    "targets":  "all",
                    "category":  "DeveloperTool",
+                   "icon":  [
+                                "icons/icon.ico"
+                            ],
                    "shortDescription":  "OpenClaw Windows Native companion",
                    "longDescription":  "Desktop companion shell for OpenClaw Windows Native status checks and safe PowerShell engine handoff."
                }

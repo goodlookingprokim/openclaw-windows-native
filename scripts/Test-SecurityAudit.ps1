@@ -163,7 +163,7 @@ function Assert-EngineModuleChecks([string]$RepoRoot) {
   if ($engine -match 'Write-Host.*(token|secret|password|apikey|TELEGRAM_BOT_TOKEN)') { Fail-Audit "Engine must not print credential-bearing values" }
   Write-AuditOk "engine JSON status and redaction checks passed"
 }
-function Assert-CompanionScaffoldSmokeChecks([string]$RepoRoot) {
+function Assert-CompanionBuildSmokeChecks([string]$RepoRoot) {
   $installPath = Join-Path $RepoRoot "downloads\Install-OpenClawWindowsNative.ps1"
   $install = Get-Content -Encoding UTF8 -Raw -LiteralPath $installPath
   $expectedLaunchers = @(
@@ -175,11 +175,11 @@ function Assert-CompanionScaffoldSmokeChecks([string]$RepoRoot) {
     "OpenClaw_06_Update.cmd"
   )
   foreach ($launcher in $expectedLaunchers) {
-    if ($install -notmatch [regex]::Escape($launcher)) { Fail-Audit "Companion launcher scaffold missing $launcher" }
+    if ($install -notmatch [regex]::Escape($launcher)) { Fail-Audit "Companion launcher missing $launcher" }
   }
   if ($install -notmatch 'set /p PAIRING_CODE=Telegram pairing code:') { Fail-Audit "Telegram pairing launcher must prompt for a pairing code at runtime" }
   if ($install -notmatch 'pnpm\.cmd openclaw pairing approve telegram %PAIRING_CODE%') { Fail-Audit "Telegram pairing launcher must approve the supplied code" }
-  if ($install -match 'TELEGRAM_BOT_TOKEN=.*' -or $install -match 'bot-token\.txt.*echo') { Fail-Audit "Companion launcher scaffold must not embed Telegram credentials" }
+  if ($install -match 'TELEGRAM_BOT_TOKEN=.*' -or $install -match 'bot-token\.txt.*echo') { Fail-Audit "Companion launcher must not embed Telegram credentials" }
 
   $companionDir = Join-Path $RepoRoot "companion"
   if (Test-Path -LiteralPath $companionDir -PathType Container) {
@@ -193,7 +193,7 @@ function Assert-CompanionScaffoldSmokeChecks([string]$RepoRoot) {
       "src-tauri\src\main.rs"
     )) {
       if (-not (Test-Path -LiteralPath (Join-Path $companionDir $required) -PathType Leaf)) {
-        Fail-Audit "Companion scaffold missing required file: $required"
+        Fail-Audit "Companion build surface missing required file: $required"
       }
     }
     $package = Assert-JsonFile -Path (Join-Path $companionDir "package.json") -Label "companion/package.json"
@@ -207,7 +207,7 @@ function Assert-CompanionScaffoldSmokeChecks([string]$RepoRoot) {
     $permissions = @($capabilities.permissions | ForEach-Object { [string]$_ })
     if ($permissions | Where-Object { $_ -match '(?i)(shell|fs|process|http)' }) { Fail-Audit "Companion default capabilities include privileged permissions" }
   }
-  Write-AuditOk "companion launcher and Tauri scaffold smoke checks passed"
+  Write-AuditOk "companion launcher and Tauri build smoke checks passed"
 }
 
 function Assert-PagesWorkflowMatchesAllowlist([string]$RepoRoot, [string[]]$AllowedPagesFiles) {
@@ -369,7 +369,7 @@ try {
   Assert-PackageManifest -RepoRoot $RepoRoot -ExpectedPayloads $expectedPayloadFiles -Patterns $allSensitivePatterns
   Assert-InstallerEngineAndRedactionChecks -RepoRoot $RepoRoot
   Assert-EngineModuleChecks -RepoRoot $RepoRoot
-  Assert-CompanionScaffoldSmokeChecks -RepoRoot $RepoRoot
+  Assert-CompanionBuildSmokeChecks -RepoRoot $RepoRoot
   Assert-TelegramValidationArtifact -Path $TelegramValidationArtifact -Patterns $allSensitivePatterns
 
   $htmlFiles = Get-ChildItem -Path $RepoRoot -Filter *.html -File

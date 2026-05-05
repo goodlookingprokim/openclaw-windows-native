@@ -1,4 +1,4 @@
-﻿# OpenClaw Windows Native Companion
+# OpenClaw Windows Native Companion
 
 Windows에서 WSL 없이 OpenClaw를 설치하고 Telegram으로 실제 대화까지 이어지도록 만든 네이티브 온보딩 프로젝트입니다.
 
@@ -19,7 +19,7 @@ The repository now includes:
 - A structured PowerShell engine: `downloads/engine/OpenClawWindowsNative.Engine.psm1`
 - Backward-compatible setup and verify scripts under `downloads/`
 - A rebuilt setup package: `downloads/OpenClawWindowsNativeSetup.exe`
-- A Tauri v2-style Companion scaffold under `companion/`
+- A build-verified Tauri v2 Companion shell under `companion/`
 - A redesigned static GitHub Pages experience
 - Telegram validation artifact checks documented in `docs/VALIDATION_ARTIFACTS.md`
 
@@ -62,10 +62,13 @@ Run local validation:
 ```powershell
 cd companion
 npm install
+npm run fmt:rust
+npm run check:rust
 npm run build:frontend
+npm run build
 ```
 
-Full Tauri packaging also requires Rust/Cargo and the Tauri build prerequisites on Windows.
+Full Tauri packaging requires Rust/Cargo and the Tauri build prerequisites on Windows.
 
 ## Repository name
 
@@ -73,4 +76,4 @@ The repository name stays `openclaw-windows-native` to preserve the public URL a
 
 ## License
 
-Installer scripts, documentation, Companion scaffold, and the static site are released under the MIT License. OpenClaw itself is a separate project governed by its own maintainers and license.
+Installer scripts, documentation, Companion shell, and the static site are released under the MIT License. OpenClaw itself is a separate project governed by its own maintainers and license.

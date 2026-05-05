@@ -1,4 +1,4 @@
-﻿[package]
+[package]
 name = "openclaw-companion"
 version = "0.1.0"
 description = "Minimal OpenClaw Windows Native companion shell"
