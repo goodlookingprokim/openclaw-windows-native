@@ -22,26 +22,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
 
       - name: Prepare static site
         shell: bash
         run: |
           set -euo pipefail
           rm -rf public
-          mkdir -p public
-          cp *.html public/
+          mkdir -p public/assets public/docs public/downloads
+          cp index.html manual.html release.html security.html technical.html public/
           cp .nojekyll public/
-          cp -R assets docs downloads public/
+          cp assets/openclaw-native-preview.png assets/styles.css public/assets/
+          cp docs/OpenClaw_Windows_Native_Technical_Spec.md docs/OpenClaw_Windows_Native_User_Manual.md public/docs/
+          cp downloads/Build-OpenClawWindowsNativeSetup.ps1 \
+             downloads/checksums.sha256 \
+             downloads/Install-OpenClawWindowsNative.ps1 \
+             downloads/OpenClawWindowsNativeSetup.exe \
+             downloads/OpenClaw_Windows_Native_Installer.cmd \
+             downloads/package-manifest.json \
+             downloads/Uninstall-OpenClawWindowsNative.ps1 \
+             downloads/Verify-OpenClawWindowsNative.ps1 \
+             public/downloads/
 
       - name: Upload static site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
           path: public
 
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e

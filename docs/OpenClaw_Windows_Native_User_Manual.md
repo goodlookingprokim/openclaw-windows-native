@@ -42,6 +42,12 @@ npm install -g pnpm@10.33.2
 2. Windows SmartScreen이 표시되면 파일 출처를 확인한 뒤 `추가 정보` → `실행`을 선택합니다.
 3. 설치 창에서 안내에 따라 진행합니다.
 
+기본 OpenClaw 소스는 `https://github.com/openclaw/openclaw.git`의 `main` ref입니다. 강의나 연구에서 같은 소스 상태를 재현해야 하면 PowerShell 설치기를 직접 실행하면서 검증한 tag 또는 commit을 지정합니다.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-OpenClawWindowsNative.ps1 -RepoRef <tag-or-commit>
+```
+
 설치 중 기본 경로는 다음과 같습니다.
 
 ```text

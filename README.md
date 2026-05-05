@@ -22,6 +22,7 @@ WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하�
 
 - Installer: [`downloads/OpenClawWindowsNativeSetup.exe`](downloads/OpenClawWindowsNativeSetup.exe)
 - SHA-256: [`downloads/checksums.sha256`](downloads/checksums.sha256)
+- Package manifest: [`downloads/package-manifest.json`](downloads/package-manifest.json)
 - Web manual: [`manual.html`](https://goodlookingprokim.github.io/openclaw-windows-native/manual.html)
 - Security guide: [`security.html`](https://goodlookingprokim.github.io/openclaw-windows-native/security.html)
 - Release center: [`release.html`](https://goodlookingprokim.github.io/openclaw-windows-native/release.html)
@@ -33,6 +34,8 @@ WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하�
 ## Security
 
 The installer and repository do not contain real Gateway tokens, Telegram bot tokens, API keys, or pairing codes. Users enter their own credentials during installation. Telegram credentials are registered through `--token-file`.
+
+Every push runs the repository security audit in `scripts/Test-SecurityAudit.ps1`. The audit checks PowerShell syntax, checksums, common secret patterns, installer binary strings, HTML security metadata, internal links, Pages publish allowlists, pinned workflow actions, and git history secret patterns.
 
 ## Publishing
 

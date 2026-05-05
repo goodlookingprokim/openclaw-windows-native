@@ -5,6 +5,7 @@ param(
   [switch]$SkipTelegram,
   [switch]$NonInteractive,
   [string]$RepoUrl = "https://github.com/openclaw/openclaw.git",
+  [string]$RepoRef = "main",
   [string]$RepoDir = (Join-Path $env:USERPROFILE "openclaw-src"),
   [string]$StateDir = (Join-Path $env:USERPROFILE ".openclaw"),
   [int]$Port = 18789
@@ -122,6 +123,25 @@ function Test-CommandExists([string]$Name) {
   return [bool](Get-Command $Name -ErrorAction SilentlyContinue)
 }
 
+function Assert-SafeRepoUrl([string]$Url) {
+  $parsed = $null
+  if (-not [Uri]::TryCreate($Url, [UriKind]::Absolute, [ref]$parsed)) {
+    throw "RepoUrl must be an absolute URL."
+  }
+  if ($parsed.Scheme -ne "https") {
+    throw "RepoUrl must use https for this public installer."
+  }
+}
+
+function Assert-SafeGitRef([string]$Ref) {
+  if ([string]::IsNullOrWhiteSpace($Ref)) {
+    throw "RepoRef must not be empty."
+  }
+  if ($Ref.StartsWith("-") -or $Ref -notmatch "^[A-Za-z0-9._/@+-]+$") {
+    throw "RepoRef contains unsupported characters."
+  }
+}
+
 function Get-NodeVersion {
   if (-not (Test-CommandExists "node.exe")) {
     return $null
@@ -197,19 +217,41 @@ function Ensure-Pnpm {
 
 function Ensure-Repository {
   Write-Title "Preparing OpenClaw source"
+  Assert-SafeRepoUrl $RepoUrl
+  Assert-SafeGitRef $RepoRef
   if (Test-Path -LiteralPath (Join-Path $RepoDir ".git") -PathType Container) {
     Write-Info "Existing repository found: $RepoDir"
-    if (-not $NonInteractive -and -not (Read-YesNo "Update this repository with git pull --ff-only?" $true)) {
+    $currentRemote = (& git.exe -C $RepoDir remote get-url origin 2>$null)
+    if ($LASTEXITCODE -ne 0 -or $currentRemote -ne $RepoUrl) {
+      throw "Existing repository origin is not the expected RepoUrl. Current: $currentRemote"
+    }
+    if (-not $NonInteractive -and -not (Read-YesNo "Fetch and checkout OpenClaw ref '$RepoRef'?" $true)) {
       Write-WarnLine "Repository update skipped."
       return
     }
-    Invoke-LoggedCommand -FilePath "git.exe" -Arguments @("-C", $RepoDir, "pull", "--ff-only") -WorkingDirectory $env:USERPROFILE
+    Sync-RepositoryRef
     return
   }
   if (Test-Path -LiteralPath $RepoDir) {
     throw "$RepoDir exists but is not a Git repository. Rename or remove it, then rerun the installer."
   }
   Invoke-LoggedCommand -FilePath "git.exe" -Arguments @("clone", $RepoUrl, $RepoDir) -WorkingDirectory $env:USERPROFILE
+  Sync-RepositoryRef
+}
+
+function Sync-RepositoryRef {
+  Write-Info "Repository source: $RepoUrl"
+  Write-Info "Repository ref: $RepoRef"
+  Invoke-LoggedCommand -FilePath "git.exe" -Arguments @("-C", $RepoDir, "fetch", "origin", "--tags", "--prune") -WorkingDirectory $env:USERPROFILE
+  Invoke-LoggedCommand -FilePath "git.exe" -Arguments @("-C", $RepoDir, "checkout", $RepoRef) -WorkingDirectory $env:USERPROFILE
+  $branch = (& git.exe -C $RepoDir symbolic-ref --short -q HEAD 2>$null)
+  if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($branch)) {
+    Invoke-LoggedCommand -FilePath "git.exe" -Arguments @("-C", $RepoDir, "pull", "--ff-only", "origin", $branch.Trim()) -WorkingDirectory $env:USERPROFILE
+  } else {
+    Write-Info "Detached ref selected; pull step skipped."
+  }
+  $commit = (& git.exe -C $RepoDir rev-parse HEAD).Trim()
+  Write-Ok "OpenClaw source checked out at $commit."
 }
 
 function Build-OpenClaw {
@@ -328,7 +370,9 @@ function Install-DesktopAssets {
     "pnpm.cmd openclaw pairing approve telegram %PAIRING_CODE%"
   )
   Write-LauncherFile "OpenClaw_06_Update.cmd" @(
-    "git pull --ff-only",
+    "git fetch origin --tags --prune",
+    "git checkout $RepoRef",
+    "for /f %%i in ('git symbolic-ref --short -q HEAD') do git pull --ff-only origin %%i",
     "pnpm.cmd install --frozen-lockfile",
     "pnpm.cmd build",
     "pnpm.cmd ui:build",
@@ -364,6 +408,7 @@ Start-Transcript -LiteralPath $logPath -Force | Out-Null
 try {
   Write-Host "OpenClaw Windows Native Installer" -ForegroundColor Cyan
   Write-Host "No WSL is required. Target repo: $RepoDir"
+  Write-Host "OpenClaw source: $RepoUrl @ $RepoRef"
   Write-Host "Log: $logPath"
 
   if ($VerifyOnly) {

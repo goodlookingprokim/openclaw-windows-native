@@ -14,6 +14,7 @@
 | 소스 관리 | Git for Windows |
 | 런타임 | Node.js LTS, OpenClaw 요구 최소 `>=22.14.0` |
 | 패키지 매니저 | pnpm `10.33.2` |
+| 소스 ref | 기본 `main`, 설치 옵션 `-RepoRef <tag-or-commit>` 지원 |
 | Gateway 자동실행 | OpenClaw `gateway install`, Windows Task Scheduler/schtasks |
 | Telegram 인증 | `channels.telegram.tokenFile` |
 
@@ -35,15 +36,16 @@ OpenClawWindowsNativeSetup.exe
       1. Git/Node.js/pnpm 확인
       2. 누락 도구 winget 설치 시도
       3. %USERPROFILE%\openclaw-src clone 또는 pull
-      4. pnpm install --frozen-lockfile
-      5. pnpm build
-      6. pnpm ui:build
-      7. pnpm openclaw onboard
-      8. pnpm openclaw plugins enable telegram
-      9. Telegram tokenFile 생성 및 channels add
-      10. pnpm openclaw gateway install/start
-      11. 바탕화면 운영 실행기 생성
-      12. Verify-OpenClawWindowsNative.ps1 실행
+      4. RepoRef fetch 및 checkout
+      5. pnpm install --frozen-lockfile
+      6. pnpm build
+      7. pnpm ui:build
+      8. pnpm openclaw onboard
+      9. pnpm openclaw plugins enable telegram
+      10. Telegram tokenFile 생성 및 channels add
+      11. pnpm openclaw gateway install/start
+      12. 바탕화면 운영 실행기 생성
+      13. Verify-OpenClawWindowsNative.ps1 실행
 ```
 
 ## 4. 저장 경로

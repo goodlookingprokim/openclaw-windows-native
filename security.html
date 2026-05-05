@@ -107,6 +107,17 @@ Get-Content .\checksums.sha256</code></pre>
           <p><a class="button secondary" href="manual.html#telegram">Telegram 토큰 등록 절차 보기</a></p>
         </div>
       </section>
+
+      <section class="section split-section" id="supply-chain" aria-labelledby="supply-chain-title">
+        <div>
+          <p class="section-kicker">Supply chain</p>
+          <h2 id="supply-chain-title">OpenClaw 소스 ref를 확인합니다.</h2>
+        </div>
+        <div class="copy-stack">
+          <p>기본 설치는 OpenClaw upstream의 <code>main</code> ref를 사용합니다. 강의나 연구에서 재현성이 중요하면 검증한 tag 또는 commit을 <code>-RepoRef</code>로 지정합니다.</p>
+          <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-OpenClawWindowsNative.ps1 -RepoRef &lt;tag-or-commit&gt;</code></pre>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">

@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Create GitHub Release
         env:
@@ -21,9 +21,12 @@ jobs:
         run: |
           tag="${GITHUB_REF_NAME:-manual-release}"
           gh release create "$tag" \
+            downloads/Build-OpenClawWindowsNativeSetup.ps1 \
             downloads/OpenClawWindowsNativeSetup.exe \
             downloads/checksums.sha256 \
             downloads/Install-OpenClawWindowsNative.ps1 \
+            downloads/OpenClaw_Windows_Native_Installer.cmd \
+            downloads/package-manifest.json \
             downloads/Verify-OpenClawWindowsNative.ps1 \
             downloads/Uninstall-OpenClawWindowsNative.ps1 \
             docs/OpenClaw_Windows_Native_User_Manual.md \

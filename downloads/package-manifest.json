@@ -1,0 +1,22 @@
+﻿{
+    "builtAt":  "2026-05-05T17:01:00.4206764+09:00",
+    "packageDir":  ".",
+    "outputExe":  "OpenClawWindowsNativeSetup.exe",
+    "payloadFiles":  [
+                         "OpenClaw_Windows_Native_Installer.cmd",
+                         "Install-OpenClawWindowsNative.ps1",
+                         "Verify-OpenClawWindowsNative.ps1",
+                         "Uninstall-OpenClawWindowsNative.ps1",
+                         "OpenClaw_Windows_Native_User_Manual.md",
+                         "OpenClaw_Windows_Native_Technical_Spec.md"
+                     ],
+    "buildScript":  "Build-OpenClawWindowsNativeSetup.ps1",
+    "nativeWindows":  true,
+    "usesWsl":  false,
+    "installer":  "PowerShell 5.1 + CMD wrapper + IExpress",
+    "defaultRepoUrl":  "https://github.com/openclaw/openclaw.git",
+    "defaultRepoRef":  "main",
+    "defaultRepoDir":  "%USERPROFILE%\\openclaw-src",
+    "defaultStateDir":  "%USERPROFILE%\\.openclaw",
+    "defaultPort":  18789
+}

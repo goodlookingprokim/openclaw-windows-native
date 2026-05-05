@@ -64,11 +64,21 @@ git push origin main --tags
 
 The release workflow uploads:
 
+- `downloads/Build-OpenClawWindowsNativeSetup.ps1`
 - `downloads/OpenClawWindowsNativeSetup.exe`
 - `downloads/checksums.sha256`
+- `downloads/OpenClaw_Windows_Native_Installer.cmd`
+- `downloads/package-manifest.json`
 - installer/verifier/uninstaller scripts
 - user manual
 - technical spec
+
+Before committing release changes, regenerate package metadata and run the security audit:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\downloads\Build-OpenClawWindowsNativeSetup.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-SecurityAudit.ps1
+```
 
 Use [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) before every public release.
 

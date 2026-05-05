@@ -1,0 +1,61 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "22 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  audit:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+
+      - name: Run repository security audit
+        shell: pwsh
+        run: |
+          ./scripts/Test-SecurityAudit.ps1
+
+      - name: Write audit SARIF
+        shell: pwsh
+        run: |
+          $sarif = [ordered]@{
+            version = "2.1.0"
+            '$schema' = "https://json.schemastore.org/sarif-2.1.0.json"
+            runs = @(
+              [ordered]@{
+                tool = [ordered]@{
+                  driver = [ordered]@{
+                    name = "OpenClaw Windows Native Security Audit"
+                    informationUri = "https://goodlookingprokim.github.io/openclaw-windows-native/security.html"
+                    rules = @(
+                      [ordered]@{
+                        id = "openclaw-security-audit"
+                        name = "OpenClaw repository security audit"
+                        shortDescription = [ordered]@{ text = "Repository security audit completed without findings." }
+                        helpUri = "https://goodlookingprokim.github.io/openclaw-windows-native/security.html"
+                      }
+                    )
+                  }
+                }
+                results = @()
+              }
+            )
+          }
+          $sarif | ConvertTo-Json -Depth 10 | Set-Content -Encoding UTF8 -Path security-audit.sarif
+
+      - name: Upload security audit SARIF
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: github/codeql-action/upload-sarif@ed410739ba306e4ebe5e123421a6bd694e494a2b
+        with:
+          sarif_file: security-audit.sarif

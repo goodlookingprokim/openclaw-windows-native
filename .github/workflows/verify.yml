@@ -14,45 +14,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
-      - name: Verify PowerShell syntax and checksums
+      - name: Run security audit
         shell: pwsh
         run: |
-          $ErrorActionPreference = "Stop"
-          $psFiles = Get-ChildItem -Path downloads -Filter *.ps1
-          foreach ($file in $psFiles) {
-            $tokens = $null
-            $errors = $null
-            [System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors) > $null
-            if ($errors.Count -gt 0) {
-              throw "PowerShell parse failed: $($file.Name)"
-            }
-          }
-
-          $hash = (Get-FileHash -Path downloads/OpenClawWindowsNativeSetup.exe -Algorithm SHA256).Hash.ToLowerInvariant()
-          $expected = Select-String -Path downloads/checksums.sha256 -Pattern "OpenClawWindowsNativeSetup.exe"
-          if (-not $expected -or -not $expected.Line.StartsWith($hash)) {
-            throw "Installer checksum mismatch."
-          }
-
-      - name: Scan text files for common secret patterns
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-          $patterns = @(
-            "sk-[A-Za-z0-9_-]{20,}",
-            "ghp_[A-Za-z0-9_]{20,}",
-            "xoxb-[A-Za-z0-9-]{20,}",
-            "[0-9]{6,}:[A-Za-z0-9_-]{20,}",
-            "BEGIN [A-Z ]*PRIVATE KEY"
-          )
-          $files = Get-ChildItem -Recurse -File |
-            Where-Object { $_.Extension -in ".md", ".ps1", ".cmd", ".html", ".css", ".yml", ".json", ".txt" }
-          foreach ($pattern in $patterns) {
-            $hits = $files | Select-String -Pattern $pattern
-            if ($hits) {
-              $hits | ForEach-Object { Write-Host "$($_.Path):$($_.LineNumber):$($_.Line)" }
-              throw "Potential secret pattern found: $pattern"
-            }
-          }
+          ./scripts/Test-SecurityAudit.ps1

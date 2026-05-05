@@ -46,6 +46,7 @@
               <tr><td>단일 EXE</td><td>Windows 내장 IExpress 패키징</td></tr>
               <tr><td>런타임</td><td>Node.js LTS, OpenClaw 요구 최소 22.14.0</td></tr>
               <tr><td>패키지 매니저</td><td>pnpm 10.33.2</td></tr>
+              <tr><td>소스 ref</td><td>기본 <code>main</code>, 설치 옵션 <code>-RepoRef &lt;tag-or-commit&gt;</code> 지원</td></tr>
               <tr><td>Telegram 인증</td><td><code>channels.telegram.tokenFile</code></td></tr>
             </tbody>
           </table>
@@ -63,12 +64,13 @@
     -> Install-OpenClawWindowsNative.ps1
       1. Git/Node.js/pnpm 확인
       2. openclaw-src clone 또는 pull
-      3. pnpm install --frozen-lockfile
-      4. pnpm build 및 ui:build
-      5. openclaw onboard
-      6. telegram plugin 및 tokenFile 등록
-      7. gateway install/start
-      8. Verify-OpenClawWindowsNative.ps1</code></pre>
+      3. RepoRef fetch 및 checkout
+      4. pnpm install --frozen-lockfile
+      5. pnpm build 및 ui:build
+      6. openclaw onboard
+      7. telegram plugin 및 tokenFile 등록
+      8. gateway install/start
+      9. Verify-OpenClawWindowsNative.ps1</code></pre>
         </div>
       </section>
 

@@ -44,6 +44,7 @@
         <div class="copy-stack">
           <p>Windows 10/11, 인터넷 연결, PowerShell 또는 CMD 실행 권한이 필요합니다.</p>
           <p>설치기는 Git for Windows, Node.js LTS, pnpm을 확인하고 가능한 경우 winget으로 설치합니다.</p>
+          <p>기본 OpenClaw 소스는 <code>https://github.com/openclaw/openclaw.git</code>의 <code>main</code> ref입니다. 재현 가능한 실험이 필요하면 PowerShell 설치기 실행 시 <code>-RepoRef &lt;tag-or-commit&gt;</code>을 지정합니다.</p>
           <pre><code>winget install --id Git.Git -e --source winget
 winget install --id OpenJS.NodeJS.LTS -e --source winget
 npm install -g pnpm@10.33.2</code></pre>
@@ -72,6 +73,7 @@ npm install -g pnpm@10.33.2</code></pre>
             <p>Gateway mode는 local, bind는 loopback, port는 18789를 기본값으로 둡니다.</p>
           </article>
         </div>
+        <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-OpenClawWindowsNative.ps1 -RepoRef main</code></pre>
       </section>
 
       <section class="section split-section" id="paths" aria-labelledby="paths-title">
