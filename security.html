@@ -1,27 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>Security | OpenClaw Companion</title>
-    <meta name="description" content="Security posture for the OpenClaw Windows Native Pages site, installer integrity, local secrets, and gateway boundaries." />
+    <title>보안 / Security | OpenClaw Companion</title>
+    <meta name="description" content="Bilingual security guide for static Pages, installer checksum, local secrets, and Telegram dry-run validation." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
-    <header class="topbar" aria-label="Primary navigation"><a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a><nav><a href="manual.html">Guided Setup</a><a href="security.html" aria-current="page">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></nav></header>
+    <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
+    <header class="topbar" aria-label="Primary navigation">
+      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
+      <nav>
+        <a href="index.html">홈 Home</a>
+        <a href="manual.html">설치 Setup</a>
+        <a href="security.html">보안 Security</a>
+        <a href="release.html">다운로드 Download</a>
+        <a href="technical.html">기술 Technical</a>
+        <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </header>
     <main id="main">
-      <section class="page-hero security-hero" aria-labelledby="page-title"><p class="eyebrow">Security posture</p><h1 id="page-title">Trust is designed into each Companion stop.</h1><p class="lead">The site stays static, the installer is hash-verifiable, credentials stay local, and the gateway defaults to a loopback Windows boundary.</p></section>
-      <section class="section trust-section" id="site" aria-labelledby="site-title"><div class="section-heading"><p class="section-kicker">Website boundary</p><h2 id="site-title">GitHub Pages serves static HTML and CSS only.</h2></div><div class="card-grid three"><article class="info-card"><span class="card-index">CSP</span><h3>Meta CSP</h3><p>Every page blocks scripts, objects, forms, and foreign base URLs with a meta Content-Security-Policy.</p></article><article class="info-card"><span class="card-index">JS</span><h3>No runtime JavaScript</h3><p>The journey uses links, anchors, tables, and CSS transitions only. There are no script tags or inline handlers.</p></article><article class="info-card"><span class="card-index">CSS</span><h3>No inline style</h3><p>Presentation lives in <code>assets/styles.css</code> so the audit surface is small and reviewable.</p></article></div><p class="note">GitHub Pages does not expose custom HTTP security headers for this static repository, so the site uses conservative markup, a meta CSP, no forms, no object embeds, and no third-party runtime assets.</p></section>
-      <section class="section split-section" id="checksum" aria-labelledby="checksum-title"><div><p class="section-kicker">Installer integrity</p><h2 id="checksum-title">Verify the EXE before you run it.</h2></div><div class="copy-stack"><p>The published installer SHA-256 should match this value:</p><p class="integrity-line"><code>a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</code></p><pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
-Get-Content .\checksums.sha256</code></pre><p><a class="button secondary" href="downloads/checksums.sha256">Open checksums.sha256</a></p></div></section>
-      <section class="section secrets-section" id="secrets" aria-labelledby="secrets-title"><div class="section-heading"><p class="section-kicker">Secrets</p><h2 id="secrets-title">The public package never ships real credentials.</h2></div><div class="card-grid three"><article class="info-card"><h3>Telegram bot token</h3><p>Entered by the user during setup and stored under <code>%USERPROFILE%\.openclaw\credentials</code> as a token file.</p></article><article class="info-card"><h3>Gateway token</h3><p>Generated or selected locally by OpenClaw and never published in Pages, release assets, or screenshots.</p></article><article class="info-card"><h3>Provider credentials</h3><p>Model API keys or OAuth information are handled by official OpenClaw onboarding, not bundled in this kit.</p></article></div></section>
-      <section class="section split-section" id="local" aria-labelledby="local-title"><div><p class="section-kicker">Local Windows boundary</p><h2 id="local-title">Gateway defaults stay on the participant PC.</h2></div><div class="copy-stack"><p>The installer recommends local gateway mode, loopback bind, token auth, and port <code>18789</code>. Desktop launchers operate from the user's Windows profile.</p><p>During classes or screen shares, do not display token files, pairing codes, API keys, OAuth sessions, or install logs that may include local paths.</p><p><a class="button secondary" href="manual.html#telegram-connect">Review Telegram token setup</a></p></div></section>
-      <section class="section split-section" id="supply-chain" aria-labelledby="supply-title"><div><p class="section-kicker">Supply chain</p><h2 id="supply-title">Pin the upstream OpenClaw ref when reproducibility matters.</h2></div><div class="copy-stack"><p>The default installer uses the OpenClaw upstream <code>main</code> ref. For a workshop, lab, or incident review, use a reviewed tag or commit with <code>-RepoRef</code>.</p><pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-OpenClawWindowsNative.ps1 -RepoRef &lt;tag-or-commit&gt;</code></pre></div></section>
+      <section class="page-hero security-hero" aria-labelledby="page-title">
+        <p class="eyebrow">Security posture</p>
+        <h1 id="page-title">비밀값은 로컬에, 설치 파일은 검증 가능하게 둡니다.</h1>
+        <p class="lead">실행 전에 해시를 확인하고, 실제 Telegram 연결 전에 dry-run으로 흐름을 확인합니다.</p>
+        <div class="language-switch" aria-label="Language shortcuts"><a href="#ko">한국어</a><a href="#en">English</a></div>
+      </section>
+
+      <section class="section trust-section" id="ko" lang="ko" aria-labelledby="security-ko-title"><div class="section-heading"><p class="section-kicker">한국어 mode</p><h2 id="security-ko-title">비밀값은 로컬에 두고, 공개 파일은 검증 가능하게 유지합니다.</h2></div><div class="card-grid three"><article class="info-card"><span class="card-index">WEB</span><h3>정적 사이트</h3><p>HTML/CSS만 사용하고 실행 스크립트는 차단합니다.</p></article><article class="info-card"><span class="card-index">KEY</span><h3>로컬 토큰</h3><p><code>%USERPROFILE%\.openclaw\credentials</code>에만 저장합니다.</p></article><article class="info-card"><span class="card-index">DRY</span><h3>Dry-run</h3><p>실제 값 없이 redacted artifact를 만듭니다.</p></article></div></section>
+      <section class="section split-section" id="checksum" lang="ko" aria-labelledby="checksum-title"><div><p class="section-kicker">Checksum</p><h2 id="checksum-title">실행 전에 파일 지문을 비교합니다.</h2></div><div class="copy-stack"><p class="integrity-line"><code>a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</code></p><pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
+Get-Content .\checksums.sha256</code></pre><p><a class="button secondary" href="downloads/checksums.sha256">checksums.sha256</a></p></div></section>
+      <section class="section split-section" id="local" lang="ko" aria-labelledby="local-title"><div><p class="section-kicker">Local boundary</p><h2 id="local-title">Gateway는 기본적으로 내 PC 안에서만 열립니다.</h2></div><div class="copy-stack"></div></section>
+      <section class="section intro-split" id="en" lang="en" aria-labelledby="security-en-title"><div><p class="section-kicker">English mode</p><h2 id="security-en-title">The rule is simple: secrets stay local.</h2></div><div class="copy-stack"><p>The public site ships static HTML and CSS only. The installer package does not include Telegram tokens, Gateway tokens, API keys, pairing codes, local state, or logs.</p><p>Before live Telegram setup, dry-run creates a redacted validation artifact. Live send/receive still requires your own BotFather token and pairing approval.</p></div></section>
+
     </main>
-    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

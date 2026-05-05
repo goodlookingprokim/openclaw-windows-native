@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,97 +7,37 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
     <title>OpenClaw Companion for Windows</title>
-    <meta name="description" content="Download the OpenClaw Windows Native Kit and follow the Companion journey from setup through Telegram verification and repair." />
-    <meta property="og:title" content="OpenClaw Companion for Windows" />
-    <meta property="og:description" content="Download the OpenClaw Windows Native Kit and follow the Companion journey from setup through Telegram verification and repair." />
-    <meta property="og:type" content="website" />
+    <meta name="description" content="Bilingual Korean and English guide for installing OpenClaw on native Windows, using Telegram dry-run, and verifying the first conversation." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
     <header class="topbar" aria-label="Primary navigation">
-      <a class="brand" href="index.html" aria-label="OpenClaw Companion home"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
       <nav>
-        <a href="manual.html">Guided Setup</a>
-        <a href="security.html">Security</a>
-        <a href="release.html">Download</a>
-        <a href="technical.html">Technical</a>
+        <a href="index.html">홈 Home</a>
+        <a href="manual.html">설치 Setup</a>
+        <a href="security.html">보안 Security</a>
+        <a href="release.html">다운로드 Download</a>
+        <a href="technical.html">기술 Technical</a>
         <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
-
     <main id="main">
-      <section class="hero hero-home" aria-labelledby="hero-title">
-        <div class="hero-content">
-          <p class="eyebrow">Approved Companion journey</p>
-          <h1 id="hero-title">Run OpenClaw on Windows without WSL guesswork.</h1>
-          <p class="lead">The Pages site is now a five-stop field guide: download the native kit, follow guided setup, dry-run Telegram setup, connect Telegram, verify the first conversation, then repair or update with confidence.</p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>Download setup EXE</a>
-            <a class="button secondary" href="manual.html">Start guided setup</a>
-            <a class="button ghost" href="security.html#checksum">Verify checksum</a>
-          </div>
-          <p class="integrity-line">Installer SHA-256 <code>a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</code></p>
-        </div>
-        <aside class="hero-console" aria-label="Companion journey summary">
-          <span>journey.status</span>
-          <strong>READY</strong>
-          <ol>
-            <li>Download kit</li>
-            <li>Guided setup</li>
-            <li>Telegram connect</li>
-            <li>Verify conversation</li>
-            <li>Repair or update</li>
-          </ol>
-        </aside>
+      <section class="page-hero manual-hero" aria-labelledby="page-title">
+        <p class="eyebrow">Bilingual companion</p>
+        <h1 id="page-title">Windows에서 OpenClaw를 쉽게 설치하고 Telegram으로 확인합니다.</h1>
+        <p class="lead">한국어와 English 안내를 함께 제공합니다. 어려운 절차를 작은 행동으로 나눕니다.</p>
+        <div class="language-switch" aria-label="Language shortcuts"><a href="#ko">한국어</a><a href="#en">English</a></div>
       </section>
 
-      <section class="signal-strip" aria-label="Project promises">
-        <span>No WSL required</span><span>Static no-script Pages</span><span>No bundled secrets</span><span>Loopback gateway</span>
-      </section>
+      <section class="signal-strip" aria-label="Project promises"><span>WSL 불필요</span><span>한국어/English</span><span>토큰 비공개</span><span>Dry-run 먼저</span></section>
+      <section class="section intro-split" id="ko" lang="ko" aria-labelledby="ko-title"><div><p class="section-kicker">한국어 mode</p><h2 id="ko-title">처음 설치하는 사람도 한 단계씩 따라갈 수 있습니다.</h2></div><div class="copy-stack"><p>목표: 참석자가 설치 파일을 실행하고, 본인 Telegram 봇 토큰과 모델 인증을 직접 입력해 Windows 네이티브 환경에서 OpenClaw를 사용한다.</p><p>설치는 다운로드, 확인, 실행, dry-run, Telegram 연결, 대화 확인으로 나누면 쉽습니다.</p><ol class="plain-steps"><li>설치 파일을 받습니다.</li><li>SHA-256 지문을 확인합니다.</li><li>Telegram dry-run으로 먼저 연습합니다.</li><li>실제 토큰은 로컬 파일에만 저장합니다.</li></ol></div></section>
+      <section class="section journey-section" aria-labelledby="route-title"><div class="section-heading"><p class="section-kicker">Route</p><h2 id="route-title">Download ? Setup ? Dry-run ? Telegram ? Verify</h2></div><div class="journey-grid"><a class="journey-card" href="release.html#download"><span class="step-number">01</span><h3>다운로드</h3><p>설치 파일과 checksum을 함께 확인합니다.</p></a><a class="journey-card" href="manual.html#guided-setup"><span class="step-number">02</span><h3>설치</h3><p>Git, Node.js, pnpm, OpenClaw 빌드를 준비합니다.</p></a><a class="journey-card" href="manual.html#dry-run"><span class="step-number">03</span><h3>Dry-run</h3><p>실제 값 없이 흐름을 검증합니다.</p></a><a class="journey-card" href="manual.html#telegram-connect"><span class="step-number">04</span><h3>Telegram</h3><p>토큰은 로컬 파일에만 둡니다.</p></a><a class="journey-card" href="manual.html#verify-conversation"><span class="step-number">05</span><h3>Verify</h3><p>pairing과 채널 상태를 확인합니다.</p></a></div></section>
+      <section class="section download-panel" aria-labelledby="download-title"><div class="download-callout"><p class="section-kicker">Start</p><h2 id="download-title">설치 파일 하나로 시작하세요.</h2><p>Checksum: <code>a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</code></p><a class="download-primary" href="downloads/OpenClawWindowsNativeSetup.exe" download><span>Recommended download</span><strong>OpenClawWindowsNativeSetup.exe</strong><small>200 KB Windows native installer</small></a></div><div class="card-grid three compact"><a class="action-card" href="manual.html#download"><span class="card-index">GUIDE</span><h3>설치 guide</h3><p>Step-by-step beginner guide.</p></a><a class="action-card" href="security.html#checksum"><span class="card-index">SHA</span><h3>Checksum</h3><p>Verify before running.</p></a><a class="action-card" href="manual.html#dry-run"><span class="card-index">DRY</span><h3>Dry-run</h3><p>Practice before real Telegram credentials.</p></a></div></section>
+      <section class="section intro-split" id="en" lang="en" aria-labelledby="en-title"><div><p class="section-kicker">English mode</p><h2 id="en-title">Follow one small step at a time.</h2></div><div class="copy-stack"><p>OpenClaw setup becomes easier when it is split into plain actions: download, check, install, practice safely, connect Telegram, and verify the first conversation.</p><ol class="plain-steps"><li>Download the setup file.</li><li>Compare the SHA-256 value.</li><li>Run Telegram dry-run before real credentials.</li><li>Store the BotFather token only in a local user file.</li><li>Approve pairing and verify the Telegram channel.</li></ol></div></section>
 
-      <section class="section intro-split" aria-labelledby="journey-title">
-        <div><p class="section-kicker">The route</p><h2 id="journey-title">A companion path, not a pile of files.</h2></div>
-        <div class="copy-stack">
-          <p>OpenClaw setup has several trust-sensitive moments: an EXE download, local build tools, Telegram bot credentials, pairing approval, and gateway recovery. The redesigned Pages flow keeps those moments in one visible sequence.</p>
-          <p>Every page points back to the same journey so a classroom participant, maintainer, or security reviewer can land anywhere and still know the next safe action.</p>
-        </div>
-      </section>
-
-      <section class="section journey-section" aria-labelledby="map-title">
-        <div class="section-heading"><p class="section-kicker">Companion map</p><h2 id="map-title">Download -&gt; Guided Setup -&gt; Telegram Connect -&gt; Verify Conversation -&gt; Repair/Update</h2></div>
-        <div class="journey-grid">
-          <a class="journey-card" href="release.html#download"><span class="step-number">01</span><h3>Download</h3><p>Get the public kit and compare its SHA-256 before running it.</p></a>
-          <a class="journey-card" href="manual.html#guided-setup"><span class="step-number">02</span><h3>Guided Setup</h3><p>Install Git, Node.js LTS, pnpm, clone OpenClaw, build, and create desktop launchers.</p></a>
-          <a class="journey-card" href="manual.html#telegram-connect"><span class="step-number">03</span><h3>Telegram Connect</h3><p>Use BotFather, store the bot token as a local file, and enable the Telegram channel.</p></a>
-          <a class="journey-card" href="manual.html#verify-conversation"><span class="step-number">04</span><h3>Verify Conversation</h3><p>Dry-run safely first, then start the gateway, approve pairing, and confirm the first Telegram probe.</p></a>
-          <a class="journey-card" href="manual.html#repair-update"><span class="step-number">05</span><h3>Repair/Update</h3><p>Use desktop helpers and the verifier to recover, rebuild, or update OpenClaw.</p></a>
-        </div>
-      </section>
-
-      <section class="section download-panel" aria-labelledby="download-title">
-        <div class="download-callout">
-          <p class="section-kicker">Fast start</p><h2 id="download-title">One obvious next click.</h2>
-          <p>The primary installer is kept separate from audit material so the action and the verification path are both clear.</p>
-          <a class="download-primary" href="downloads/OpenClawWindowsNativeSetup.exe" download><span>Recommended download</span><strong>OpenClawWindowsNativeSetup.exe</strong><small>200 KB Windows native installer</small></a>
-        </div>
-        <div class="card-grid three compact">
-          <a class="action-card" href="release.html"><span class="card-index">REL</span><h3>Release notes</h3><p>Download assets, current tag, and maintainer publishing flow.</p></a>
-          <a class="action-card" href="security.html#checksum"><span class="card-index">SHA</span><h3>Integrity check</h3><p>Hash command and checksum file for local verification.</p></a>
-          <a class="action-card" href="manual.html#repair-update"><span class="card-index">FIX</span><h3>Repair path</h3><p>Known fixes for build, dashboard, gateway, and Telegram pairing issues.</p></a>
-        </div>
-      </section>
-
-      <section class="section trust-section" aria-labelledby="trust-title">
-        <div class="section-heading"><p class="section-kicker">Trust boundaries</p><h2 id="trust-title">Static site. Local secrets. Verifiable installer.</h2></div>
-        <div class="card-grid three">
-          <a class="action-card" href="security.html#site"><span class="card-index">WEB</span><h3>No runtime script</h3><p>Pages is static HTML and CSS with a meta CSP blocking scripts, objects, and forms.</p></a>
-          <a class="action-card" href="security.html#secrets"><span class="card-index">KEY</span><h3>No shipped tokens</h3><p>Telegram and provider credentials stay on the participant's Windows profile.</p></a>
-          <a class="action-card" href="technical.html#boundaries"><span class="card-index">PC</span><h3>Loopback first</h3><p>The gateway defaults to local mode, loopback bind, token auth, and port 18789.</p></a>
-        </div>
-      </section>
     </main>
-
-    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="manual.html">Guided Setup</a><a href="security.html">Security</a><a href="release.html">Download</a><a href="technical.html">Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

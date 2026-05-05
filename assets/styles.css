@@ -146,3 +146,10 @@ th { background: var(--ink); color: var(--signal); font-family: "Cascadia Mono",
   margin-left: 0;
   margin-right: 0;
 }
+
+.language-switch { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.language-switch a { min-height: 42px; display: inline-flex; align-items: center; padding: 9px 14px; background: var(--panel); border: 2px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-small); font-weight: 950; text-decoration: none; }
+.language-switch a:hover { background: var(--signal); transform: translate(-2px,-2px); box-shadow: var(--shadow); }
+.plain-steps { margin: 18px 0 0; padding-left: 24px; color: var(--ink-soft); font-size: 1.08rem; font-weight: 750; }
+.plain-steps li { margin-bottom: 8px; }
+[lang="ko"] { word-break: keep-all; }
