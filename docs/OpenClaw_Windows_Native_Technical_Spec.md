@@ -81,6 +81,7 @@ OpenClawWindowsNativeSetup.exe
 - Gateway config 존재
 - Telegram channel enabled
 - Telegram credential source 존재
+- `-TelegramDryRunOnly` creates a redacted simulated validation artifact without live network access.
 - `pnpm.cmd openclaw --version`
 - `pnpm.cmd openclaw plugins list --enabled`
 - `pnpm.cmd openclaw gateway health`

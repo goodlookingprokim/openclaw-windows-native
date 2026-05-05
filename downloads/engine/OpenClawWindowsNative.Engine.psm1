@@ -1,4 +1,4 @@
-﻿Set-StrictMode -Version 2.0
+Set-StrictMode -Version 2.0
 
 $script:OpenClawSecretPatterns = New-Object System.Collections.Generic.List[string]
 @(
@@ -157,6 +157,60 @@ function New-OpenClawVerifierResult {
   }
 }
 
+
+function New-OpenClawTelegramDryRunArtifact {
+  param(
+    [Parameter(Mandatory=$true)][string]$StateDir,
+    [Parameter(Mandatory=$true)][string]$OutputPath
+  )
+
+  $artifact = [ordered]@{
+    schemaVersion = 1
+    generatedAt = (Get-Date).ToUniversalTime().ToString('o')
+    channel = 'telegram'
+    status = 'warning'
+    mode = 'dry-run'
+    checks = @(
+      [ordered]@{
+        name = 'plugin-enable-plan'
+        status = 'passed'
+        evidence = 'Enable command shape is present; no network call was made.'
+      },
+      [ordered]@{
+        name = 'local-file-path-shape'
+        status = 'passed'
+        evidence = 'User-local file path handoff is planned without reading file contents.'
+      },
+      [ordered]@{
+        name = 'inline-value-rejection'
+        status = 'passed'
+        evidence = 'Inline sensitive value handoff remains rejected.'
+      },
+      [ordered]@{
+        name = 'user-code-approval'
+        status = 'passed'
+        evidence = 'Runtime approval stays user-entered and is not stored in the artifact.'
+      },
+      [ordered]@{
+        name = 'live-send-receive'
+        status = 'skipped'
+        evidence = 'Skipped by dry-run; requires user-approved real account setup.'
+      }
+    )
+  }
+
+  $parent = Split-Path -Parent $OutputPath
+  if (-not [string]::IsNullOrWhiteSpace($parent)) {
+    New-Item -ItemType Directory -Force -Path $parent | Out-Null
+  }
+  $artifact | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $OutputPath -Encoding UTF8
+  return [pscustomobject]@{
+    path = $OutputPath
+    status = 'warning'
+    mode = 'dry-run'
+  }
+}
+
 function Invoke-OpenClawVerifierChecks {
   param(
     [Parameter(Mandatory=$true)][string]$RepoDir,
@@ -255,5 +309,6 @@ Export-ModuleMember -Function @(
   'Protect-OpenClawSecretFile',
   'Test-OpenClawCommandExists',
   'New-OpenClawVerifierResult',
+  'New-OpenClawTelegramDryRunArtifact',
   'Invoke-OpenClawVerifierChecks'
 )

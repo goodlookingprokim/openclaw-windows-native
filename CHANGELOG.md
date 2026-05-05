@@ -7,5 +7,6 @@
 - Added a build-verified Tauri v2 Companion shell for the guided Windows app path.
 - Redesigned GitHub Pages around Download → Guided Setup → Telegram Connect → Verify Conversation → Repair/Update.
 - Added Telegram validation artifact schema and fixtures.
+- Added Telegram dry-run validation mode for simulated setup proof without real credentials.
 - Rebuilt the setup package and checksums with the engine payload included.
 - Expanded security audit coverage for engine, Companion build surface, package manifest, Pages allowlist, and validation artifacts.

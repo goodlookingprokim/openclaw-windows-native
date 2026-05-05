@@ -412,7 +412,10 @@ function Install-DesktopAssets {
     "set /p PAIRING_CODE=Telegram pairing code: ",
     "pnpm.cmd openclaw pairing approve telegram %PAIRING_CODE%"
   )
-  Write-LauncherFile "OpenClaw_06_Update.cmd" @(
+  Write-LauncherFile "OpenClaw_06_Telegram_Dry_Run.cmd" @(
+    "powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$KitDir\Verify-OpenClawWindowsNative.ps1`" -RepoDir `"$RepoDir`" -StateDir `"$StateDir`" -Port $Port -TelegramDryRunOnly"
+  )
+  Write-LauncherFile "OpenClaw_07_Update.cmd" @(
     "git fetch origin --tags --prune",
     "git checkout $RepoRef",
     "for /f %%i in ('git symbolic-ref --short -q HEAD') do git pull --ff-only origin %%i",

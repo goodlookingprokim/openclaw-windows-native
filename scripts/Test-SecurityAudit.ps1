@@ -152,6 +152,7 @@ function Assert-EngineModuleChecks([string]$RepoRoot) {
     'New-OpenClawStatusRecord',
     'Write-OpenClawStatus',
     'Assert-OpenClawSafeParameters',
+    'New-OpenClawTelegramDryRunArtifact',
     'Invoke-OpenClawVerifierChecks'
   )) {
     if ($engine -notmatch "function\s+$functionName\b") { Fail-Audit "Engine module missing required function: $functionName" }
@@ -172,13 +173,15 @@ function Assert-CompanionBuildSmokeChecks([string]$RepoRoot) {
     "OpenClaw_03_Stop_Gateway.cmd",
     "OpenClaw_04_Open_Dashboard.cmd",
     "OpenClaw_05_Approve_Telegram_Pairing.cmd",
-    "OpenClaw_06_Update.cmd"
+    "OpenClaw_06_Telegram_Dry_Run.cmd",
+    "OpenClaw_07_Update.cmd"
   )
   foreach ($launcher in $expectedLaunchers) {
     if ($install -notmatch [regex]::Escape($launcher)) { Fail-Audit "Companion launcher missing $launcher" }
   }
   if ($install -notmatch 'set /p PAIRING_CODE=Telegram pairing code:') { Fail-Audit "Telegram pairing launcher must prompt for a pairing code at runtime" }
   if ($install -notmatch 'pnpm\.cmd openclaw pairing approve telegram %PAIRING_CODE%') { Fail-Audit "Telegram pairing launcher must approve the supplied code" }
+  if ($install -notmatch '-TelegramDryRunOnly') { Fail-Audit "Telegram dry-run launcher must be available" }
   if ($install -match 'TELEGRAM_BOT_TOKEN=.*' -or $install -match 'bot-token\.txt.*echo') { Fail-Audit "Companion launcher must not embed Telegram credentials" }
 
   $companionDir = Join-Path $RepoRoot "companion"
@@ -190,7 +193,9 @@ function Assert-CompanionBuildSmokeChecks([string]$RepoRoot) {
       "src-tauri\Cargo.toml",
       "src-tauri\tauri.conf.json",
       "src-tauri\capabilities\default.json",
-      "src-tauri\src\main.rs"
+      "src-tauri\src\main.rs",
+      "src-tauri\Cargo.lock",
+      "src-tauri\icons\icon.ico"
     )) {
       if (-not (Test-Path -LiteralPath (Join-Path $companionDir $required) -PathType Leaf)) {
         Fail-Audit "Companion build surface missing required file: $required"

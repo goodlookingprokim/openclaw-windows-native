@@ -38,6 +38,16 @@ struct GatewayStartPlan {
     executes_now: bool,
 }
 
+#[derive(Debug, Serialize)]
+struct TelegramDryRunPlan {
+    executable: &'static str,
+    args: Vec<String>,
+    mode: &'static str,
+    expected_artifact: String,
+    live_network: bool,
+    note: &'static str,
+}
+
 #[tauri::command]
 fn probe_powershell() -> Result<PowerShellProbe, String> {
     let output = Command::new("powershell.exe")
@@ -91,6 +101,32 @@ fn plan_gateway_start(
     })
 }
 
+#[tauri::command]
+fn plan_telegram_dry_run(app: tauri::AppHandle) -> Result<TelegramDryRunPlan, String> {
+    let verify_script = default_verify_script(&app);
+    let artifact = default_validation_artifact();
+
+    Ok(TelegramDryRunPlan {
+        executable: "powershell.exe",
+        args: vec![
+            "-NoProfile".into(),
+            "-NonInteractive".into(),
+            "-ExecutionPolicy".into(),
+            "Bypass".into(),
+            "-File".into(),
+            verify_script.display().to_string(),
+            "-TelegramDryRunOnly".into(),
+            "-TelegramValidationArtifact".into(),
+            artifact.clone(),
+        ],
+        mode: "dry-run",
+        expected_artifact: artifact,
+        live_network: false,
+        note:
+            "Simulates the Telegram setup proof without reading credentials or contacting Telegram.",
+    })
+}
+
 fn validate_token_file_path(token_file: String) -> Result<TokenFileValidation, String> {
     let trimmed = token_file.trim();
 
@@ -131,6 +167,26 @@ fn expand_user_profile(value: &str) -> String {
     value.to_string()
 }
 
+fn default_validation_artifact() -> String {
+    let base = env::var("USERPROFILE")
+        .map(PathBuf::from)
+        .unwrap_or_else(|_| PathBuf::from("%USERPROFILE%"));
+    base.join(".openclaw")
+        .join("validation")
+        .join("telegram-validation.dry-run.json")
+        .display()
+        .to_string()
+}
+
+fn default_verify_script(app: &tauri::AppHandle) -> PathBuf {
+    app.path()
+        .home_dir()
+        .unwrap_or_else(|_| PathBuf::from("%USERPROFILE%"))
+        .join("Desktop")
+        .join("OpenClaw")
+        .join("Verify-OpenClawWindowsNative.ps1")
+}
+
 fn default_engine_script(app: &tauri::AppHandle) -> PathBuf {
     app.path()
         .home_dir()
@@ -144,7 +200,8 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             probe_powershell,
-            plan_gateway_start
+            plan_gateway_start,
+            plan_telegram_dry_run
         ])
         .run(tauri::generate_context!())
         .expect("failed to run OpenClaw Companion");
