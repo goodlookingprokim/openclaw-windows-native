@@ -180,6 +180,9 @@ try {
     }
     Write-AuditOk "git history secret scan passed"
   }
+  Write-AuditOk "security audit completed"
 } finally {
   Pop-Location
 }
+
+exit 0
