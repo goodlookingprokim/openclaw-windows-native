@@ -1,5 +1,5 @@
 ﻿{
-    "builtAt":  "2026-05-05T21:02:52.9876808+09:00",
+    "builtAt":  "2026-05-05T21:31:49.4167942+09:00",
     "packageDir":  ".",
     "outputExe":  "OpenClawWindowsNativeSetup.exe",
     "payloadFiles":  [
@@ -15,7 +15,8 @@
     "nativeWindows":  true,
     "usesWsl":  false,
     "installer":  "PowerShell 5.1 + structured engine + CMD wrapper + IExpress fallback",
-    "companionScaffold":  "..\\companion",
+    "companionShell":  "..\\companion",
+    "companionPackaging":  "Tauri v2 Windows executable plus MSI/NSIS bundles",
     "secretBoundary":  "No command-line token arguments; token-file registration only",
     "defaultRepoUrl":  "https://github.com/openclaw/openclaw.git",
     "defaultRepoRef":  "main",
