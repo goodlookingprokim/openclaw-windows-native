@@ -1,0 +1,59 @@
+name: Installation help
+description: Ask for help installing or verifying OpenClaw Windows Native Kit.
+title: "[Install] "
+labels: ["installation", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not paste Telegram bot tokens, Gateway tokens, API keys, pairing codes, or private logs.
+  - type: input
+    id: windows-version
+    attributes:
+      label: Windows version
+      placeholder: "Windows 11 24H2"
+    validations:
+      required: true
+  - type: input
+    id: installer-version
+    attributes:
+      label: Installer or release version
+      placeholder: "v2026.05.05"
+    validations:
+      required: true
+  - type: dropdown
+    id: install-stage
+    attributes:
+      label: Where did it fail?
+      options:
+        - Download
+        - Git or Node.js prerequisite
+        - pnpm install
+        - OpenClaw build
+        - OpenClaw onboarding
+        - Telegram token setup
+        - Telegram pairing
+        - Gateway start or dashboard
+        - Verification
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the visible error without secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: verification-output
+    attributes:
+      label: Verifier output
+      description: Paste `Verify-OpenClawWindowsNative.ps1` output after removing private identifiers.
+      render: text
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed tokens, API keys, pairing codes, and private logs from this issue.
+          required: true

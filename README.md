@@ -24,6 +24,7 @@ WSL 없이 Windows에서 OpenClaw Gateway와 Telegram bot channel을 설치하�
 - SHA-256: [`downloads/checksums.sha256`](downloads/checksums.sha256)
 - Manual: [`docs/OpenClaw_Windows_Native_User_Manual.md`](docs/OpenClaw_Windows_Native_User_Manual.md)
 - Technical spec: [`docs/OpenClaw_Windows_Native_Technical_Spec.md`](docs/OpenClaw_Windows_Native_Technical_Spec.md)
+- Release checklist: [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md)
 
 ## Security
 

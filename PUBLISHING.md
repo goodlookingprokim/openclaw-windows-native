@@ -62,6 +62,8 @@ The release workflow uploads:
 - user manual
 - technical spec
 
+Use [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) before every public release.
+
 ## Pages troubleshooting
 
 If the Pages URL is not live yet, open the repository settings:
