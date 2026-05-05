@@ -6,42 +6,36 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>보안 / Security | OpenClaw Companion</title>
-    <meta name="description" content="Bilingual security guide for static Pages, installer checksum, local secrets, and Telegram dry-run validation." />
+    <title>OpenClaw Windows 보안 가이드</title>
+    <meta name="description" content="OpenClaw Windows 설치 파일 checksum, 로컬 비밀 값, Telegram dry-run 검증을 설명하는 한국어 보안 안내입니다." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
-    <header class="topbar" aria-label="Primary navigation">
+    <a class="skip-link" href="#main">본문으로 이동</a>
+    <header class="topbar" aria-label="주요 탐색">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav aria-label="Site navigation">
-        <a href="index.html">홈 Home</a>
-        <a href="manual.html">설치 Setup</a>
-        <a href="security.html">보안 Security</a>
-        <a href="release.html">다운로드 Download</a>
-        <a href="technical.html">기술 Technical</a>
+      <nav aria-label="사이트 탐색">
+        <a href="index.html">홈</a>
+        <a href="manual.html">설치</a>
+        <a href="security.html" aria-current="page">보안</a>
+        <a href="release.html">다운로드</a>
+        <a href="technical.html">기술</a>
         <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
     <main id="main">
       <section class="page-hero security-hero" aria-labelledby="page-title"><div>
-        <p class="eyebrow">Security boundary</p>
-        <h1 id="page-title">비밀값은 로컬에, 설치 파일은 검증 가능하게 둡니다.</h1>
-        <p class="lead">실행 전 checksum을 확인하고, 실제 Telegram 연결 전에는 dry-run으로 흐름을 점검합니다.</p>
+        <p class="eyebrow">보안 가이드</p>
+        <h1 id="page-title">비밀 값을 공개하지 않고 Telegram 연결 준비를 검증합니다.</h1>
+        <p class="lead">체크섬, 로컬 tokenFile, dry-run artifact, 스크립트 없는 GitHub Pages로 사용자의 보안 경계를 지킵니다.</p>
       </div></section>
 
-      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
-        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
-        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
-        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
-          <label for="lang-ko" role="tab">한국어</label>
-          <label for="lang-en" role="tab">English</label>
-        </div>
-        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">비밀값은 로컬에, 공개 파일은 검증 가능하게</h2><p>Pages는 HTML/CSS만 사용하고 script 실행을 차단합니다. 설치 패키지와 release asset에는 Telegram token, Gateway token, API key, pairing code, local state, logs를 넣지 않습니다.</p><ol class="plain-steps"><li id="checksum">설치 전 SHA-256을 비교합니다: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></li><li id="local">Gateway는 기본적으로 loopback <code>127.0.0.1:18789</code>에서 동작합니다.</li><li>Telegram 토큰은 <code>%USERPROFILE%\.openclaw\credentials</code> 아래 사용자 로컬 파일에만 둡니다.</li><li>Dry-run artifact는 redacted 상태로 생성됩니다.</li></ol></div></section>
-        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">Secrets stay local; public files stay verifiable</h2><p>Pages use HTML and CSS only, with scripts blocked. Release assets do not include Telegram tokens, Gateway tokens, API keys, pairing codes, local state, or logs.</p><ol class="plain-steps"><li>Compare SHA-256 before running the installer.</li><li>The Gateway defaults to loopback <code>127.0.0.1:18789</code>.</li><li>Telegram uses a user-local token file.</li><li>Dry-run artifacts are redacted and simulated.</li></ol></div></section>
-      </div></section>
+      <section class="section" aria-labelledby="security-overview"><div class="intro-split"><div><p class="section-kicker">보안 원칙</p><h2 id="security-overview">공개하지 말고, 먼저 연습하고, 로컬에서만 승인합니다.</h2></div><div class="copy-stack"><p>사용자가 입력하는 민감한 값은 GitHub, Pages, 릴리스, 로그에 남기지 않는 구조를 유지합니다. 설치 전에는 체크섬을, 연결 전에는 dry-run을 확인합니다.</p></div></div></section>
+      <section class="section" id="checksum" aria-labelledby="checksum-title"><div class="split-section"><div><p class="section-kicker">Checksum</p><h2 id="checksum-title">실행 전 SHA-256을 비교하세요.</h2></div><div class="copy-stack"><pre>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256</pre><p>기대 값: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p><p class="note">값이 다르면 실행하지 말고 새 릴리스 파일을 다시 받으세요.</p></div></div></section>
+      <section class="section secrets-section" id="local" aria-labelledby="local-title"><div class="split-section"><div><p class="section-kicker">로컬 경계</p><h2 id="local-title">Telegram 값은 로컬 tokenFile에만 둡니다.</h2></div><div class="copy-stack"><ul><li>명령줄 인자로 민감한 값을 넘기지 않습니다.</li><li>설치기는 SecureString 입력과 메모리 해제를 사용합니다.</li><li>검증 artifact에는 민감한 필드 이름도 허용하지 않습니다.</li><li>GitHub Pages는 정적 HTML/CSS이며 <code>script-src 'none'</code>을 유지합니다.</li></ul></div></div></section>
+      <section class="section trust-section" aria-labelledby="proof-title"><div class="section-heading"><p class="section-kicker">검증 근거</p><h2 id="proof-title">보안 경계를 자동 감사로 확인합니다.</h2></div><div class="card-grid four"><a class="info-card" href="technical.html#validation"><span class="card-index">JSON</span><h3>Artifact schema</h3><p>상태와 checks만 남기고 민감 값은 제거합니다.</p></a><a class="info-card" href="manual.html#dry-run"><span class="card-index">DRY</span><h3>Dry-run 우선</h3><p>실제 값 없이 설치 후 흐름을 검증합니다.</p></a><a class="info-card" href="release.html#download"><span class="card-index">SHA</span><h3>파일 무결성</h3><p>릴리스 파일과 체크섬을 함께 제공합니다.</p></a><a class="info-card" href="manual.html#telegram-connect"><span class="card-index">BOT</span><h3>사용자 승인</h3><p>봇 연결은 사용자 입력과 승인으로만 진행됩니다.</p></a></div></section>
 
     </main>
-    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈</a><a href="manual.html">설치</a><a href="security.html">보안</a><a href="release.html">다운로드</a><a href="technical.html">기술</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

@@ -6,52 +6,44 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>기술 / Technical Spec | OpenClaw Companion</title>
-    <meta name="description" content="Current bilingual technical explanation of installer engine, Companion shell, tokenFile, JSON status, and dry-run validation." />
+    <title>OpenClaw Windows 기술 노트</title>
+    <meta name="description" content="OpenClaw Windows 네이티브 설치기, Gateway, 검증 artifact, 정적 Pages를 설명하는 한국어 기술 문서입니다." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
-    <header class="topbar" aria-label="Primary navigation">
+    <a class="skip-link" href="#main">본문으로 이동</a>
+    <header class="topbar" aria-label="주요 탐색">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav aria-label="Site navigation">
-        <a href="index.html">홈 Home</a>
-        <a href="manual.html">설치 Setup</a>
-        <a href="security.html">보안 Security</a>
-        <a href="release.html">다운로드 Download</a>
-        <a href="technical.html">기술 Technical</a>
+      <nav aria-label="사이트 탐색">
+        <a href="index.html">홈</a>
+        <a href="manual.html">설치</a>
+        <a href="security.html">보안</a>
+        <a href="release.html">다운로드</a>
+        <a href="technical.html" aria-current="page">기술</a>
         <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
     <main id="main">
       <section class="page-hero technical-hero" aria-labelledby="page-title"><div>
-        <p class="eyebrow">Technical spec</p>
-        <h1 id="page-title">최신 코드 기준 기술 흐름을 설명합니다.</h1>
-        <p class="lead">설치기, Companion shell, Gateway, tokenFile, dry-run 검증을 현재 코드와 맞춥니다.</p>
+        <p class="eyebrow">기술 노트</p>
+        <h1 id="page-title">설치 경험을 검증 가능한 기술 계약으로 정리했습니다.</h1>
+        <p class="lead">Node.js 기준, Gateway, dry-run artifact, CSS-only Pages, Telegram 보안 경계를 최신 흐름에 맞게 설명합니다.</p>
       </div></section>
 
-      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
-        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
-        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
-        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
-          <label for="lang-ko" role="tab">한국어</label>
-          <label for="lang-en" role="tab">English</label>
-        </div>
-        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">최신 코드 기준 기술 흐름</h2><p>설치기는 PowerShell 5.1+, CMD wrapper, IExpress 패키지, 구조화된 엔진 모듈을 사용합니다. Companion은 Tauri v2 shell로 빌드 검증되었고, 설치 경로는 WSL/Docker/Podman을 요구하지 않습니다.</p><pre><code>OpenClawWindowsNativeSetup.exe
-  -> OpenClaw_Windows_Native_Installer.cmd
-    -> Install-OpenClawWindowsNative.ps1
-      -> engine/OpenClawWindowsNative.Engine.psm1
-      -> Git/Node.js/pnpm check
-      -> OpenClaw clone/build/ui:build
-      -> onboard local gateway loopback 18789 token auth
-      -> Telegram tokenFile registration
-      -> Gateway install/start
-      -> desktop helpers
-      -> verifier and JSON/redacted status</code></pre><p id="validation">검증기는 native Windows, Node.js 버전, OpenClaw build 산출물, Gateway config, Telegram credential source, Gateway health, channel probe, port 18789 listener를 확인합니다. <code>-TelegramDryRunOnly</code>는 <code>%USERPROFILE%\.openclaw\validation\telegram-validation.dry-run.json</code>을 생성합니다.</p></div></section>
-        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">Current technical flow</h2><p>The kit uses PowerShell 5.1+, a CMD wrapper, IExpress packaging, and a structured engine module. The Companion shell is build-verified with Tauri v2, and the install path does not require WSL, Docker, or Podman.</p><pre><code>setup EXE -> installer CMD -> PowerShell installer -> engine module -> Git/Node/pnpm checks -> OpenClaw build -> local Gateway -> tokenFile Telegram -> desktop helpers -> verifier</code></pre><p>Verification checks native Windows, Node.js version, OpenClaw build outputs, Gateway config, Telegram credential source, Gateway health, channel probe, and port 18789. <code>-TelegramDryRunOnly</code> writes a redacted dry-run artifact.</p></div></section>
-      </div></section>
-      <section class="section stack-section" aria-labelledby="stack-title"><div class="section-heading"><p class="section-kicker">Stack</p><h2 id="stack-title">반영된 구성 요소</h2></div><div class="table-wrap"><table><thead><tr><th>Part</th><th>Current behavior</th></tr></thead><tbody><tr><td>Installer</td><td>PowerShell engine, CMD entry, IExpress single EXE fallback.</td></tr><tr><td>Companion</td><td>Tauri v2 Windows executable plus MSI/NSIS build evidence.</td></tr><tr><td>Secrets</td><td>No CLI token arguments; Telegram uses user-local tokenFile.</td></tr><tr><td>Status</td><td>Redacted host output and optional JSON status records.</td></tr><tr><td>Validation</td><td>Fixture-backed dry-run plus live checks only after user credentials.</td></tr></tbody></table></div></section>
+      <section class="section" aria-labelledby="tech-overview"><div class="intro-split"><div><p class="section-kicker">기술 개요</p><h2 id="tech-overview">설치 흐름을 검증 가능한 계약으로 설명합니다.</h2></div><div class="copy-stack"><p>Windows 네이티브 설치, Node.js 엔진 기준, Companion Gateway, Telegram channel 검증, 정적 Pages 보안 경계를 함께 봅니다.</p></div></div></section>
+      <section class="section stack-section" aria-labelledby="stack-title"><div class="section-heading"><p class="section-kicker">구성</p><h2 id="stack-title">Windows installer + OpenClaw checkout + Companion Gateway</h2></div><div class="card-grid three"><div class="info-card"><span class="card-index">설치기</span><h3>Windows 네이티브</h3><p>PowerShell/CMD 환경에서 WSL 없이 Git checkout과 dependency 준비를 수행합니다.</p></div><div class="info-card"><span class="card-index">런타임</span><h3>Node.js >=22.14.0</h3><p>설치기는 Node.js 엔진 기준을 검사하고 pnpm 기반 준비를 진행합니다.</p></div><div class="info-card"><span class="card-index">Gateway</span><h3>Port 18789</h3><p>Companion Gateway와 Telegram channel 검증을 로컬 상태에서 확인합니다.</p></div></div></section>
+      <section class="section" id="validation" aria-labelledby="validation-title"><div class="split-section"><div><p class="section-kicker">검증</p><h2 id="validation-title">검증 artifact는 민감하지 않은 상태 증거만 남깁니다.</h2></div><div class="copy-stack"><p>dry-run 결과는 schemaVersion, generatedAt, channel, status, mode, checks 구조로 정리됩니다. token, secret, password, pairingCode 같은 민감 필드 이름은 허용하지 않습니다.</p><pre>{
+  "schemaVersion": 1,
+  "channel": "telegram",
+  "status": "warning",
+  "mode": "dry-run",
+  "checks": [
+    { "name": "channel-status-probe", "status": "warning" }
+  ]
+}</pre></div></div></section>
+      <section class="section trust-section" aria-labelledby="pages-title"><div class="split-section"><div><p class="section-kicker">GitHub Pages</p><h2 id="pages-title">Pages는 한국어 HTML/CSS만 게시합니다.</h2></div><div class="copy-stack"><ul><li>언어 전환 UI를 제거하고 한국어 단일 안내로 정리했습니다.</li><li>CSP는 <code>script-src 'none'</code>을 유지합니다.</li><li>Markdown 문서로 직접 보내지 않고 HTML 안내 페이지를 제공합니다.</li><li>open-design은 로컬에 설치해 디자인 참고용으로 활용하며, 코드나 자산은 복사하지 않습니다.</li></ul><div class="hero-actions"><a class="button primary" href="manual.html#dry-run">Dry-run 가이드</a><a class="button secondary" href="security.html#local">보안 경계</a></div></div></div></section>
+
     </main>
-    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈</a><a href="manual.html">설치</a><a href="security.html">보안</a><a href="release.html">다운로드</a><a href="technical.html">기술</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

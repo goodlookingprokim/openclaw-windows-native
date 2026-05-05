@@ -6,46 +6,38 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>설치 / Guided Setup | OpenClaw Companion</title>
-    <meta name="description" content="Korean and English setup guide for OpenClaw Windows Native, dry-run, Telegram tokenFile, and pairing." />
+    <title>OpenClaw Windows 설치 가이드</title>
+    <meta name="description" content="OpenClaw Windows 네이티브 설치, dry-run, Telegram tokenFile, pairing을 설명하는 한국어 가이드입니다." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
-    <header class="topbar" aria-label="Primary navigation">
+    <a class="skip-link" href="#main">본문으로 이동</a>
+    <header class="topbar" aria-label="주요 탐색">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav aria-label="Site navigation">
-        <a href="index.html">홈 Home</a>
-        <a href="manual.html">설치 Setup</a>
-        <a href="security.html">보안 Security</a>
-        <a href="release.html">다운로드 Download</a>
-        <a href="technical.html">기술 Technical</a>
+      <nav aria-label="사이트 탐색">
+        <a href="index.html">홈</a>
+        <a href="manual.html" aria-current="page">설치</a>
+        <a href="security.html">보안</a>
+        <a href="release.html">다운로드</a>
+        <a href="technical.html">기술</a>
         <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
     <main id="main">
       <section class="page-hero manual-hero" aria-labelledby="page-title"><div>
-        <p class="eyebrow">Guided setup</p>
-        <h1 id="page-title">설치부터 첫 Telegram 대화까지 차근차근 진행합니다.</h1>
-        <p class="lead">탭으로 언어를 바꾸고, 다운로드부터 검증까지 같은 최신 흐름을 확인합니다.</p>
+        <p class="eyebrow">설치 가이드</p>
+        <h1 id="page-title">설치보다 중요한 것은 다음 행동이 분명한 안내입니다.</h1>
+        <p class="lead">다운로드, 체크섬, 설치, dry-run, Telegram 연결, 대화 준비 확인까지 한 화면씩 따라가세요.</p>
       </div></section>
 
-      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
-        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
-        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
-        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
-          <label for="lang-ko" role="tab">한국어</label>
-          <label for="lang-en" role="tab">English</label>
-        </div>
-        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">설치부터 첫 Telegram 대화까지</h2><ol class="plain-steps"><li id="download"><strong>다운로드:</strong> <a class="button secondary" href="downloads/OpenClawWindowsNativeSetup.exe" download>OpenClawWindowsNativeSetup.exe</a>를 받고 checksum을 비교합니다.</li><li id="guided-setup"><strong>설치:</strong> Git, Node.js 22.14+, pnpm 10.33.2를 확인하고 <code>%USERPROFILE%\openclaw-src</code>에 OpenClaw를 준비합니다.</li><li id="dry-run"><strong>Dry-run:</strong> <code>Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly</code>로 실제 Telegram 접속 없이 redacted artifact를 만듭니다.</li><li id="telegram-connect"><strong>Telegram:</strong> BotFather 토큰은 <code>%USERPROFILE%\.openclaw\credentials\telegram-bot-token.txt</code>에 저장하고 <code>--token-file</code>로 등록합니다.</li><li id="verify-conversation"><strong>검증:</strong> pairing code를 승인한 뒤 Gateway health와 <code>channels status --probe</code>를 확인합니다.</li></ol><pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
-Get-Content .\checksums.sha256
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1</code></pre><p class="note">Dry-run은 실제 송수신 증명이 아닙니다. 실제 Telegram 대화는 사용자의 BotFather 토큰과 pairing 승인 후 확인합니다.</p></div></section>
-        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">From setup to the first Telegram conversation</h2><ol class="plain-steps"><li><strong>Download:</strong> get the setup EXE and compare the checksum.</li><li><strong>Install:</strong> verify Git, Node.js 22.14+, pnpm 10.33.2, then prepare OpenClaw under <code>%USERPROFILE%\openclaw-src</code>.</li><li><strong>Dry-run:</strong> run <code>Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly</code> to create a redacted artifact without Telegram network access.</li><li><strong>Telegram:</strong> store the BotFather token in a user-local token file and register it with <code>--token-file</code>.</li><li><strong>Verify:</strong> approve pairing, then check Gateway health and <code>channels status --probe</code>.</li></ol><pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1</code></pre><p class="note">Dry-run is simulated. Live send/receive remains a user-controlled credential and pairing step.</p></div></section>
-      </div></section>
-      <section class="section repair-section" aria-labelledby="helpers-title"><div class="section-heading"><p class="section-kicker">Desktop helpers</p><h2 id="helpers-title">설치 후 바탕화면 도우미</h2></div><div class="card-grid four"><article class="info-card"><h3>Start</h3><p><code>OpenClaw_01_Start_Gateway.cmd</code></p></article><article class="info-card"><h3>Status</h3><p><code>OpenClaw_02_Status.cmd</code></p></article><article class="info-card"><h3>Pairing</h3><p><code>OpenClaw_05_Approve_Telegram_Pairing.cmd</code></p></article><article class="info-card"><h3>Dry-run / Update</h3><p><code>OpenClaw_06_Telegram_Dry_Run.cmd</code><br /><code>OpenClaw_07_Update.cmd</code></p></article></div></section>
+      <section class="section" aria-labelledby="manual-overview"><div class="intro-split"><div><p class="section-kicker">설치 흐름</p><h2 id="manual-overview">준비 → 실행 → 연습 → 연결 → 확인 순서입니다.</h2></div><div class="copy-stack"><p>초보자도 같은 순서로 따라가도록 모든 단계를 작은 행동으로 나눴습니다. 민감한 값은 화면이나 로그에 남기지 않고, 사용자가 직접 승인한 순간에만 로컬 파일로 저장합니다.</p></div></div></section>
+      <section class="section" id="download" aria-labelledby="download-step"><div class="split-section"><div><p class="section-kicker">01 다운로드</p><h2 id="download-step">설치 파일과 지문을 먼저 확인합니다.</h2></div><div class="copy-stack"><p>릴리스 페이지에서 <code>OpenClawWindowsNativeSetup.exe</code>를 내려받은 뒤 체크섬을 비교하세요.</p><pre>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256</pre><p class="note">기대 SHA-256: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p><div class="hero-actions"><a class="button primary" href="release.html#download">다운로드 페이지</a><a class="button secondary" href="security.html#checksum">Checksum 확인</a></div></div></div></section>
+      <section class="section stack-section" id="guided-setup" aria-labelledby="setup-step"><div class="split-section"><div><p class="section-kicker">02 설치</p><h2 id="setup-step">Windows 네이티브 터미널에서 설치합니다.</h2></div><div class="copy-stack"><p>설치기는 WSL을 사용하지 않고 Git, Node.js, pnpm, OpenClaw 저장소, Companion Gateway 준비를 순서대로 진행합니다.</p><pre>.\OpenClawWindowsNativeSetup.exe</pre><ul><li>기본 저장소: <code>https://github.com/openclaw/openclaw.git</code></li><li>기본 브랜치: <code>main</code></li><li>기본 소스 폴더: <code>%USERPROFILE%\openclaw-src</code></li><li>기본 상태 폴더: <code>%USERPROFILE%\.openclaw</code></li><li>기본 Gateway 포트: <code>18789</code></li></ul></div></div></section>
+      <section class="section" id="dry-run" aria-labelledby="dry-run-step"><div class="split-section"><div><p class="section-kicker">03 Dry-run</p><h2 id="dry-run-step">실제 값을 넣기 전에 흐름을 검증합니다.</h2></div><div class="copy-stack"><p>dry-run은 Telegram 연결 절차를 연습하고 JSON 검증 artifact를 만듭니다. 실제 BotFather 값이나 pairing 승인은 필요하지 않습니다.</p><pre>powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly</pre><p class="note">결과는 통과, 경고, 실패, 건너뜀 상태로 정리되며 민감한 필드 이름과 값은 허용하지 않습니다.</p></div></div></section>
+      <section class="section secrets-section" id="telegram-connect" aria-labelledby="telegram-step"><div class="split-section"><div><p class="section-kicker">04 Telegram</p><h2 id="telegram-step">사용자가 직접 승인한 봇만 연결합니다.</h2></div><div class="copy-stack"><p>BotFather에서 받은 값은 명령줄 인자로 넘기지 않습니다. 설치기는 SecureString으로 입력받고 BSTR을 해제한 뒤, OpenClaw가 읽을 수 있는 로컬 tokenFile 경로만 등록합니다.</p><ul><li>공개 저장소, GitHub Pages, 릴리스 artifact에는 값이 들어가지 않습니다.</li><li>pairing code와 실제 대화 검증은 사용자 환경에서만 수행합니다.</li><li>문제가 있으면 dry-run 결과와 redacted validation artifact만 공유하세요.</li></ul></div></div></section>
+      <section class="section trust-section" id="verify-conversation" aria-labelledby="verify-step"><div class="split-section"><div><p class="section-kicker">05 검증</p><h2 id="verify-step">첫 대화 준비 상태를 확인합니다.</h2></div><div class="copy-stack"><p>Gateway 상태, channel probe, pairing 승인, OpenClaw 응답 경로를 차례대로 봅니다. 실제 Telegram 송수신은 사용자가 자신의 봇과 채팅에서 최종 확인합니다.</p><div class="card-grid three"><a class="info-card" href="technical.html#validation"><span class="card-index">JSON</span><h3>검증 artifact</h3><p>schemaVersion, status, checks를 확인합니다.</p></a><a class="info-card" href="security.html#local"><span class="card-index">로컬</span><h3>비밀 값 보관</h3><p>비밀 값은 사용자 PC 밖으로 나가지 않습니다.</p></a><a class="info-card" href="release.html#download"><span class="card-index">릴리스</span><h3>파일 확인</h3><p>설치 파일과 체크섬을 다시 확인합니다.</p></a></div></div></div></section>
+
     </main>
-    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈</a><a href="manual.html">설치</a><a href="security.html">보안</a><a href="release.html">다운로드</a><a href="technical.html">기술</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

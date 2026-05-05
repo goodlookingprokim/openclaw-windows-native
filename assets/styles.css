@@ -455,7 +455,6 @@ pre {
 .section-heading { margin-bottom: 32px; }
 
 .journey-section,
-.language-shell,
 .stack-section,
 .setup-section,
 .secrets-section { background: rgba(255, 253, 248, .56); }
@@ -646,64 +645,6 @@ th {
   font-weight: 750;
 }
 
-.language-tabs {
-  width: min(var(--max), 100%);
-  margin-left: auto;
-  margin-right: auto;
-}
-.language-radio {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-.language-tab-labels {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 22px;
-  padding: 6px;
-  background: rgba(255, 253, 248, .74);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: var(--shadow-tight);
-}
-.language-tab-labels label {
-  min-height: 40px;
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 16px;
-  color: var(--muted);
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 950;
-  transition: color 160ms ease, background 160ms ease;
-}
-.language-tab-labels label:hover { color: var(--ink); }
-#lang-ko:focus-visible ~ .language-tab-labels label[for="lang-ko"],
-#lang-en:focus-visible ~ .language-tab-labels label[for="lang-en"] {
-  outline: 3px solid var(--blue);
-  outline-offset: 3px;
-}
-#lang-ko:checked ~ .language-tab-labels label[for="lang-ko"],
-#lang-en:checked ~ .language-tab-labels label[for="lang-en"] {
-  color: white;
-  background: var(--ink);
-}
-.lang-panel {
-  display: none;
-  padding: clamp(22px, 4vw, 38px);
-  background: rgba(255, 253, 248, .86);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow);
-}
-#lang-ko:checked ~ .lang-ko,
-#lang-en:checked ~ .lang-en { display: block; }
-
 .plain-steps {
   margin: 18px 0 0;
   padding-left: 24px;
@@ -740,8 +681,7 @@ th {
   .page-hero::after,
   .journey-card,
   .action-card,
-  .info-card,
-  .lang-panel {
+  .info-card {
     animation: rise-in 520ms ease both;
   }
   .journey-card:nth-child(2),
@@ -800,5 +740,4 @@ th {
   }
   .signal-strip span:last-child { border-bottom: 0; }
   .hero-console { transform: none; }
-  .lang-panel { border-radius: var(--radius-lg); }
 }
