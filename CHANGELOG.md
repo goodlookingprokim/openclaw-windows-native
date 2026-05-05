@@ -1,15 +1,11 @@
-# Changelog
+﻿# Changelog
 
-## 2026.05.05-security
+## 2026-05-05 — Companion overhaul foundation
 
-- Hardened GitHub Pages and repository security checks.
-- Added pinned GitHub Actions, explicit Pages publish allowlist, Dependabot config, and SARIF security audit workflow.
-- Rebuilt the installer EXE with upstream `RepoRef` support and refreshed installer checksum.
-- Added package manifest and tracked IExpress build sources for reproducible release packaging.
-
-## 2026.05.05
-
-- Initial public Windows-native installer kit.
-- Added GitHub Pages landing page.
-- Added installer EXE, PowerShell installer, verifier, uninstall helper, user manual, and technical spec.
-- Added GitHub Actions workflows for Pages deployment and tagged releases.
+- Reframed the project as OpenClaw Windows Native Companion.
+- Added structured PowerShell engine with JSON status and redaction helpers.
+- Added Tauri v2-style Companion scaffold for the future guided Windows app.
+- Redesigned GitHub Pages around Download → Guided Setup → Telegram Connect → Verify Conversation → Repair/Update.
+- Added Telegram validation artifact schema and fixtures.
+- Rebuilt the setup package and checksums with the engine payload included.
+- Expanded security audit coverage for engine, Companion scaffold, package manifest, Pages allowlist, and validation artifacts.

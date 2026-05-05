@@ -32,7 +32,7 @@ jobs:
         run: |
           set -euo pipefail
           rm -rf public
-          mkdir -p public/assets public/docs public/downloads
+          mkdir -p public/assets public/docs public/downloads public/downloads/engine
           cp index.html manual.html release.html security.html technical.html public/
           cp .nojekyll public/
           cp assets/openclaw-native-preview.png assets/styles.css public/assets/
@@ -46,6 +46,7 @@ jobs:
              downloads/Uninstall-OpenClawWindowsNative.ps1 \
              downloads/Verify-OpenClawWindowsNative.ps1 \
              public/downloads/
+          cp downloads/engine/OpenClawWindowsNative.Engine.psm1 public/downloads/engine/
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9

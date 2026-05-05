@@ -1,12 +1,25 @@
 param(
   [string]$RepoDir = (Join-Path $env:USERPROFILE "openclaw-src"),
   [string]$StateDir = (Join-Path $env:USERPROFILE ".openclaw"),
-  [int]$Port = 18789
+  [int]$Port = 18789,
+  [switch]$JsonStatus
 )
 
 $ErrorActionPreference = "Continue"
 $failures = 0
 $warnings = 0
+$KitDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$EngineCandidates = @(
+  (Join-Path $KitDir "engine\OpenClawWindowsNative.Engine.psm1"),
+  (Join-Path $KitDir "OpenClawWindowsNative.Engine.psm1")
+)
+$EngineModule = $EngineCandidates | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
+$EngineAvailable = $false
+if ($EngineModule) {
+  Import-Module $EngineModule -Force -DisableNameChecking
+  $EngineAvailable = $true
+  Assert-OpenClawSafeParameters -BoundParameters $PSBoundParameters
+}
 
 function Pass([string]$Text) { Write-Host "[PASS] $Text" -ForegroundColor Green }
 function Warn([string]$Text) { $script:warnings++; Write-Host "[WARN] $Text" -ForegroundColor Yellow }
@@ -16,11 +29,31 @@ function Test-Cmd([string]$Name) {
   return [bool](Get-Command $Name -ErrorAction SilentlyContinue)
 }
 
-Write-Host "OpenClaw Windows Native Verification" -ForegroundColor Cyan
-Write-Host "Repo:  $RepoDir"
-Write-Host "State: $StateDir"
-Write-Host "Port:  $Port"
-Write-Host ""
+if (-not $JsonStatus) {
+  Write-Host "OpenClaw Windows Native Verification" -ForegroundColor Cyan
+  Write-Host "Repo:  $RepoDir"
+  Write-Host "State: $StateDir"
+  Write-Host "Port:  $Port"
+  Write-Host ""
+}
+
+if ($EngineAvailable) {
+  $results = @(Invoke-OpenClawVerifierChecks -RepoDir $RepoDir -StateDir $StateDir -Port $Port)
+  foreach ($result in $results) {
+    if ($result.level -eq "fail") { $failures++ }
+    if ($result.level -eq "warn") { $warnings++ }
+    Write-OpenClawStatus -Level $result.level -Message $result.message -Check $result.name -Data $result.data -Json:$JsonStatus
+  }
+  if ($JsonStatus) {
+    $level = if ($failures -gt 0) { "fail" } elseif ($warnings -gt 0) { "warn" } else { "ok" }
+    Write-OpenClawStatus -Level $level -Message "Verification summary: failures=$failures warnings=$warnings" -Check "summary" -Data @{ failures = $failures; warnings = $warnings } -Json
+  } else {
+    Write-Host ""
+    Write-Host "Verification summary: failures=$failures warnings=$warnings"
+  }
+  if ($failures -gt 0) { exit 1 }
+  exit 0
+}
 
 if ($env:WSL_DISTRO_NAME) { Fail "Running inside WSL: $env:WSL_DISTRO_NAME" } else { Pass "Running in native Windows PowerShell/CMD context" }
 
