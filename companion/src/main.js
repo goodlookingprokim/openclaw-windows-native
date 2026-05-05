@@ -1,10 +1,12 @@
-﻿import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "@tauri-apps/api/core";
 import "./styles.css";
 
 const statusButton = document.querySelector("#status-button");
 const statusOutput = document.querySelector("#status-output");
 const planButton = document.querySelector("#plan-button");
 const planOutput = document.querySelector("#plan-output");
+const dryRunButton = document.querySelector("#dry-run-button");
+const dryRunOutput = document.querySelector("#dry-run-output");
 const tokenFileInput = document.querySelector("#token-file");
 
 function render(target, payload) {
@@ -22,6 +24,10 @@ async function runAction(target, action) {
 
 statusButton.addEventListener("click", () => {
   runAction(statusOutput, () => invoke("probe_powershell"));
+});
+
+dryRunButton.addEventListener("click", () => {
+  runAction(dryRunOutput, () => invoke("plan_telegram_dry_run"));
 });
 
 planButton.addEventListener("click", () => {

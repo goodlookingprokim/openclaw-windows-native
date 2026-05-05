@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -27,6 +27,18 @@
         </div>
         <button id="status-button" type="button">Check PowerShell</button>
         <pre id="status-output" aria-live="polite">Not checked yet.</pre>
+      </section>
+
+      <section class="panel">
+        <div>
+          <h2>Telegram dry-run</h2>
+          <p>
+            Build a simulated validation plan before entering a real BotFather value. The dry-run
+            writes a redacted artifact and never contacts Telegram.
+          </p>
+        </div>
+        <button id="dry-run-button" type="button">Build dry-run plan</button>
+        <pre id="dry-run-output" aria-live="polite">No dry-run plan yet.</pre>
       </section>
 
       <section class="panel">

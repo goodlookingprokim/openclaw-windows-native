@@ -1,4 +1,4 @@
-﻿param(
+param(
   [string]$RepoRoot = (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path))
 )
 
@@ -25,11 +25,12 @@ try {
     generatedAt = "2026-05-05T00:00:00Z"
     channel = "telegram"
     status = "warning"
+    mode = "dry-run"
     checks = @(
       [pscustomobject]@{
         name = "channel-status-probe"
         status = "warning"
-        evidence = "Probe completed; user action may still be required."
+        evidence = "Dry-run completed; user action may still be required."
       }
     )
   } | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $goodArtifact -Encoding UTF8

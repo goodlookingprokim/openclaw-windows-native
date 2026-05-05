@@ -1,6 +1,10 @@
 # Validation Artifacts
 
-This repository keeps release validation artifacts out of Git by default (`.artifacts/` is ignored). Maintainers can still generate local JSON evidence and point the audit at it:
+This repository keeps release validation artifacts out of Git by default (`.artifacts/` is ignored). Users can generate a Telegram dry-run artifact without real credentials, and maintainers can point the audit at any redacted artifact:
+
+```powershell
+.\downloads\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
+```
 
 ```powershell
 .\scripts\Test-SecurityAudit.ps1 -TelegramValidationArtifact .artifacts\telegram-validation.json
@@ -19,6 +23,7 @@ Required top-level fields:
 | `channel` | string | `telegram` |
 | `status` | string | `passed`, `warning`, `failed`, or `skipped` |
 | `checks` | array | At least one check object |
+| `mode` | string | Optional; `dry-run` for simulated validation |
 
 Each check object uses:
 
@@ -55,5 +60,5 @@ The audit now validates these release gates in addition to the baseline secret, 
 - `downloads/package-manifest.json` parses as JSON, contains required fields, stays Windows-native (`nativeWindows: true`, `usesWsl: false`), uses user-relative default paths, and matches the expected payload list.
 - Installer engine checks remain aligned with OpenClaw's Node floor (`>=22.14.0`), require HTTPS repo URLs, validate Git refs, and register Telegram with `--token-file` instead of printing or passing raw token values.
 - Verifier checks parse `openclaw.json` as JSON and do not print credential values.
-- Companion desktop launcher checks include the expected six launchers and keep Telegram pairing/token material runtime-only.
+- Companion desktop launcher checks include the expected seven launchers, including Telegram dry-run, and keep Telegram pairing/token material runtime-only.
 - GitHub Pages workflow publishes exactly the audited static allowlist and never publishes `docs/RELEASE_CHECKLIST.md` or broad recursive repository copies.

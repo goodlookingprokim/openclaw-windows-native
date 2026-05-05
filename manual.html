@@ -26,7 +26,7 @@
       <section class="section split-section" id="download" aria-labelledby="download-title">
         <div><p class="section-kicker">01 Download</p><h2 id="download-title">Start with the kit and its checksum.</h2></div>
         <div class="copy-stack"><p>Download the EXE from this site, then compare the SHA-256 before running it. The checksum is also published as <a href="downloads/checksums.sha256">checksums.sha256</a>.</p><p><a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>Download setup EXE</a></p><pre><code>Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
-Get-Content .\checksums.sha256</code></pre><p class="integrity-line"><code>f804f0583076e9d40abe097d1a0c572645efad7055e35af2bc388e81d9126b80</code></p></div>
+Get-Content .\checksums.sha256</code></pre><p class="integrity-line"><code>a1a1154f8816c3fa26100224182df9842c00777026cda1b6afff248d501781ce</code></p></div>
       </section>
 
       <section class="section setup-section" id="guided-setup" aria-labelledby="setup-title">
@@ -41,7 +41,7 @@ Get-Content .\checksums.sha256</code></pre><p class="integrity-line"><code>f804f
 
       <section class="section split-section" id="paths" aria-labelledby="paths-title">
         <div><p class="section-kicker">Generated paths</p><h2 id="paths-title">Know where the Companion puts things.</h2></div>
-        <div class="table-wrap"><table><thead><tr><th>Path</th><th>Purpose</th></tr></thead><tbody><tr><td><code>%USERPROFILE%\openclaw-src</code></td><td>OpenClaw source checkout, build output, and CLI working directory.</td></tr><tr><td><code>%USERPROFILE%\.openclaw</code></td><td>Config, logs, sessions, and user-local credentials.</td></tr><tr><td><code>%USERPROFILE%\.openclaw\credentials\telegram-bot-token.txt</code></td><td>Telegram bot token file created on the participant PC only.</td></tr><tr><td><code>%USERPROFILE%\Desktop\OpenClaw</code></td><td>Start, status, stop, dashboard, pairing, update, and verify helpers.</td></tr></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Path</th><th>Purpose</th></tr></thead><tbody><tr><td><code>%USERPROFILE%\openclaw-src</code></td><td>OpenClaw source checkout, build output, and CLI working directory.</td></tr><tr><td><code>%USERPROFILE%\.openclaw</code></td><td>Config, logs, sessions, and user-local credentials.</td></tr><tr><td><code>%USERPROFILE%\.openclaw\credentials\telegram-bot-token.txt</code></td><td>Telegram bot token file created on the participant PC only.</td></tr><tr><td><code>%USERPROFILE%\Desktop\OpenClaw</code></td><td>Start, status, stop, dashboard, pairing, dry-run, update, and verify helpers.</td></tr></tbody></table></div>
       </section>
 
       <section class="section telegram-section" id="telegram-connect" aria-labelledby="telegram-title">
@@ -58,7 +58,7 @@ pnpm.cmd openclaw channels add --channel telegram --token-file "$env:USERPROFILE
 pnpm.cmd openclaw pairing list telegram
 pnpm.cmd openclaw pairing approve telegram &lt;PAIRING_CODE&gt;
 pnpm.cmd openclaw gateway health
-pnpm.cmd openclaw channels status --probe</code></pre><p>You can also use <code>OpenClaw_02_Status.cmd</code> and <code>OpenClaw_05_Approve_Telegram_Pairing.cmd</code> from the desktop <code>OpenClaw</code> folder.</p></div>
+pnpm.cmd openclaw channels status --probe</code></pre><p>Before entering a real value, run <code>OpenClaw_06_Telegram_Dry_Run.cmd</code> or <code>Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly</code> to create a redacted dry-run artifact. This does not prove live Telegram send/receive.</p><p>You can also use <code>OpenClaw_02_Status.cmd</code> and <code>OpenClaw_05_Approve_Telegram_Pairing.cmd</code> from the desktop <code>OpenClaw</code> folder.</p></div>
       </section>
 
       <section class="section repair-section" id="repair-update" aria-labelledby="repair-title">
@@ -67,7 +67,7 @@ pnpm.cmd openclaw channels status --probe</code></pre><p>You can also use <code>
           <article class="info-card"><h3>Gateway stopped</h3><p>Run <code>OpenClaw_01_Start_Gateway.cmd</code>, then <code>OpenClaw_02_Status.cmd</code>. Check that port <code>18789</code> is listening.</p></article>
           <article class="info-card"><h3>Dashboard token issue</h3><p>Open the dashboard through <code>OpenClaw_04_Open_Dashboard.cmd</code> so the current gateway token is applied.</p></article>
           <article class="info-card"><h3>Telegram silent</h3><p>Run <code>channels status --probe</code>, inspect pending pairings, then approve the latest pairing code.</p></article>
-          <article class="info-card"><h3>Update/rebuild</h3><p>Run <code>OpenClaw_06_Update.cmd</code> to pull the selected repo ref, rebuild, re-enable Telegram, and restart the gateway.</p></article>
+          <article class="info-card"><h3>Dry-run first</h3><p>Run <code>OpenClaw_06_Telegram_Dry_Run.cmd</code> to simulate the Telegram validation path without a real BotFather value.</p></article><article class="info-card"><h3>Update/rebuild</h3><p>Run <code>OpenClaw_07_Update.cmd</code> to pull the selected repo ref, rebuild, re-enable Telegram, and restart the gateway.</p></article>
           <article class="info-card"><h3>Full verifier</h3><p>Run the verifier after a repair to check dependencies, build output, config, gateway health, channel probe, and listener state.</p></article>
           <article class="info-card"><h3>Clean uninstall</h3><p>Use the included uninstall script only when you intentionally want to remove scheduled startup and local helper files.</p></article>
         </div>

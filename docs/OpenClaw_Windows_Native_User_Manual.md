@@ -125,12 +125,19 @@ pnpm.cmd openclaw pairing approve telegram <PAIRING_CODE>
 | `OpenClaw_03_Stop_Gateway.cmd` | Gateway 종료 |
 | `OpenClaw_04_Open_Dashboard.cmd` | Control UI 열기 |
 | `OpenClaw_05_Approve_Telegram_Pairing.cmd` | Telegram pairing 승인 |
-| `OpenClaw_06_Update.cmd` | 업데이트 및 재빌드 |
+| `OpenClaw_06_Telegram_Dry_Run.cmd` | Telegram dry-run validation without real credentials |
+| `OpenClaw_07_Update.cmd` | Update and rebuild |
 
 명령줄 검증은 다음과 같습니다.
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1
+```
+
+Run a Telegram dry-run before using real credentials. This creates a redacted validation artifact and does not prove live send/receive.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Verify-OpenClawWindowsNative.ps1 -TelegramDryRunOnly
 ```
 
 성공 기준:

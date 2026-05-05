@@ -2,6 +2,9 @@ param(
   [string]$RepoDir = (Join-Path $env:USERPROFILE "openclaw-src"),
   [string]$StateDir = (Join-Path $env:USERPROFILE ".openclaw"),
   [int]$Port = 18789,
+  [switch]$TelegramDryRun,
+  [switch]$TelegramDryRunOnly,
+  [string]$TelegramValidationArtifact,
   [switch]$JsonStatus
 )
 
@@ -20,6 +23,9 @@ if ($EngineModule) {
   $EngineAvailable = $true
   Assert-OpenClawSafeParameters -BoundParameters $PSBoundParameters
 }
+if ([string]::IsNullOrWhiteSpace($TelegramValidationArtifact)) {
+  $TelegramValidationArtifact = Join-Path $StateDir "validation\telegram-validation.dry-run.json"
+}
 
 function Pass([string]$Text) { Write-Host "[PASS] $Text" -ForegroundColor Green }
 function Warn([string]$Text) { $script:warnings++; Write-Host "[WARN] $Text" -ForegroundColor Yellow }
@@ -34,7 +40,21 @@ if (-not $JsonStatus) {
   Write-Host "Repo:  $RepoDir"
   Write-Host "State: $StateDir"
   Write-Host "Port:  $Port"
+  if ($TelegramDryRun -or $TelegramDryRunOnly) { Write-Host "Telegram dry-run: enabled" }
   Write-Host ""
+}
+
+if ($EngineAvailable -and $TelegramDryRunOnly) {
+  $artifact = New-OpenClawTelegramDryRunArtifact -StateDir $StateDir -OutputPath $TelegramValidationArtifact
+  Write-OpenClawStatus -Level pass -Message "Telegram dry-run validation artifact written" -Check "telegram-dry-run" -Data @{ artifact = $artifact.path; mode = $artifact.mode; status = $artifact.status } -Json:$JsonStatus
+  Write-OpenClawStatus -Level warn -Message "Telegram dry-run is simulated and does not prove live send/receive" -Check "telegram-live-scope" -Data @{ mode = $artifact.mode } -Json:$JsonStatus
+  if ($JsonStatus) {
+    Write-OpenClawStatus -Level warn -Message "Verification summary: failures=0 warnings=1" -Check "summary" -Data @{ failures = 0; warnings = 1 } -Json
+  } else {
+    Write-Host ""
+    Write-Host "Verification summary: failures=0 warnings=1"
+  }
+  exit 0
 }
 
 if ($EngineAvailable) {
@@ -43,6 +63,10 @@ if ($EngineAvailable) {
     if ($result.level -eq "fail") { $failures++ }
     if ($result.level -eq "warn") { $warnings++ }
     Write-OpenClawStatus -Level $result.level -Message $result.message -Check $result.name -Data $result.data -Json:$JsonStatus
+  }
+  if ($TelegramDryRun) {
+    $artifact = New-OpenClawTelegramDryRunArtifact -StateDir $StateDir -OutputPath $TelegramValidationArtifact
+    Write-OpenClawStatus -Level pass -Message "Telegram dry-run validation artifact written" -Check "telegram-dry-run" -Data @{ artifact = $artifact.path; mode = $artifact.mode; status = $artifact.status } -Json:$JsonStatus
   }
   if ($JsonStatus) {
     $level = if ($failures -gt 0) { "fail" } elseif ($warnings -gt 0) { "warn" } else { "ok" }
@@ -54,6 +78,8 @@ if ($EngineAvailable) {
   if ($failures -gt 0) { exit 1 }
   exit 0
 }
+
+if ($TelegramDryRun -or $TelegramDryRunOnly) { Warn "Telegram dry-run artifact generation requires the shared engine module." }
 
 if ($env:WSL_DISTRO_NAME) { Fail "Running inside WSL: $env:WSL_DISTRO_NAME" } else { Pass "Running in native Windows PowerShell/CMD context" }
 
