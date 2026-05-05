@@ -1,33 +1,19 @@
 # Changelog
 
+## v2026.05.06-korean-only-pages - 2026-05-06
+
+- GitHub Pages의 언어 전환 UI를 제거하고 한국어 단일 안내로 정리했습니다.
+- open-design을 로컬 source 설치해 앞으로 디자인 참고 도구로 활용할 수 있게 했습니다.
+- 정적 HTML/CSS, CSP `script-src 'none'`, 민감정보 비공개 보안 경계를 유지했습니다.
+- README와 다운로드 페이지를 새 릴리스 태그 기준으로 갱신했습니다.
+
 ## v2026.05.05-open-design-refresh - 2026-05-05
 
-- Refreshed GitHub Pages with an original open-design-inspired visual system.
-- Kept Korean/English CSS-only language tabs and the static no-JavaScript security boundary.
-- Reframed the site around Download → Setup → Dry-run → Telegram → Verify.
-- Clarified checksum, tokenFile, Gateway, validation artifact, and user-controlled Telegram verification guidance.
-- Did not copy open-design code or assets; Apache-2.0 material was reviewed as design reference only.
+- GitHub Pages를 open-design 참고 방향의 독립 디자인 시스템으로 개선했습니다.
+- 다운로드, 설치, dry-run, Telegram, 검증 흐름을 더 명확하게 정리했습니다.
+- open-design 코드나 자산은 복사하지 않았습니다.
 
-## v2026.05.05-open-design-refresh - working language tabs and synced docs
+## 2026-05-05 이전 UI 동기화
 
-- Replaced language shortcut anchors with JavaScript-free CSS tabs that show one language mode at a time.
-- Synced README, Pages, user manual, and technical spec with the current installer engine, Companion shell, tokenFile, JSON status, and Telegram dry-run behavior.
-- Kept the static no-script Pages security boundary and credential redaction policy.
-
-## v2026.05.05-bilingual - bilingual beginner guide
-
-- Added Korean and English modes across README and GitHub Pages.
-- Rewrote setup guidance as small beginner-friendly actions without exposing sensitive values.
-- Kept the no-script static Pages security boundary while adding language shortcuts.
-- Updated release page copy for Telegram dry-run before real credentials.
-
-## 2026-05-05 — Companion overhaul foundation
-
-- Reframed the project as OpenClaw Windows Native Companion.
-- Added structured PowerShell engine with JSON status and redaction helpers.
-- Added a build-verified Tauri v2 Companion shell for the guided Windows app path.
-- Redesigned GitHub Pages around Download → Guided Setup → Telegram Connect → Verify Conversation → Repair/Update.
-- Added Telegram validation artifact schema and fixtures.
-- Added Telegram dry-run validation mode for simulated setup proof without real credentials.
-- Rebuilt the setup package and checksums with the engine payload included.
-- Expanded security audit coverage for engine, Companion build surface, package manifest, Pages allowlist, and validation artifacts.
+- 당시 언어 전환 탭 동작을 수정하고 문서를 동기화했습니다.
+- 설치 파일 checksum과 release 안내를 정리했습니다.

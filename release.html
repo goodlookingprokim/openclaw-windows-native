@@ -6,42 +6,36 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
-    <title>다운로드 / Download and Release | OpenClaw Companion</title>
-    <meta name="description" content="Bilingual release page for OpenClaw Windows Native setup assets, checksums, and current documentation." />
+    <title>OpenClaw Windows 다운로드</title>
+    <meta name="description" content="OpenClaw Windows 네이티브 설치 파일과 SHA-256 checksum을 제공하는 한국어 다운로드 페이지입니다." />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 이동 / Skip to main content</a>
-    <header class="topbar" aria-label="Primary navigation">
+    <a class="skip-link" href="#main">본문으로 이동</a>
+    <header class="topbar" aria-label="주요 탐색">
       <a class="brand" href="index.html"><span class="brand-mark">OC</span><span class="brand-copy"><strong>OpenClaw</strong><small>Windows Companion</small></span></a>
-      <nav aria-label="Site navigation">
-        <a href="index.html">홈 Home</a>
-        <a href="manual.html">설치 Setup</a>
-        <a href="security.html">보안 Security</a>
-        <a href="release.html">다운로드 Download</a>
-        <a href="technical.html">기술 Technical</a>
+      <nav aria-label="사이트 탐색">
+        <a href="index.html">홈</a>
+        <a href="manual.html">설치</a>
+        <a href="security.html">보안</a>
+        <a href="release.html" aria-current="page">다운로드</a>
+        <a href="technical.html">기술</a>
         <a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
     <main id="main">
       <section class="page-hero release-hero" aria-labelledby="page-title"><div>
-        <p class="eyebrow">Release center</p>
-        <h1 id="page-title">설치 파일과 검증 자료를 함께 제공합니다.</h1>
-        <p class="lead">사용자는 파일을 받고 해시를 확인한 뒤 dry-run과 실제 Telegram 연결을 순서대로 진행합니다.</p>
+        <p class="eyebrow">다운로드</p>
+        <h1 id="page-title">다운로드와 검증을 같은 화면에서 처리합니다.</h1>
+        <p class="lead">현재 설치 파일, 체크섬, 릴리스 노트, 다음 설치 단계까지 한 번에 확인하세요.</p>
       </div></section>
 
-      <section class="section language-shell" aria-label="Language mode selector"><div class="language-tabs">
-        <input class="language-radio" type="radio" id="lang-ko" name="language-mode" checked />
-        <input class="language-radio" type="radio" id="lang-en" name="language-mode" />
-        <div class="language-tab-labels" role="tablist" aria-label="Language mode">
-          <label for="lang-ko" role="tab">한국어</label>
-          <label for="lang-en" role="tab">English</label>
-        </div>
-        <section class="lang-panel lang-ko" id="ko" lang="ko" aria-labelledby="ko-mode-title"><div class="copy-stack"><p class="section-kicker">한국어 mode</p><h2 id="ko-mode-title">v2026.05.05-open-design-refresh</h2><p>이번 릴리스는 open-design을 참고한 새로운 Pages 디자인, CSS 한/영 탭, 최신 기술/사용자 문서, Telegram dry-run 안내, release asset 12개 검증을 반영합니다.</p><p id="download"><a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>OpenClawWindowsNativeSetup.exe 다운로드</a> <a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-open-design-refresh" rel="noopener noreferrer">GitHub release</a></p><p>Checksum: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p></div></section>
-        <section class="lang-panel lang-en" id="en" lang="en" aria-labelledby="en-mode-title"><div class="copy-stack"><p class="section-kicker">English mode</p><h2 id="en-mode-title">v2026.05.05-open-design-refresh</h2><p>This release reflects working CSS language tabs, current technical/user documentation, Telegram dry-run guidance, and validation for the 12 release assets.</p><p><a class="button primary" href="downloads/OpenClawWindowsNativeSetup.exe" download>Download setup EXE</a> <a class="button secondary" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-open-design-refresh" rel="noopener noreferrer">Open GitHub release</a></p><p>Checksum: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p></div></section>
-      </div></section>
-      <section class="section journey-section" aria-labelledby="assets-title"><div class="section-heading"><p class="section-kicker">Assets</p><h2 id="assets-title">릴리스에 포함되는 검증 자료</h2></div><div class="card-grid three"><a class="action-card" href="downloads/checksums.sha256"><span class="card-index">SHA</span><h3>checksums.sha256</h3><p>Installer integrity fingerprint.</p></a><a class="action-card" href="downloads/package-manifest.json"><span class="card-index">JSON</span><h3>package-manifest.json</h3><p>Payload, defaults, Companion packaging metadata.</p></a><a class="action-card" href="downloads/Verify-OpenClawWindowsNative.ps1" download><span class="card-index">VERIFY</span><h3>Verifier</h3><p>Native checks plus Telegram dry-run mode.</p></a></div></section>
+      <section class="section" aria-labelledby="release-overview"><div class="intro-split"><div><p class="section-kicker">릴리스 안내</p><h2 id="release-overview">다운로드는 간단하지만 검증은 반드시 함께 합니다.</h2></div><div class="copy-stack"><p>이번 릴리스는 Pages를 한국어 단일 안내로 정리하고 open-design 로컬 설치 흐름을 반영합니다. 설치 파일 자체의 체크섬은 아래 값으로 확인하세요.</p></div></div></section>
+      <section class="section download-panel" id="download" aria-labelledby="download-title"><div class="download-callout"><p class="section-kicker">현재 릴리스</p><h2 id="download-title">v2026.05.06-korean-only-pages</h2><p>SHA-256: <code>5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883</code></p><a class="download-primary" href="downloads/OpenClawWindowsNativeSetup.exe" download><span>설치 파일 다운로드</span><strong>OpenClawWindowsNativeSetup.exe</strong><small>Windows 네이티브 패키지</small></a></div><div class="card-grid two"><a class="action-card" href="downloads/checksums.sha256"><span class="card-index">SHA</span><h3>checksums.sha256</h3><p>체크섬 파일을 내려받아 로컬에서 비교합니다.</p></a><a class="action-card" href="https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.06-korean-only-pages" rel="noopener noreferrer"><span class="card-index">GitHub</span><h3>릴리스 노트</h3><p>GitHub 릴리스 게시 후 상세 내용을 확인합니다.</p></a></div></section>
+      <section class="section" aria-labelledby="included-title"><div class="section-heading"><p class="section-kicker">포함 파일</p><h2 id="included-title">Pages와 릴리스에 포함되는 주요 파일입니다.</h2></div><div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><code>OpenClawWindowsNativeSetup.exe</code></td><td>Windows 네이티브 설치 실행 파일</td></tr><tr><td><code>Install-OpenClawWindowsNative.ps1</code></td><td>Git, Node.js, pnpm, OpenClaw 준비 흐름</td></tr><tr><td><code>Verify-OpenClawWindowsNative.ps1</code></td><td>dry-run과 검증 artifact 생성</td></tr><tr><td><code>OpenClawWindowsNative.Engine.psm1</code></td><td>Companion Gateway와 설치 공통 로직</td></tr></tbody></table></div></section>
+      <section class="section trust-section" aria-labelledby="next-title"><div class="split-section"><div><p class="section-kicker">다음 단계</p><h2 id="next-title">파일을 받았다면 설치 가이드로 이동하세요.</h2></div><div class="copy-stack"><p>파일을 받은 뒤 바로 실행하지 말고 체크섬을 비교한 다음, dry-run을 먼저 진행하세요.</p><div class="hero-actions"><a class="button primary" href="manual.html#download">설치 가이드</a><a class="button secondary" href="security.html#checksum">보안 확인</a></div></div></div></section>
+
     </main>
-    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈 Home</a><a href="manual.html">설치 Setup</a><a href="security.html">보안 Security</a><a href="release.html">다운로드 Download</a><a href="technical.html">기술 Technical</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
+    <footer class="site-footer"><span>OpenClaw Windows Native Kit</span><a href="index.html">홈</a><a href="manual.html">설치</a><a href="security.html">보안</a><a href="release.html">다운로드</a><a href="technical.html">기술</a><a href="https://github.com/goodlookingprokim/openclaw-windows-native" rel="noopener noreferrer">GitHub</a></footer>
   </body>
 </html>

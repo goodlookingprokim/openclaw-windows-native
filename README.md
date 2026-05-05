@@ -1,27 +1,27 @@
 # OpenClaw Windows Native Companion
 
-[공개 사이트 / Public site](https://goodlookingprokim.github.io/openclaw-windows-native/) · [설치 가이드](manual.html) · [Release](https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.05-open-design-refresh)
+[공개 사이트](https://goodlookingprokim.github.io/openclaw-windows-native/) · [설치 가이드](manual.html) · [Release](https://github.com/goodlookingprokim/openclaw-windows-native/releases/tag/v2026.05.06-korean-only-pages)
 
 OpenClaw를 WSL 없이 Windows 네이티브 환경에서 설치하고, Telegram 봇 연결 전 dry-run으로 안전하게 검증하도록 돕는 설치 패키지와 GitHub Pages 안내 사이트입니다.
 
-## 이번 디자인 개선
+## 이번 개선
 
-- `nexu-io/open-design`의 로컬 우선·디자인 시스템 접근을 참고해 GitHub Pages를 더 조용하고 명확한 설치 중심 화면으로 개편했습니다.
+- GitHub Pages의 언어 전환 UI를 제거하고 한국어 단일 안내로 정리했습니다.
+- 로컬 OpenClaw 작업 폴더의 `open-design` sibling 디렉터리에 `nexu-io/open-design`를 source 설치해 앞으로 디자인 참고 도구로 활용할 수 있게 했습니다.
 - 외부 코드나 자산은 복사하지 않고, 이 저장소의 정적 HTML/CSS로 독립 구현했습니다.
-- 한국어/English CSS-only 언어 탭을 유지합니다.
 - CSP는 `script-src 'none'`이며 JavaScript를 사용하지 않습니다.
 - Telegram 민감 값은 GitHub, Pages, 릴리스 artifact에 포함하지 않습니다.
 
 ## 빠른 시작
 
-1. [Download page](release.html#download)에서 `OpenClawWindowsNativeSetup.exe`를 받습니다.
+1. [다운로드 페이지](release.html#download)에서 `OpenClawWindowsNativeSetup.exe`를 받습니다.
 2. SHA-256을 확인합니다.
 
 ```powershell
 Get-FileHash .\OpenClawWindowsNativeSetup.exe -Algorithm SHA256
 ```
 
-Expected:
+기대 값:
 
 ```text
 5204fa42eaecce7fc40b75afa60f67c30fdbf1814848e62c70d21a51acf7d883
@@ -33,20 +33,20 @@ Expected:
 
 ## 검증 기준
 
-- Native Windows package: `OpenClawWindowsNativeSetup.exe`
-- Default OpenClaw source: `https://github.com/openclaw/openclaw.git`
-- Default ref: `main`
-- Node.js floor: `node >=22.14.0`
-- Default Gateway port: `18789`
-- Security posture: no published secrets, no raw token command argument, static Pages with no script execution
+- Windows 네이티브 패키지: `OpenClawWindowsNativeSetup.exe`
+- 기본 OpenClaw source: `https://github.com/openclaw/openclaw.git`
+- 기본 ref: `main`
+- Node.js 기준: `node >=22.14.0`
+- 기본 Gateway port: `18789`
+- 보안 기준: 공개 비밀 값 없음, raw token command argument 없음, script 실행 없는 정적 Pages
 
 ## 문서
 
-- [Setup guide](manual.html)
-- [Security guide](security.html)
-- [Technical notes](technical.html)
-- [Release download](release.html)
+- [설치 가이드](manual.html)
+- [보안 가이드](security.html)
+- [기술 노트](technical.html)
+- [다운로드](release.html)
 
-## Not tested by automation
+## 자동화로 검증하지 않는 항목
 
-Live Telegram send/receive requires the user's own BotFather value and pairing approval, so it remains a user-controlled final check.
+실제 Telegram 송수신은 사용자의 BotFather 값과 pairing 승인이 필요하므로, 사용자 환경에서 최종 확인합니다.
