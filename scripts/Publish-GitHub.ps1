@@ -18,6 +18,10 @@ if (-not (Get-Command $GhExe -ErrorAction SilentlyContinue)) {
   }
 }
 
+if ([string]::IsNullOrWhiteSpace($env:GH_TOKEN) -and -not [string]::IsNullOrWhiteSpace($env:GITHUB_TOKEN)) {
+  $env:GH_TOKEN = $env:GITHUB_TOKEN
+}
+
 function Invoke-Gh {
   param(
     [string[]]$Arguments,
@@ -31,11 +35,46 @@ function Invoke-Gh {
   return $exit
 }
 
+function Test-GitHubAuth {
+  if (-not [string]::IsNullOrWhiteSpace($env:GH_TOKEN)) {
+    & $GhExe api user >$null
+    if ($LASTEXITCODE -ne 0) {
+      throw "GH_TOKEN/GITHUB_TOKEN is present but GitHub API authentication failed."
+    }
+    return
+  }
+  Invoke-Gh -Arguments @("auth", "status") | Out-Null
+}
+
+function Invoke-GitPush {
+  param([string[]]$Arguments)
+  if (-not [string]::IsNullOrWhiteSpace($env:GH_TOKEN)) {
+    $oldCount = $env:GIT_CONFIG_COUNT
+    $oldKey = $env:GIT_CONFIG_KEY_0
+    $oldValue = $env:GIT_CONFIG_VALUE_0
+    try {
+      $env:GIT_CONFIG_COUNT = "1"
+      $env:GIT_CONFIG_KEY_0 = "http.https://github.com/.extraheader"
+      $env:GIT_CONFIG_VALUE_0 = "AUTHORIZATION: bearer $env:GH_TOKEN"
+      & git @Arguments
+    } finally {
+      $env:GIT_CONFIG_COUNT = $oldCount
+      $env:GIT_CONFIG_KEY_0 = $oldKey
+      $env:GIT_CONFIG_VALUE_0 = $oldValue
+    }
+  } else {
+    & git @Arguments
+  }
+  if ($LASTEXITCODE -ne 0) {
+    throw "git $($Arguments -join ' ') failed."
+  }
+}
+
 if (-not (Get-Command $GhExe -ErrorAction SilentlyContinue)) {
   throw "GitHub CLI is required. Install it with: winget install --id GitHub.cli -e --source winget"
 }
 
-Invoke-Gh -Arguments @("auth", "status") | Out-Null
+Test-GitHubAuth
 
 $fullName = "$Owner/$Repo"
 & $GhExe repo view $fullName >$null 2>$null
@@ -57,10 +96,7 @@ if (-not $remote) {
   & git remote set-url origin $remoteUrl
 }
 
-& git push -u origin main
-if ($LASTEXITCODE -ne 0) {
-  throw "git push failed."
-}
+Invoke-GitPush -Arguments @("push", "-u", "origin", "main")
 
 Invoke-Gh -Arguments @("repo", "edit", $fullName, "--homepage", "https://$Owner.github.io/$Repo/") | Out-Null
 
@@ -71,10 +107,7 @@ $tagExists = (& git tag --list $InitialTag)
 if (-not $tagExists) {
   & git tag $InitialTag
 }
-& git push origin main --tags
-if ($LASTEXITCODE -ne 0) {
-  throw "git push tags failed."
-}
+Invoke-GitPush -Arguments @("push", "origin", "main", "--tags")
 
 Write-Host "Published repository: https://github.com/$fullName"
 Write-Host "GitHub Pages URL: https://$Owner.github.io/$Repo/"

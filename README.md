@@ -38,6 +38,8 @@ Maintainers can publish the repository and GitHub Pages site with:
 .\Publish-ToGitHub.cmd
 ```
 
+If browser login is unavailable, use `.\Publish-WithToken.cmd` and paste a GitHub token with `repo` and `workflow` scopes.
+
 ## Audience
 
 This project is for open-source learners, educators, and researchers who want to experiment with standalone agents on Windows for academic and non-commercial learning purposes.

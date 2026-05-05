@@ -28,6 +28,14 @@ Or double-click:
 Publish-ToGitHub.cmd
 ```
 
+If browser login is not available, use a GitHub Personal Access Token with `repo` and `workflow` scopes:
+
+```text
+Publish-WithToken.cmd
+```
+
+The token helper keeps the token in the current process only and does not write it to the repository.
+
 The script will:
 
 1. Check GitHub CLI auth.
